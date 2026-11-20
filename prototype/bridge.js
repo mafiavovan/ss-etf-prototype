@@ -54,3 +54,12 @@
   }, true);
   window.__DS = {open, close, send: m => { if (ready) send(m); }};
 })();
+
+/* телефон на десктопе: всегда пропорции 390×844, целиком уменьшается под высоту окна (claude.ai, ноутбук) */
+(function(){ const fit = () => { const d = document.getElementById('device'); if (!d) return;
+  if (innerWidth <= 520){ d.style.zoom = ''; return; }
+  const cap = document.querySelector('.caption'), tab = document.getElementById('scTab');
+  const capH = cap && getComputedStyle(cap).display !== 'none' ? cap.offsetHeight + 14 : 0, tabH = tab ? tab.offsetHeight + 14 : 0;
+  const k = Math.min(1, (innerHeight - 40 - capH - tabH - 24) / 844);
+  d.style.zoom = k < 1 ? k.toFixed(3) : ''; };
+  addEventListener('resize', fit); addEventListener('load', fit); fit(); setTimeout(fit, 300); })();
