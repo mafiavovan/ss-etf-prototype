@@ -22,7 +22,7 @@ body.kbd button:focus-visible{outline:2px solid var(--caret);outline-offset:2px}
 .caption{color:#8E8E93;font-size:13px;font-weight:500;text-align:center;max-width:390px;line-height:1.4}
 
 /* ───────── device ───────── */
-.device{width:390px;height:844px;max-height:max(700px,calc(100dvh - 72px));min-height:700px;background:var(--bg);border-radius:52px;
+.device{width:390px;height:844px;max-height:max(560px,calc(100dvh - 72px));min-height:560px;background:var(--bg);border-radius:52px;
   overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;
   box-shadow:0 0 0 11px #0B0B0C,0 0 0 12px #3A3A3C,0 40px 90px rgba(0,0,0,.5);user-select:none;-webkit-user-select:none}
 .status{height:62px;flex:none;position:relative;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:2px 9px 0}
@@ -45,6 +45,12 @@ body.kbd button:focus-visible{outline:2px solid var(--caret);outline-offset:2px}
 
 /* ── kind choice (whole vs single stock) ── */
 #scrKind{transform:translateX(calc(100% + 48px));box-shadow:-10px 0 30px rgba(0,0,0,.08);padding-top:var(--st)}
+/* невысокое окно (ноутбук, просмотр на claude.ai): телефон ужимается по высоте, подпись прячется, верх не обрезается */
+body{justify-content:safe center}
+@media (min-width:521px) and (max-height:1020px){
+  .caption{display:none}
+  .device{max-height:max(560px,calc(100dvh - 116px))}
+}
 @media (max-width:520px){ #scrKind{padding-top:0} }
 .device.on-kind #scrKind{transform:none}
 .device.on-kind #scrStock{transform:translateX(-28%);filter:brightness(.92)}
