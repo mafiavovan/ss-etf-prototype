@@ -7810,7 +7810,7 @@ P.sd = () => { const t = TT(SD.k), ss = SD.ss && t.ss, px = pxOf(SD.k, ss), st =
     <div id="sd-pill">${sdPill()}</div><div class="sd-ch" id="sd-ch">${sdChart()}</div>
     <div class="sd-per"><div class="f">${Segmented('sdp', SDP, {value: SDP[SD.per]})}</div><button class="sd-cnd ${SD.cand ? 'on' : ''}" data-act="sd-cand" aria-label="Свечи"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 3v3M7 15v4M17 5v4M17 17v3" stroke="#3C3C43" stroke-width="1.6" stroke-linecap="round"/><rect x="5" y="6" width="4" height="9" rx="1" fill="#10C810"/><rect x="15" y="9" width="4" height="8" rx="1" fill="#E22F2F"/></svg></button></div>
     ${ss ? Notice({size: 'L', state: 'Info', title: 'Что такое Single Stock ETF?', subtitle: `Фонд на одну акцию ${t.s}, поделённый на 100 частей. Цена — 1/100 акции, рост и дивиденды — как у акции.`, closeShow: false, buttonShow: false}) : ''}
-    ${sdPos()}${st ? sdAnalysts(SD.k) + sdIdea(SD.k) : ''}${sdStats()}${sdSlider(SD.k)}${sdNews(SD.k)}${sdSimilar(SD.k)}</div>`;
+    ${sdPos()}${st ? sdAnalysts(SD.k) + sdIdea(SD.k) : ''}${sdSlider(SD.k)}${sdNews(SD.k)}${sdSimilar(SD.k)}</div>`;
   return {bar: nb.bar, body, bottom: ButtonGroup({primary: {label: 'Торговать', act: 'sd-trade'}, secondary: false})}; };
 SEGH.sdm = i => { SD.ss = i === 1; setTimeout(() => render(), 200); };
 SEGH.sdp = i => { SD.per = i; const c = phone.querySelector('#sd-ch'), p = phone.querySelector('#sd-pill'); if (c) c.innerHTML = sdChart(); if (p) p.innerHTML = sdPill(); };
