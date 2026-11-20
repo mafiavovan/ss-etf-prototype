@@ -7923,8 +7923,9 @@ P.ideas = () => { const nb = Navbar({alignment: 'Leading', layout: 'Stacked', ti
   return {bar: nb.bar, body: nb.large + `<div class="content idl">${scrollChips(IDT.map((l, i) => Chip({label: l, selected: IDS.tab === i, act: 'id-tab', arg: i, style: 'Filled'})))}<div id="id-list">${idList()}</div></div><div class="tabpad"></div>`}; };
 /* ---------- «Идеи» клиента: «Аналитика Freedom» — поиск, Последние / Вы подписаны, фильтры, обзор рынка, инвестидеи, свежая аналитика (основа — лента 13.1) ---------- */
 const IDA = {q: '', seg: 0, f: 0, rec: 0, cur: 'rv', sub: ['AMAT', 'CSCO', 'Сергей Пигарев']};
-const IDAF = ['Все', 'Инвестидеи', 'Компании', 'Отрасли', 'Опционы', 'Обзоры рынка'];
-const IDAFC = {2: 'Компания', 3: 'Отрасль', 4: 'Опционы'};
+const IDAF = ['Все', 'Инвестидеи', 'Компании', 'Облигации', 'Обзор рынка', 'Опционы', 'Отрасли', 'Макро', 'Портфели', 'Стратегия'];
+/* фильтр → категория материала (0 — все, 1 — инвестидеи) */
+const IDAFC = {2: 'Компания', 3: 'Облигации', 4: 'Обзор рынка', 5: 'Опционы', 6: 'Отрасль', 7: 'Макро', 8: 'Портфель', 9: 'Стратегия'};
 const IDAREC = ['Все', 'Покупать', 'Держать', 'Продавать'];
 const IDARV = {cat: 'Обзор рынка', d: '17 ноя', dl: '17 ноября 2026', t: 'Направление торгам задаёт NVIDIA', au: 'Михаил Денисламов и ещё 1',
   x: 'Главным событием дня станет отчёт NVIDIA (NVDA), который выйдет после закрытия, в 16:20 по восточному времени (ET). Это первая публикация после отставки Дженсена Хуанга 1 ноября — инвесторы ждут комментариев нового руководства о спросе на ускорители и планах на 2027 год.'};
@@ -7939,7 +7940,20 @@ const IDAL = [
   {cat: 'Компания', d: '16 ноя', t: 'Слабые результаты и задержки B2B-запусков – снижаем нашу ЦЦ до $5 и сохраняем рекомендацию «Покупать»', co: 'LiveOne, Inc.', tk: 'LVO', v: 'Покупать', g: 5, p: 71.8, au: 'Сакен Исмаилов'},
   {cat: 'Отрасль', d: '16 ноя', t: 'Цены на газ в США могут показать негативную динамику на текущей неделе', sec: 'Энергетика', x: 'Вечером 13 ноября Минэнерго США опубликовало нейтральную для котировок голубого топлива статистику запасов, но прогноз погоды на ближайшие две недели остаётся тёплым.', au: 'Сергей Пигарев и ещё 1'},
   {cat: 'Опционы', d: '16 ноя', t: 'Два билета на отскок', x: 'Пока внимание инвесторов приковано к Nvidia, покупатели уже возвращаются в остальной рынок. Разбираем две опционные стратегии на отскок.', au: 'Михаил Денисламов и ещё 1'},
-  {cat: 'Отрасль', d: '16 ноя', t: 'Изменение политических ветров усиливает расхождение динамики сырьевых рынков', sec: 'Сырьевые рынки', x: 'Металлы и энергоносители реагируют на новости по-разному: золото держится у максимумов, нефть дешевеет на ожиданиях роста добычи.', au: 'Сергей Пигарев'}];
+  {cat: 'Отрасль', d: '16 ноя', t: 'Изменение политических ветров усиливает расхождение динамики сырьевых рынков', sec: 'Сырьевые рынки', x: 'Металлы и энергоносители реагируют на новости по-разному: золото держится у максимумов, нефть дешевеет на ожиданиях роста добычи.', au: 'Сергей Пигарев'},
+  {cat: 'Отрасль', d: '16 ноя', t: 'Рынок нефти перешёл от дефицита к профициту', sec: 'Энергетика', x: 'На прошлой неделе цена нефти сорта WTI снизилась на 2,5%, до $88,6 за баррель. Котировки давит рост запасов и добычи вне ОПЕК+.', au: 'Сергей Пигарев и ещё 1'},
+  {cat: 'Обзор рынка', d: '16 ноя', t: 'NVIDIA ищет CEO — индексы ищут опору', x: 'Для инвестсообщества и ФРС неделя начинается с темы ИИ. Сегодня в ФРБ Сан-Франциско пройдут выступления о влиянии ИИ на рынок труда.', au: 'Михаил Денисламов и ещё 2'},
+  {cat: 'Обзор рынка', d: '13 ноя', t: 'Спрос на технологии поддержит индексы', x: 'Сезон отчётностей близок к завершению: выручка технологических компаний растёт быстрее ожиданий, рынок ждёт данных по инфляции.', au: 'Михаил Денисламов и ещё 2'},
+  {cat: 'Опционы', d: '9 ноя', t: 'Волатильность на минимумах — время для защиты', x: 'Подразумеваемая волатильность по индексу S&P 500 опустилась ниже исторической: защитные путы подешевели.', au: 'Севак Араратян'},
+  {cat: 'Облигации', d: '28 авг', t: 'Инициируем кредитное покрытие Sobha Realty с рейтингом «Покупать»', x: 'Выпуски Sobha торгуются с доходностью к погашению 8,3–8,5%, значительно выше кривой сопоставимых эмитентов региона.', au: 'Ильгиз Беккоенов и ещё 1'},
+  {cat: 'Макро', d: '13 ноя', t: 'Базовый CPI в октябре повышен: как это влияет на тренды?', sec: 'США', x: 'Базовая инфляция повышена второй месяц подряд по широкому перечню категорий. Причина — рост цен на услуги и жильё.', au: 'Юрий Ичкитидзе'},
+  {cat: 'Макро', d: '9 ноя', t: 'Оценка чистого найма повышена из-за переоценки предложения труда', sec: 'США', x: 'Основной сюрприз был в платёжных ведомостях: рост числа занятых составил 165 тыс. Другой важный сигнал — пересмотр данных за прошлые месяцы.', au: 'Юрий Ичкитидзе'},
+  {cat: 'Макро', d: '31 окт', t: 'Инфляция без сюрпризов: базовый PCE повышен из-за цен на топливо', sec: 'США', au: 'Юрий Ичкитидзе'},
+  {cat: 'Портфель', d: '21 окт', t: 'Регулярная ребалансировка консервативного модельного портфеля для оптимальной аллокации активов', x: 'Вес секторов изменился на фоне смещения тактического взгляда, а также рыночной динамики за последний квартал.', au: 'Георгий Маса Тимошин, CFA'},
+  {cat: 'Портфель', d: '17 окт', t: 'Итоги недели с 12 по 16 октября', x: 'Модельные портфели обогнали бенчмарк: лучший вклад дали технологические компании и облигации с короткой дюрацией.', au: 'Георгий Маса Тимошин, CFA'},
+  {cat: 'Стратегия', d: '1 окт', t: 'Стратегический обзор: взгляд на IV квартал 2026 и 2027 гг.', au: 'Михаил Денисламов'},
+  {cat: 'Стратегия', d: '3 июл', t: 'Стратегический обзор: взгляд на III квартал и весь 2026 год', au: 'Михаил Денисламов'},
+  {cat: 'Стратегия', d: '1 апр', t: 'Стратегический обзор: взгляд на II квартал и весь 2026 год', au: 'Михаил Денисламов'}];
 const idaQ = () => IDA.q.trim().toLowerCase();
 const idaSubd = x => IDA.sub.some(s => s === x.tk || (x.au || '').includes(s));
 const idaHit = x => { const q = idaQ(); if (q && ![x.t, x.co, x.tk, x.au, x.x, x.cat, x.sec].join(' ').toLowerCase().includes(q)) return false;
@@ -7951,20 +7965,24 @@ const idaPct = p => `<span class="${p < 0 ? 'dn' : 'up'}">${p < 0 ? '−' : '+'}
 const idaTop = (c, d) => `<span class="ida-top"><em class="ts-Caption-Medium-13">${esc(c)}</em><i class="ts-Body-Regular-14">${esc(d)}</i></span>`;
 /* карточки материалов — визуал ленты 13.1: иконка + подзаголовок/заголовок, тег, цель, автор · дата, «Подробнее» + колокольчик */
 function idaCard(x, arg){ const j = arg ?? IDAL.indexOf(x), sub = x.co ? `${x.co.replace(/,? Inc\.?$/, '')} · ${x.tk}` : x.sec ? `${x.cat} · ${x.sec}` : x.cat;
-  const sec = {'Компания': 2, 'Отрасль': 3, 'Опционы': 4, 'Обзор рынка': 5}[x.cat] || 0;
-  return `<div class="ig Container bx idv ida-v" data-sec="${sec}"><button class="idv-h" data-act="ida-open" data-arg="${j}">${Asset({type: 'Icon', size: 'L', duo: 'Documents/Документ'})}<span><span class="ts-Caption-Regular-13 sub">${esc(sub)}</span><b class="ts-Title-Semibold-18 ida-t">${esc(x.t)}</b></span></button>
+  return `<div class="ig Container bx idv ida-v"><button class="idv-h" data-act="ida-open" data-arg="${j}">${Asset({type: 'Icon', size: 'L', duo: 'Documents/Документ'})}<span><span class="ts-Caption-Regular-13 sub">${esc(sub)}</span><b class="ts-Title-Semibold-18 ida-t">${esc(x.t)}</b></span></button>
     ${x.x ? `<p class="ts-Body-Regular-14 ida-d">${esc(x.x)}</p>` : ''}
     ${x.v ? `<div class="idv-t">${Tag({label: x.v, color: x.v === 'Покупать' ? 'Green' : x.v === 'Продавать' ? 'Red' : 'Neutral', style: 'Subtle', size: 'S', outline: true})}</div><div class="idv-g"><span class="ts-Body-Medium-16">Цель $${x.g}</span><span class="ts-Body-Regular-14 ${x.p < 0 ? 'dn' : 'up'}">${x.p < 0 ? '−' : '+'}${String(Math.abs(x.p)).replace('.', ',')} % к цене отчёта</span></div><i class="idv-p"><b style="width:${Math.round(Math.min(100, Math.max(8, 100 / (1 + x.p / 100))))}%"></b></i>` : ''}
     <span class="ts-Caption-Regular-13 sub">${esc(x.au)} · ${esc(x.d)}</span>
     <div class="idv-b">${Button({type: 'Secondary', size: 'M', label: 'Подробнее', act: 'ida-open', arg: j, fill: true})}<button class="idbell" data-act="id-ntf-all" aria-label="Уведомления">${ic('Bell Alert Notification', 20)}</button></div></div>`; }
 const idaIdea = d => idCard(d);
-/* чипсы — якоря секций: нажатие прокручивает к блоку, при скролле подсвечивается чипс блока под шапкой (idaSpy) */
-function idaBody(){ const out = [], L = IDAL.filter(idaHit), I = idaIdeas(), mark = (h, k) => h.replace('<div class="', `<div data-sec="${k}" class="`);
-  if (!IDA.rec && idaHit(IDARV)) out.push(mark(Title({size: 'L', type: 'Icon', iconShow: false, title: 'Последний обзор рынка'}), 5) + idaCard(IDARV, 'rv'));
-  if (I.length) out.push(`<div class="ida-sh" data-sec="1">${Title({size: 'L', type: 'Icon', iconShow: false, title: 'Инвестидеи'})}<button class="ts-Body-Medium-16 lk" data-act="id-all-list">Все</button></div><div class="bleed ida-row">${I.map(idaIdea).join('')}</div>`);
-  if (L.length) out.push(Title({size: 'L', type: 'Icon', iconShow: false, title: 'Свежая аналитика'}) + L.map(idaCard).join(''));
-  const empty = IDA.seg === 1 ? out.length <= 1 : !out.length;
-  if (empty) out.push(EmptyState({title: 'Ничего не нашли', subtitle: IDA.seg === 1 ? 'По вашим подпискам материалов нет — добавьте компании или аналитиков' : 'Попробуйте другой запрос или сбросьте фильтры', icon: 'Search'}));
+/* чипсы — фильтры, как в макете 13.6.x: «Все» — обзор рынка, инвестидеи и свежая аналитика; остальные — только своя категория */
+const idaCardAny = x => x === IDARV ? idaCard(IDARV, 'rv') : idaCard(x);
+function idaBody(){ const out = [], I = idaIdeas(), T = t => Title({size: 'L', type: 'Icon', iconShow: false, title: t});
+  const nothing = () => EmptyState({title: 'Ничего не нашли', subtitle: IDA.seg === 1 ? 'По вашим подпискам материалов нет — добавьте компании или аналитиков' : 'Попробуйте другой запрос или сбросьте фильтры', icon: 'Search'});
+  if (IDA.f === 1){ out.push(T('Инвестидеи') + (I.length ? I.map(idaIdea).join('') : nothing())); return out.join(''); }
+  if (IDA.f > 1){ const c = IDAFC[IDA.f], L = [IDARV].concat(IDAL).filter(x => x.cat === c && idaHit(x));
+    out.push(T(IDAF[IDA.f]) + (L.length ? L.map(idaCardAny).join('') : nothing())); return out.join(''); }
+  const L = IDAL.filter(idaHit), rv = !IDA.rec && idaHit(IDARV);
+  if (rv) out.push(T('Последний обзор рынка') + idaCard(IDARV, 'rv'));
+  if (I.length) out.push(`<div class="ida-sh">${T('Инвестидеи')}<button class="ts-Body-Medium-16 lk" data-act="ida-f" data-arg="1">Все</button></div><div class="bleed ida-row">${I.map(idaIdea).join('')}</div>`);
+  if (L.length) out.push(T('Свежая аналитика') + L.map(idaCard).join(''));
+  if (IDA.seg === 1 ? out.length <= (rv ? 1 : 0) : !out.length) out.push(nothing());
   return out.join(''); }
 const idaChips = () => `<div class="bleed hchips ida-chips">${ChipGroup([Chip({label: 'Фильтры', lead: true, act: 'ida-flt', badge: IDA.rec ? '1' : ''})].concat(IDAF.map((l, i) => Chip({label: l, selected: IDA.f === i, act: 'ida-f', arg: i}))))}</div>`;
 function idaPage(){ const nb = Navbar({alignment: 'Center', layout: 'Inline', title: 'Идеи', leadingShow: false, trailingShow: true, trailing: 'Single', icon: 'Bell Alert Notification', trailAct: 'id-ntf-all'});
@@ -8024,10 +8042,8 @@ P['ida-rep'] = () => { const x = IDA.cur === 'rv' ? IDARV : String(IDA.cur).star
     ${INV.acc ? Notice({size: 'L', state: 'Info', title: 'Полный отчёт', subtitle: 'PDF с графиками, моделью и раскрытием информации', closeShow: false, buttonShow: true, button: 'Открыть', btnAct: 'id-pdf'}) : lockNotice('Полный отчёт', 'PDF с графиками, моделью и раскрытием информации — после открытия брокерского счёта', 'Открыть счёт')}`;
   return Object.assign(page(x.cat, body, {nav: {alignment: 'Center', layout: 'Inline'}}), k ? {bottom: ButtonGroup({primary: {label: 'Открыть ' + x.tk, act: 'sd-open', arg: k}, secondary: false})} : {}); };
 Object.assign(ACT, {
-  'ida-f'(i){ i = +i; const sc = phone.querySelector('#scroll'), ch = phone.querySelector('#ida-ch'); if (!sc || !ch) return;
-    const el = i ? phone.querySelector('#ida-body [data-sec="' + i + '"]') : null; if (i && !el){ mkSnack('Сейчас нет материалов в этой категории'); return; }
-    IDA.f = i; idaChipOn(i); clearTimeout(IDA._lk); IDA._lock = true; IDA._lk = setTimeout(() => { IDA._lock = false; }, 800);
-    sc.scrollTo({top: el ? el.offsetTop - chipTop() - ch.offsetHeight - 8 : 0, behavior: 'smooth'}); },
+  'ida-f'(i){ i = +i; IDA.f = i; idaChipOn(i); idaSync(); const sc = phone.querySelector('#scroll'), b = phone.querySelector('#ida-body'), ch = phone.querySelector('#ida-ch');
+    if (sc && b && ch && sc.scrollTop > b.offsetTop - chipTop() - ch.offsetHeight - 8) sc.scrollTo({top: b.offsetTop - chipTop() - ch.offsetHeight - 8, behavior: 'smooth'}); },
   'id-all-list'(){ IDS.tab = 0; ACT.push('ideas13'); },
   'ida-flt'(){ IDA._rec = IDA.rec; openOv({type: 'ida-flt'}); },
   'ida-rec'(i){ IDA._rec = +i; phone.querySelectorAll('#ida-recs .chip').forEach((c, j) => c.classList.toggle('on', j === IDA._rec)); },
@@ -8087,7 +8103,7 @@ function idaSpy(){ const sc = phone.querySelector('#scroll'), ch = phone.querySe
   for (const el of phone.querySelectorAll('#ida-body [data-sec]')) if (el.offsetTop <= line) k = +el.dataset.sec;
   if (sc.scrollTop < 8) k = 0;
   if (k !== IDA.f){ IDA.f = k; idaChipOn(k); } }
-phone.addEventListener('scroll', e => { if (e.target.id === 'scroll'){ chipTop(); idSpy(); idaSpy(); } }, true);
+phone.addEventListener('scroll', e => { if (e.target.id === 'scroll'){ chipTop(); idSpy(); } }, true);
 { const _rc = render; render = function(...a){ const r = _rc.apply(this, a); chipTop(); requestAnimationFrame(chipTop); return r; }; }
 OVS['id-ntf'] = o => { const d = o.i != null ? IDX[o.i] : null, t = d && TT(d.k), sw = (key, on) => ({type: 'Switch', key: 'ntf:' + key, on: !!IDS.n[key]});
   const grp1 = d ? ListGroup({title: 'По этой идее', items: [{content: {title: 'Все материалы по ' + t.t, subtitle: 'Идеи, отчёты и обзоры по ' + t.n.replace(' Inc.', '')}, right: sw(t.t), divider: true}, {content: {title: AU[d.au][1], subtitle: 'Каждый новый материал аналитика'}, right: sw(d.au)}]}) : '';
