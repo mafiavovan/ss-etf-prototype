@@ -6506,7 +6506,7 @@ button.sd-pos{display:flex;flex-direction:column;gap:12px;width:100%;text-align:
 .sd-tabs .sl-c .lg.Container{margin:0 -16px -16px}
 .sl-k{margin-top:4px}
 .sd-dots{display:flex;justify-content:center;margin-top:-4px}
-.pf-car{align-items:flex-start}
+.pf-car{align-items:flex-start;overflow-y:hidden;transition:height .12s linear}
 .sl-c.pf{gap:12px;box-shadow:0 5px 20px rgba(0,0,0,.05)}
 .pf-eb{color:var(--Text-Brand-Default,#2DAE57);text-transform:uppercase;letter-spacing:.04em}
 .pf-t{margin-top:-6px;color:var(--Text-Base-Primary)}
@@ -7894,8 +7894,12 @@ SEGH.sdp = i => { SD.per = i; const c = phone.querySelector('#sd-ch'), p = phone
 SEGH.sdtab = i => { SD.tab = i; const b = phone.querySelector('#sd-tb'); if (b){ const T = slTabs(SD.k); b.innerHTML = T[Math.min(i, T.length - 1)][1](SD.k); } };
 SEGH.sdi = i => { SD.inf = i; const p = phone.querySelector('#sd-inf'); if (p){ p.style.opacity = 0; setTimeout(() => { p.textContent = INFT(SD.k)[i]; p.style.opacity = 1; }, 150); } };
 /* точки слайдера */
+/* высота карусели — по текущей карточке: во время свайпа плавно между соседними, блоки ниже подтягиваются */
+function sdSlFit(s){ const C = s.children; if (!C.length) return; const step = C[0].offsetWidth + 12, end = s.scrollLeft >= s.scrollWidth - s.clientWidth - 2, f = end ? C.length - 1 : Math.max(0, Math.min(C.length - 1, s.scrollLeft / step)), a = Math.floor(f), b = Math.min(C.length - 1, a + 1), t = f - a;
+  s.style.height = Math.round(C[a].offsetHeight * (1 - t) + C[b].offsetHeight * t + 4) + 'px'; }
 phone.addEventListener('scroll', e => { const s = e.target; if (!s.id || s.id !== 'sd-sl') return; const i = Math.round(s.scrollLeft / (s.firstElementChild.offsetWidth + 12));
-  phone.querySelectorAll('#sd-dots i').forEach((d, j) => d.classList.toggle('on', j === i)); }, true);
+  phone.querySelectorAll('#sd-dots i').forEach((d, j) => d.classList.toggle('on', j === i)); sdSlFit(s); }, true);
+new MutationObserver(() => { const s = phone.querySelector('#sd-sl'); if (s && !s.dataset.fit){ s.dataset.fit = 1; requestAnimationFrame(() => sdSlFit(s)); } }).observe(phone, {childList: true, subtree: true});
 OVS['sd-tr'] = () => { const p = posOf(SD.k, SD.ss), nm = tkName(SD.k, SD.ss && TT(SD.k).ss);
   return BottomSheet({title: 'Торговать', subtitle: nm + ' · ' + usd(pxOf(SD.k, SD.ss)), body: `<p class="ts-Body-Regular-16 sdtr">${p.q ? `В портфеле ${grp(p.q)} ${SD.ss ? 'шт.' : 'акц.'} на ${usd(p.q * pxOf(SD.k, SD.ss))}` : 'Этой бумаги пока нет в портфеле'}</p>`,
     primary: {label: 'Купить', act: 'trade-go', arg: 'buy'}, secondary: p.q ? {label: 'Продать', act: 'trade-go', arg: 'sell', set: 'Button/Destructive', type: 'Secondary'} : false}); };
