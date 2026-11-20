@@ -7966,7 +7966,7 @@ function nbIdaPage(){ const nb = Navbar({alignment: 'Center', layout: 'Inline', 
     <span class="ts-Caption-Regular-13 nbi-end">Больше материалов нет</span>${lockList}</div><div class="tabpad"></div>`}; }
 P.ideas = () => INV.acc ? idaPage() : nbIdaPage();
 Object.assign(ACT, {
-  'nbi-open'(j){ const x = NBI[+j]; if (x && x.idx != null){ IDS.i = x.idx; IDS.per = 2; IDS.sec = 0; ACT.push('idea2'); } },
+  'nbi-open'(j){ const x = NBI[+j]; if (!x) return; if (x.idx != null){ IDS.i = x.idx; IDS.per = 2; IDS.sec = 0; ACT.push('idea2'); } else { IDA.cur = 'nb' + j; ACT.push('ida-rep'); } },
   'nbi-bell'(){ openOv({type: 'noacc', sub: 'Уведомления о новых идеях и материалах аналитиков станут доступны после открытия брокерского счёта.'}); }
 });
 /* «Все» в секции «Инвестидеи» — полный список идей (лента 13.1) со стрелкой назад */
@@ -7976,12 +7976,13 @@ SEGH.idaseg = i => { IDA.seg = i; idaSync(); };
 phone.addEventListener('input', e => { if (e.target.dataset && e.target.dataset.bind === 'ida.q'){ IDA.q = e.target.value; e.target.closest('.sfld') && e.target.closest('.sfld').classList.toggle('has', !!IDA.q); idaSync(); } });
 OVS['ida-flt'] = () => BottomSheet({title: 'Фильтры', body: `<div class="ida-flt"><span class="ts-Body-Medium-14 sub">Рекомендация аналитика</span><div id="ida-recs">${ChipGroup(IDAREC.map((l, i) => Chip({label: l, selected: (IDA._rec ?? IDA.rec) === i, act: 'ida-rec', arg: i})), 'Wrap')}</div></div>`,
   primary: {label: 'Показать', act: 'ida-flt-ok'}, secondary: {label: 'Сбросить', act: 'ida-flt-reset'}});
-P['ida-rep'] = () => { const x = IDA.cur === 'rv' ? IDARV : IDAL[+IDA.cur], k = x.tk && TK[x.tk.toLowerCase()] ? x.tk.toLowerCase() : null;
+const nbRep = j => { const n = NBI[j]; return {cat: 'Компании', t: n.t, co: n.co, tk: n.tk, v: n.v, g: n.g, p: n.p, au: n.au, d: n.d}; };
+P['ida-rep'] = () => { const x = IDA.cur === 'rv' ? IDARV : String(IDA.cur).startsWith('nb') ? nbRep(+String(IDA.cur).slice(2)) : IDAL[+IDA.cur], k = x.tk && TK[x.tk.toLowerCase()] ? x.tk.toLowerCase() : null;
   const txt = x.v ? `Аналитики Freedom Broker ${x.v === 'Держать' ? 'рекомендуют держать' : x.v === 'Продавать' ? 'рекомендуют продавать' : 'сохраняют рекомендацию «Покупать» по'} ${esc(x.co.replace(/\.$/, ""))}. Целевая цена — $${x.g}, это ${x.p < 0 ? 'ниже' : 'выше'} цены на дату отчёта на ${String(Math.abs(x.p)).replace('.', ',')} %.` : esc(x.x);
   const body = `<div class="ida-rp">${idaTop(x.cat, x.dl || x.d + ' 2026')}<h1 class="ts-Title-Bold-22">${esc(x.t)}</h1>${x.co ? `<span class="ts-Body-Regular-14 sub">${esc(x.co)} · ${x.tk}</span>` : x.sec ? `<span class="ts-Body-Regular-14 sub">Отрасль: ${esc(x.sec)}</span>` : ''}
     ${x.v ? `<span class="ida-rec">${Tag({label: x.v, color: x.v === 'Покупать' ? 'Green' : x.v === 'Продавать' ? 'Red' : 'Neutral', style: 'Subtle', size: 'M'})}<span class="ts-Body-Regular-14">Цель <b>$${x.g}</b> · ${idaPct(x.p)} к цене отчёта</span></span>` : ''}</div>
     <div class="ig Container bx"><p class="ts-Body-Regular-16 ida-p">${txt}</p><span class="ts-Body-Regular-14 sub">${esc(x.au)} · Freedom Broker</span></div>
-    ${Notice({size: 'L', state: 'Info', title: 'Полный отчёт', subtitle: 'PDF с графиками, моделью и раскрытием информации', closeShow: false, buttonShow: true, button: 'Открыть', btnAct: 'id-pdf'})}`;
+    ${INV.acc ? Notice({size: 'L', state: 'Info', title: 'Полный отчёт', subtitle: 'PDF с графиками, моделью и раскрытием информации', closeShow: false, buttonShow: true, button: 'Открыть', btnAct: 'id-pdf'}) : lockNotice('Полный отчёт', 'PDF с графиками, моделью и раскрытием информации — после открытия брокерского счёта', 'Открыть счёт')}`;
   return Object.assign(page(x.cat, body, {nav: {alignment: 'Center', layout: 'Inline'}}), k ? {bottom: ButtonGroup({primary: {label: 'Открыть ' + x.tk, act: 'sd-open', arg: k}, secondary: false})} : {}); };
 Object.assign(ACT, {
   'ida-f'(i){ i = +i; const sc = phone.querySelector('#scroll'), ch = phone.querySelector('#ida-ch'); if (!sc || !ch) return;
