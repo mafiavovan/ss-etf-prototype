@@ -6506,6 +6506,37 @@ button.sd-pos{display:flex;flex-direction:column;gap:12px;width:100%;text-align:
 .sd-tabs .sl-c .lg.Container{margin:0 -16px -16px}
 .sl-k{margin-top:4px}
 .sd-dots{display:flex;justify-content:center;margin-top:-4px}
+.pf-car{align-items:flex-start}
+.sl-c.pf{gap:12px;box-shadow:0 5px 20px rgba(0,0,0,.05)}
+.pf-eb{color:var(--Text-Brand-Default,#2DAE57);text-transform:uppercase;letter-spacing:.04em}
+.pf-t{margin-top:-6px;color:var(--Text-Base-Primary)}
+.pf-n{margin:4px 0 0}
+.pf-fs{display:flex;flex-direction:column;gap:14px;margin-top:4px}
+.pf-fr{display:grid;grid-template-columns:1fr 44px;column-gap:16px;row-gap:6px;align-items:center}
+.pf-fl{display:flex;justify-content:space-between;color:var(--Text-Base-Primary)}
+.pf-fd{grid-row:span 2;text-align:right}.pf-fd.up{color:#2DAE57}.pf-fd.dn{color:#E22F2F}.pf-fd.z{color:#C7C7CC}
+.pf-fb{position:relative;display:block;height:6px;border-radius:3px;background:#EEEEF0}
+.pf-fb b{display:block;height:100%;border-radius:3px;background:#0F0F0F}.pf-fb b.g{background:#5AC83A}
+.pf-fb em{position:absolute;top:0;bottom:0;width:3px;margin-left:-1.5px;background:#fff}
+.pf-bz{display:flex;flex-direction:column}
+.pf-br{display:flex;flex-direction:column;gap:10px;padding:14px 0;background:none;border:0;border-bottom:1px solid var(--Border-Base-Default,#EEEEF0);text-align:left;font:inherit;color:inherit;cursor:pointer}
+.pf-br:last-child{border-bottom:0}
+.pf-bh{display:flex;align-items:center;gap:8px;color:var(--Text-Base-Primary)}.pf-bh b{flex:1}.pf-bh svg{color:#8E8E93}
+.pf-dots{display:flex;gap:12px}
+.pf-dots i{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#E5E5EA}
+.pf-dots i.y{background:#5AC83A}.pf-dots i.x{background:#F2F2F7}
+.pf-pr{display:flex;flex-direction:column;gap:10px}
+.pf-pr>b{color:var(--Text-Base-Primary)}
+.pf-pl{display:flex;justify-content:space-between;align-items:center;background:none;border:0;padding:0;margin-top:-8px;font:inherit;color:var(--Text-Base-Primary);cursor:pointer;text-align:left}.pf-pl svg{color:#8E8E93;flex:none}
+.pf-sc{position:relative;height:28px;display:flex;align-items:center}
+.pf-sg{display:flex;gap:4px;width:100%}.pf-sg i{flex:1;height:16px;border-radius:4px;background:#EEEEF0}.pf-sg i.on{background:#B6E5A8}
+.pf-sc em{position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:#0F0F0F}
+.pf-sc>b{position:absolute;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:#5AC83A;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.15);box-sizing:border-box}
+.pf-pv{display:flex;justify-content:space-between}.pf-pv b{color:var(--Text-Base-Primary)}
+.pf-dv{display:block;height:1px;background:var(--Border-Base-Default,#EEEEF0);margin:6px 0}
+.pf-lg{display:flex;justify-content:space-between}.pf-lg b{color:var(--Text-Base-Primary)}
+.pf-dt{margin-top:4px}.pf-dt>span{display:flex;gap:12px;align-items:center;height:16px}
+.pf-dt i{width:8px;height:8px;border-radius:4px;background:#C7C7CC;transition:all .25s}.pf-dt i.on{width:24px;background:#5AC83A}
 .pgc{display:inline-flex;align-items:center;gap:8px;height:24px;padding:0 12px;border-radius:9999px;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.05)}
 .pgc i{width:8px;height:8px;border-radius:50%;background:#C7C7CC;transition:background .25s}
 .pgc i.on{background:#0F0F0F}
@@ -7793,10 +7824,51 @@ function slPrice(k){ const t = TT(k), mid = 51.0, dm = 27.5, low = t.vola < mid;
   return `<div class="sl-c"><span class="ts-Caption-Regular-13 sub">За год, по 25 сен · среди 74 компаний сектора «${t.sec}»</span><span class="ts-Body-Regular-14 sub sl-k">Колебания цены</span>
     ${pbar(t.t, n1(t.vola) + ' %', t.vola, low ? 'grn' : 'org', (low ? 'Ниже, чем у большинства компаний сектора' : 'Выше, чем у большинства компаний сектора') + ' · середина сектора ' + n1(mid) + ' %', low ? 'grn' : 'org')}
     <span class="ts-Body-Regular-14 sub sl-k">Динамика цены</span>${pbar(t.t, (t.dyn < 0 ? '−' : '+') + n1(Math.abs(t.dyn)) + ' %', Math.abs(t.dyn) * 1.6 + 8, t.dyn >= dm ? 'grn' : t.dyn < 0 ? 'red' : 'org', (t.dyn >= dm + 15 ? 'Заметно сильнее сектора' : t.dyn >= dm - 10 ? 'Примерно в середине сектора' : 'Слабее большинства компаний сектора') + ' · середина сектора +' + n1(dm) + ' %', 'neu')}</div>`; }
-/* табы: Обзор · Бизнес · Цена */
-const slTabs = k => TT(k).cat === 'stock' ? [['Обзор', slOverview], ['Бизнес', slBiz], ['Цена', slPrice]] : [['Обзор', slOverview], ['Цена', slPrice]];
-function sdSlider(k){ const T = slTabs(k), i = Math.min(SD.tab, T.length - 1);
-  return card(`${Segmented('sdtab', T.map(x => x[0]), {value: T[i][0]})}<div class="sd-tb" id="sd-tb">${T[i][1](k)}</div>`, 'sd-tabs'); }
+/* «Профиль компании»: карусель Факторы · Бизнес · Цена · Обзор (у фондов — Цена · Обзор) + точки */
+const PF = {per: 0};
+const pfSeed = k => { let h = 7; for (const c of k) h = (h * 31 + c.charCodeAt(0)) % 9973; return i => ((h * (i + 3) * 7919) % 1000) / 1000; };
+function pfFacData(k){ if (k === 'aapl') return {v: [33, 65, 90, 90], m: [40, 33, 55, 75], d: [[8, 7, 0, 0], [12, -4, 2, 0], [15, -9, 5, -3]]};
+  const r = pfSeed(k), v = [0, 1, 2, 3].map(i => 15 + Math.round(r(i) * 80)), m = [0, 1, 2, 3].map(i => 30 + Math.round(r(i + 4) * 40));
+  return {v, m, d: [0, 1, 2].map(p => [0, 1, 2, 3].map(i => Math.round((r(i + 8 + p * 4) - .5) * (6 + p * 8)))) }; }
+const PFN = ['Рост', 'Стоимость', 'Качество', 'Низкая волатильность'];
+const pfHead = (t, sub) => `<span class="pf-eb ts-Caption-Medium-13">Профиль компании</span><b class="ts-Title-Bold-22 pf-t">${t}</b>${sub ? `<span class="ts-Body-Regular-14 sub">${sub}</span>` : ''}`;
+const pfNote = '<p class="ts-Caption-Regular-13 sub pf-n">Описывает прошлое и текущее состояние. Не прогноз и не рекомендация.</p>';
+function pfFacRows(k){ const D = pfFacData(k), d = D.d[PF.per], top = D.v.map((v, i) => [v, i]).sort((a, b) => b[0] - a[0]);
+  return D.v.map((v, i) => { const hi = v >= 80, x = d[i];
+    return `<div class="pf-fr"><div class="pf-fl"><span class="ts-Body-Regular-16">${PFN[i]}</span><b class="ts-Body-Medium-16">${v}</b></div><span class="pf-fd ts-Body-Medium-16 ${x > 0 ? 'up' : x < 0 ? 'dn' : 'z'}">${x > 0 ? '▲ ' + x : x < 0 ? '▼ ' + Math.abs(x) : '0'}</span>
+      <i class="pf-fb"><b class="${hi ? 'g' : ''}" style="width:${v}%"></b><em style="left:${D.m[i]}%"></em></i></div>`; }).join(''); }
+function pfFactors(k){ const D = pfFacData(k), top = D.v.map((v, i) => [v, i]).sort((a, b) => b[0] - a[0]).slice(0, 2).map(x => PFN[x[1]].toLowerCase());
+  return `<div class="sl-c pf">${pfHead('Факторы', 'Стиль: ' + top[0][0].toUpperCase() + top[0].slice(1) + ' и ' + top[1])}<div class="pf-fs" id="pf-fs">${pfFacRows(k)}</div>
+    ${Segmented('pff', ['1 мес', '3 мес', '6 мес'], {value: ['1 мес', '3 мес', '6 мес'][PF.per]})}<p class="ts-Caption-Regular-13 sub pf-n">Оценка модели от 0 до 100 среди компаний схожей капитализации, шкала неравномерная. Белая риска — медиана. Срез 15.11.2026, обновляется раз в неделю.</p></div>`; }
+SEGH.pff = i => { PF.per = i; const b = phone.querySelector('#pf-fs'); if (b) b.innerHTML = pfFacRows(SD.k); };
+const PFDOT = {y: '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="m3 6.2 2 2L9 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>', n: '<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="m3 3 4 4m0-4-4 4" stroke="#8E8E93" stroke-width="1.6" stroke-linecap="round"/></svg>', x: '<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2.5 5h5" stroke="#C7C7CC" stroke-width="1.6" stroke-linecap="round"/></svg>'};
+function pfBizDots(k, i, v, max){ if (k === 'aapl'){ const A = ['nnnynn', 'yynnny', 'yyyyyy', 'yyynyx', 'nnyyyy']; return A[i].split(''); }
+  const r = pfSeed(k + i), idx = [0, 1, 2, 3, 4, 5].sort((a, b) => r(a) - r(b)), on = new Set(idx.slice(0, v)); return [0, 1, 2, 3, 4, 5].map(j => j >= max ? 'x' : on.has(j) ? 'y' : 'n'); }
+function pfRadar(v){ const cx = 163, cy = 108, R = 64, ang = i => -Math.PI / 2 + i * 2 * Math.PI / 5, P = (i, r) => [cx + Math.cos(ang(i)) * r, cy + Math.sin(ang(i)) * r];
+  const pts = v.map((x, i) => P(i, Math.max(.12, x / 6) * R)), n = pts.length;
+  let d = ''; for (let i = 0; i < n; i++){ const p0 = pts[(i - 1 + n) % n], p1 = pts[i], p2 = pts[(i + 1) % n], p3 = pts[(i + 2) % n];
+    if (!i) d = `M${p1[0].toFixed(1)} ${p1[1].toFixed(1)}`; const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6], c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+    d += `C${c1.map(z => z.toFixed(1)).join(' ')} ${c2.map(z => z.toFixed(1)).join(' ')} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`; }
+  const lab = [['Цена бизнеса', cx, cy - R - 12, 'middle'], ['Прогноз\nроста', cx + R + 14, cy - 28, 'start'], ['Прошлые\nрезультаты', cx + R * .62 + 10, cy + R * .85 + 6, 'start'], ['Финансовая\nустойчивость', cx - R * .62 - 10, cy + R * .85 + 6, 'end'], ['Дивиденды', cx - R - 14, cy - 22, 'end']];
+  return `<svg class="radar" viewBox="0 0 326 216" width="100%"><g fill="none" stroke="#E5E5EA">${[1, .66, .33].map(k => `<circle cx="${cx}" cy="${cy}" r="${(R * k).toFixed(1)}"/>`).join('')}${[0, 1, 2, 3, 4].map(i => `<line x1="${cx}" y1="${cy}" x2="${P(i, R)[0].toFixed(1)}" y2="${P(i, R)[1].toFixed(1)}"/>`).join('')}</g>
+    <path d="${d}Z" fill="rgba(78,188,115,.28)" stroke="#4EBC73" stroke-width="2.2"/>${lab.map(([t, x, y, a]) => `<text x="${x}" y="${y}" text-anchor="${a}" font-size="12.5" fill="#8E8E93" font-weight="500">${t.split('\n').map((q, j) => `<tspan x="${x}" dy="${j ? 15 : 0}">${q}</tspan>`).join('')}</text>`).join('')}</svg>`; }
+function pfBiz(k){ const t = TT(k), V = k === 'aapl' ? [1, 3, 6, 4, 4] : t.bz.map(v => Math.round(v)), MX = [6, 6, 6, 5, 6];
+  return `<div class="sl-c pf">${pfHead('Бизнес', 'По отчётности за квартал до 26 сентября 2026 · сектор и рынок — 500 крупнейших компаний S&P 1500')}${pfRadar(V)}
+    <div class="pf-bz">${BZL.map((l, i) => `<button class="pf-br" data-act="noop"><span class="pf-bh"><b class="ts-Title-Semibold-18">${l}</b><span class="ts-Body-Regular-16">${V[i]}/${MX[i]}</span>${ic('chevron-right', 20)}</span><span class="pf-dots">${pfBizDots(k, i, V[i], MX[i]).map(c => `<i class="${c}">${PFDOT[c]}</i>`).join('')}</span></button>`).join('')}</div>${pfNote}</div>`; }
+function pfScale(val, mid, spread){ const p = Math.max(0, Math.min(1, .5 + (val - mid) / (2 * spread))), seg = 10, dot = p * 100, lo = Math.min(dot, 50), hi = Math.max(dot, 50);
+  const cells = Array.from({length: seg}, (_, i) => { const a = i * 10, b = a + 10, on = b > lo + .01 && a < hi - .01; return `<i class="${on ? 'on' : ''}"></i>`; }).join('');
+  return {p, html: `<div class="pf-sc"><span class="pf-sg">${cells}</span><em></em><b style="left:${dot}%"></b></div>`}; }
+function pfPrice(k){ const t = TT(k), mid = 52.0, dm = 27.5, v = k === 'aapl' ? 25.0 : t.vola, d = k === 'aapl' ? 29.4 : t.dyn;
+  const A = pfScale(v, mid, 27), B = pfScale(d, dm, 5), txt = (p, lowWord) => p <= .02 ? 'ниже, чем у всех остальных компаний сектора' : p >= .98 ? 'выше, чем у всех остальных компаний сектора' : (p > .5 ? 'выше' : 'ниже') + ', чем примерно у ' + Math.max(1, Math.round((p > .5 ? p : 1 - p) * 10)) + ' из 10';
+  const blk = (h, S, val, m) => `<div class="pf-pr"><b class="ts-Title-Semibold-18">${h}</b><button class="pf-pl ts-Body-Medium-14" data-act="noop">${txt(S.p)}${ic('chevron-right', 18)}</button>${S.html}<div class="pf-pv ts-Body-Regular-14"><span><span class="sub">${t.t}</span> <b>${val}</b></span><span><span class="sub">середина сектора</span> <b>${m}</b></span></div></div>`;
+  return `<div class="sl-c pf">${pfHead('Цена', 'За год, по 16 ноя · среди 79 компаний сектора «' + t.sec + '»')}${blk('Колебания цены', A, n1(v) + ' %', n1(mid) + ' %')}<i class="pf-dv"></i>${blk('Динамика цены', B, (d < 0 ? '−' : '+') + n1(Math.abs(d)) + ' %', '+' + n1(dm) + ' %')}
+    <div class="pf-lg ts-Caption-Medium-13"><span class="sub">меньше</span><b>середина сектора</b><span class="sub">больше</span></div>${pfNote}</div>`; }
+const PFAAPL = ['Apple Inc. разрабатывает, производит и продаёт смартфоны, персональные компьютеры, планшеты, носимые устройства и аксессуары, а также предлагает сопутствующие услуги. Категории её продуктов включают iPhone, Mac, iPad, носимые устройства, товары для дома и аксессуары. Услуги компании включают рекламу, AppleCare, облачные сервисы, цифровой контент и платёжные сервисы.',
+  'Компания управляет платформами, включая App Store, которые позволяют клиентам находить и загружать приложения и цифровой контент: книги, музыку, видео, игры и подкасты. Она также предлагает цифровой контент через сервисы по подписке, включая Apple Arcade, Apple Fitness+, Apple Music, Apple News+ и Apple TV+.'];
+function pfOverview(k){ const t = TT(k), P = k === 'aapl' ? PFAAPL : [t.about, t.biz];
+  return `<div class="sl-c pf">${pfHead('Обзор')}${P.map(x => `<p class="ts-Body-Regular-16">${esc(x)}</p>`).join('')}${pfNote}</div>`; }
+function sdSlider(k){ const sl = TT(k).cat === 'stock' ? [pfFactors(k), pfBiz(k), pfPrice(k), pfOverview(k)] : [pfPrice(k), pfOverview(k)];
+  return `<div class="bleed sd-sl pf-car" id="sd-sl">${sl.join('')}</div><div class="sd-dots pf-dt"><span id="sd-dots">${sl.map((_, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</span></div>`; }
 const INFT = k => { const t = TT(k); return [t.about.split('. ')[0] + '.', t.biz.split('. ')[0] + '.', 'Отчёт за III квартал 2026 вышел 30 октября. Следующий — 29 января 2027.']; };
 function sdInfo(){ return card(`${cH('Информация')}${Segmented('sdi', ['Аналитика', 'Обзор', 'Отчёты'], {value: ['Аналитика', 'Обзор', 'Отчёты'][SD.inf]})}<p class="sd-inf ts-Title-Semibold-16" id="sd-inf">${esc(INFT(SD.k)[SD.inf])}</p>${Button({type: 'Ghost', size: 'M', label: 'Подробнее', act: 'sd-more', full: true})}`, 'sd-info'); }
 function sdNews(k){ const t = TT(k), own = NEWS.filter(n => n.tags.some(g => g[0] === t.t)), L = (own.length >= 2 ? own : own.concat(NEWS.filter(n => !own.includes(n) && n.img))).slice(0, 2);
