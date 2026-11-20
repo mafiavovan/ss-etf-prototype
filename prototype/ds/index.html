@@ -6479,6 +6479,9 @@ html,body{background:transparent!important}
 .sl-c .lg.Container{margin:0 -16px -8px;background:none;box-shadow:none}
 .sl-c .lg.Container .li{padding-left:16px;padding-right:16px}
 .sl-tag{display:flex}
+.sd-tabs{gap:16px}
+.sd-tabs .sl-c{padding:0;background:none;border-radius:0;flex:none;gap:12px}
+.sd-tabs .sl-c .lg.Container{margin:0 -16px -16px}
 .sl-k{margin-top:4px}
 .sd-dots{display:flex;justify-content:center;margin-top:-4px}
 .pgc{display:inline-flex;align-items:center;gap:8px;height:24px;padding:0 12px;border-radius:9999px;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.05)}
@@ -7660,7 +7663,7 @@ const availCash = () => INV.fresh ? INV.cash : 11200.52;
 const SDP = ['1D', '1M', '3M', '6M', '1Y', 'ALL'];
 const SDW = ['за день', 'за месяц', 'за 3 месяца', 'за 6 месяцев', 'за год', 'за всё время'];
 const SDX = [['10:00', '12:00', '14:00', '16:00'], ['22 окт', '29 окт', '5 ноя', '12 ноя'], ['Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'], ['Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя'], ['Дек', 'Фев', 'Апр', 'Июн', 'Авг', 'Окт'], ['2018', '2020', '2022', '2024', '2026']];
-const SD = {k: 'aapl', ss: false, per: 2, cand: false, inf: 0};
+const SD = {k: 'aapl', ss: false, per: 2, cand: false, inf: 0, tab: 0};
 function sdChg(k, per){ const t = TT(k); if (k === 'aapl' && per === 2) return 3.91; const g = (t.y || 0);
   return [t.d, g / 12 + 1.2, g / 4 + 0.8, g / 2, g, Math.max(40, g * 3 + 120)][per]; }
 function sdSeries(k, per, ss){
@@ -7738,17 +7741,19 @@ function radar(v, sz = 216){ const cx = 163, cy = 108, R = 64, ang = i => -Math.
     ${lab.map(([t, x, y, a]) => `<text x="${x}" y="${y}" text-anchor="${a}" font-size="12" fill="#3C3C43">${t.split('\n').map((s, j) => `<tspan x="${x}" dy="${j ? 15 : 0}">${s}</tspan>`).join('')}</text>`).join('')}</svg>`; }
 const pbar = (l, v, max, c, note, nc) => `<div class="pbr"><div class="r ts-Body-Regular-14"><span>${l}</span><span>${v}</span></div><i><b style="width:${Math.max(2, Math.min(100, max))}%" class="${c}"></b></i>${note ? `<span class="nt ${nc || ''} ts-Caption-Regular-13">${nc === 'grn' ? ic('Check', 16) : ''}${note}</span>` : ''}</div>`;
 function slOverview(k){ const t = TT(k);
-  return `<div class="sl-c">${cH('Обзор')}<p class="ts-Body-Regular-16">${esc(t.about)}</p><p class="ts-Body-Regular-16">${esc(t.biz)}</p>
+  return `<div class="sl-c"><p class="ts-Body-Regular-16">${esc(t.about)}</p><p class="ts-Body-Regular-16">${esc(t.biz)}</p>
     ${ListGroup({items: [['Сектор', t.sec], [t.cat === 'stock' ? 'Основана' : 'Запуск', String(t.f)], [t.cat === 'stock' ? 'Штаб-квартира' : 'Управляющий', t.hq]].map(([l, v], i) => ({density: 'Compact', content: {kind: 'info', label: l, value: v}, divider: i < 2}))})}</div>`; }
 function slBiz(k){ const t = TT(k);
-  return `<div class="sl-c">${cH('Бизнес', 'По отчётности за последний год · среди 74 компаний сектора «' + t.sec + '»')}<span class="sl-tag">${Tag({label: 'Демонстрационные данные', color: 'Neutral', style: 'Subtle', size: 'S', outline: true})}</span>${radar(t.bz)}
+  return `<div class="sl-c"><span class="ts-Caption-Regular-13 sub">По отчётности за последний год · среди 74 компаний сектора «${t.sec}»</span><span class="sl-tag">${Tag({label: 'Демонстрационные данные', color: 'Neutral', style: 'Subtle', size: 'S', outline: true})}</span>${radar(t.bz)}
     ${t.bz.map((v, i) => { const n = bzNote(i, v, t); return pbar(BZL[i], n1(v).replace(',0', '') + '/6', v / 6 * 100, n.c, n.txt, n.c); }).join('')}<p class="ts-Caption-Regular-13 sub dsc">Описывает прошлое и текущее состояние. Не прогноз и не рекомендация.</p></div>`; }
 function slPrice(k){ const t = TT(k), mid = 51.0, dm = 27.5, low = t.vola < mid;
-  return `<div class="sl-c">${cH('Цена', 'За год, по 25 сен · среди 74 компаний сектора «' + t.sec + '»')}<span class="ts-Body-Regular-14 sub sl-k">Колебания цены</span>
+  return `<div class="sl-c"><span class="ts-Caption-Regular-13 sub">За год, по 25 сен · среди 74 компаний сектора «${t.sec}»</span><span class="ts-Body-Regular-14 sub sl-k">Колебания цены</span>
     ${pbar(t.t, n1(t.vola) + ' %', t.vola, low ? 'grn' : 'org', (low ? 'Ниже, чем у большинства компаний сектора' : 'Выше, чем у большинства компаний сектора') + ' · середина сектора ' + n1(mid) + ' %', low ? 'grn' : 'org')}
     <span class="ts-Body-Regular-14 sub sl-k">Динамика цены</span>${pbar(t.t, (t.dyn < 0 ? '−' : '+') + n1(Math.abs(t.dyn)) + ' %', Math.abs(t.dyn) * 1.6 + 8, t.dyn >= dm ? 'grn' : t.dyn < 0 ? 'red' : 'org', (t.dyn >= dm + 15 ? 'Заметно сильнее сектора' : t.dyn >= dm - 10 ? 'Примерно в середине сектора' : 'Слабее большинства компаний сектора') + ' · середина сектора +' + n1(dm) + ' %', 'neu')}</div>`; }
-function sdSlider(k){ const t = TT(k), sl = t.cat === 'stock' ? [slOverview(k), slBiz(k), slPrice(k)] : [slOverview(k), slPrice(k)];
-  return `<div class="bleed sd-sl" id="sd-sl">${sl.join('')}</div><div class="sd-dots"><span class="pgc" id="sd-dots">${sl.map((_, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</span></div>`; }
+/* табы: Обзор · Бизнес · Цена */
+const slTabs = k => TT(k).cat === 'stock' ? [['Обзор', slOverview], ['Бизнес', slBiz], ['Цена', slPrice]] : [['Обзор', slOverview], ['Цена', slPrice]];
+function sdSlider(k){ const T = slTabs(k), i = Math.min(SD.tab, T.length - 1);
+  return card(`${Segmented('sdtab', T.map(x => x[0]), {value: T[i][0]})}<div class="sd-tb" id="sd-tb">${T[i][1](k)}</div>`, 'sd-tabs'); }
 const INFT = k => { const t = TT(k); return [t.about.split('. ')[0] + '.', t.biz.split('. ')[0] + '.', 'Отчёт за III квартал 2026 вышел 30 октября. Следующий — 29 января 2027.']; };
 function sdInfo(){ return card(`${cH('Информация')}${Segmented('sdi', ['Аналитика', 'Обзор', 'Отчёты'], {value: ['Аналитика', 'Обзор', 'Отчёты'][SD.inf]})}<p class="sd-inf ts-Title-Semibold-16" id="sd-inf">${esc(INFT(SD.k)[SD.inf])}</p>${Button({type: 'Ghost', size: 'M', label: 'Подробнее', act: 'sd-more', full: true})}`, 'sd-info'); }
 function sdNews(k){ const t = TT(k), own = NEWS.filter(n => n.tags.some(g => g[0] === t.t)), L = (own.length >= 2 ? own : own.concat(NEWS.filter(n => !own.includes(n) && n.img))).slice(0, 2);
@@ -7767,6 +7772,7 @@ P.sd = () => { const t = TT(SD.k), ss = SD.ss && t.ss, px = pxOf(SD.k, ss), st =
   return {bar: nb.bar, body, bottom: ButtonGroup({primary: {label: 'Торговать', act: 'sd-trade'}, secondary: false})}; };
 SEGH.sdm = i => { SD.ss = i === 1; setTimeout(() => render(), 200); };
 SEGH.sdp = i => { SD.per = i; const c = phone.querySelector('#sd-ch'), p = phone.querySelector('#sd-pill'); if (c) c.innerHTML = sdChart(); if (p) p.innerHTML = sdPill(); };
+SEGH.sdtab = i => { SD.tab = i; const b = phone.querySelector('#sd-tb'); if (b){ const T = slTabs(SD.k); b.innerHTML = T[Math.min(i, T.length - 1)][1](SD.k); } };
 SEGH.sdi = i => { SD.inf = i; const p = phone.querySelector('#sd-inf'); if (p){ p.style.opacity = 0; setTimeout(() => { p.textContent = INFT(SD.k)[i]; p.style.opacity = 1; }, 150); } };
 /* точки слайдера */
 phone.addEventListener('scroll', e => { const s = e.target; if (!s.id || s.id !== 'sd-sl') return; const i = Math.round(s.scrollLeft / (s.firstElementChild.offsetWidth + 12));
