@@ -8193,6 +8193,7 @@ P.idea2 = () => { const d = IDX[IDS.i], t = TT(d.k), now = pxOf(d.k, false), a =
   const acc = INV.acc, buyLbl = acc ? (d.v === 'Продавать' ? 'Продать ' : 'Купить ') + t.t : 'Открыть счёт, чтобы купить по идее';
   const body = `<div class="content idd">${scrollChips(['Обзор', 'Тезис', 'Аргументы', 'Похожие'].map((l, i) => Chip({label: l, selected: i === (IDS.sec || 0), act: 'id-sec', arg: i, style: 'Filled'})))}
     <div id="ids0"><h1 class="ts-Title-Bold-22 idd-t">${esc(d.t)}</h1><span class="ts-Body-Regular-14 sub">Инвестидея · ${d.dl}</span></div>
+    ${Notice({size: 'L', state: 'Positive', title: 'Вывод аналитика', subtitle: d.out, closeShow: false, buttonShow: false})}
     ${ListGroup({items: [{left: {type: 'Logo', k: d.k}, content: {title: t.n + ' · ' + t.t, subtitle: t.sec}, right: {type: 'Arrow'}, act: 'sd-open', arg: d.k, divider: true}, {left: {type: 'Avatar', avType: 'Initials', initials: a[0], avColor: 'Green'}, content: {title: a[1], subtitle: 'Аналитик Freedom Broker · все идеи автора'}, right: {type: 'Arrow'}, act: 'id-au', arg: d.au}]})}
     <div class="ig Container bx idpar"><span class="ts-Body-Regular-14 sub">Параметры идеи</span><div class="idv-t">${idTags(d)}</div>
       <div class="idv-g"><span class="ts-Body-Medium-16">Путь к цели $${d.goal}</span><span class="ts-Body-Regular-14">${pct2(d.now, 1)} из ${pct2(d.pot, 1)}</span></div><i class="idv-p"><b style="width:${idProg(d)}%"></b></i><span class="ts-Caption-Regular-13 sub">Сейчас ${usd(now)} · закрытие 21 окт</span>
@@ -8202,7 +8203,6 @@ P.idea2 = () => { const d = IDX[IDS.i], t = TT(d.k), now = pxOf(d.k, false), a =
     <div class="idrep">${ic('Info round', 20)}<span class="ts-Body-Medium-14">Данные из отчёта от ${d.dl}</span></div>
     ${sec('ids1', 'Инвестиционный тезис')}${Accordion({key: 'idw' + IDS.i, title: 'Кто такая ' + t.s, text: d.who})}
     ${sec('ids2', 'Ключевые аргументы')}${d.args.map((x, j) => Accordion({key: 'ida' + IDS.i + j, title: (j + 1) + '. ' + x[0], text: x[1]})).join('')}
-    ${Notice({size: 'L', state: 'Positive', title: 'Вывод аналитика', subtitle: d.out, closeShow: false, buttonShow: false})}
     ${IDASUM[d.t] ? `<div class="ig Container bx ida-sum"><span class="ts-Caption-Medium-13 ida-sk">Краткое содержание</span>${idaParas(IDASUM[d.t]).map(q => `<p class="ts-Body-Regular-16">${esc(q)}</p>`).join('')}</div>` : ''}
     ${acc ? Notice({size: 'L', state: 'Info', title: 'Полный отчёт', subtitle: 'Отчёт с графиками и раскрытием информации — PDF, 14 страниц', closeShow: false, buttonShow: true, button: 'Открыть', btnAct: 'id-pdf'}) : lockNotice('Полный отчёт', 'Отчёт с графиками и раскрытием информации — после открытия брокерского счёта')}
     ${sec('ids3', 'Ещё по теме')}${more.map(idCard).join('')}</div>`;
