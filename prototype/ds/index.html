@@ -6255,7 +6255,10 @@ html,body{background:transparent!important}
 @keyframes okIn{from{opacity:0;transform:translateY(-48%) scale(.96)}to{opacity:1;transform:translateY(-54%)}}
 .phone.okmode>.sb{color:#fff}
 /* Долгосрочные */
-.lt-c{align-items:stretch}
+.lt-c{align-items:stretch;gap:32px}
+/* как в макете «Долгосрочные инвестиции»: группы внутри карточки — 12, между группами — 32, между карточками — 20 */
+.ltg{display:flex;flex-direction:column;gap:12px}
+.content:has(>.lt-c){gap:20px;padding-top:4px}
 .lth{text-align:center;color:var(--Text-Base-Primary)}
 .ltl .li{padding-left:0;padding-right:0}
 .ltl .ct{display:flex!important;flex-direction:row!important;align-items:center;justify-content:space-between;gap:8px}
@@ -7239,9 +7242,9 @@ const ltPayItem = () => LT.pay === 0
   : {left: {type: 'Card'}, content: {subhead: 'Freedom Card · USD **5212', title: sumS(12640.79, '$')}, right: {type: 'Arrow', icon: 'chevron-down'}, act: 'lt-sheet'};
 P.lt = () => {
   const cur = (k, t, d) => ListItem({left: {type: 'Icon', duo: d}, content: {kind: 'slots', html: `<span class="ltc ts-Title-Semibold-16">${t}</span><span class="ltr ts-Body-Regular-16">${String(LTR[k][LT.term]).replace('.', ',')}% годовых</span>`}, right: {type: 'Radio', on: LT.cur === k}, act: 'lt-cur', arg: k});
-  const body = `<div class="ig Container bx lt-c"><div class="lth ts-Title-Semibold-18">Выберите срок</div>${Segmented('ltterm', LTT, {value: LTT[LT.term]})}
-      <div class="lth ts-Title-Semibold-18">Выберите валюту</div><div class="ltl">${cur('usd', 'Доллары США', 'Currency/Доллар')}${cur('eur', 'Евро', 'Currency/Евро')}</div>
-      <div class="ltn">${ic('Info round', 24)}<span class="ts-Caption-Regular-13">Проценты по вкладу обновляются на основании ставок: для доллара США — SOFR, для евро — EURIBOR</span></div></div>
+  const body = `<div class="ig Container bx lt-c"><div class="ltg"><div class="lth ts-Title-Semibold-18">Выберите срок</div>${Segmented('ltterm', LTT, {value: LTT[LT.term]})}</div>
+      <div class="ltg"><div class="lth ts-Title-Semibold-18">Выберите валюту</div><div class="ltl">${cur('usd', 'Доллары США', 'Currency/Доллар')}${cur('eur', 'Евро', 'Currency/Евро')}</div>
+      <div class="ltn">${ic('Info round', 24)}<span class="ts-Caption-Regular-13">Проценты по вкладу обновляются на основании ставок: для доллара США — SOFR, для евро — EURIBOR</span></div></div></div>
     <div class="ig Container bx camt"><span class="l ts-Caption-Regular-13">Сумма инвестирования</span>${Input({id: 'lt-amt', bind: 'lt.amt', labelShow: false, placeholder: 'от 1 000 ' + ltSym(), mode: 'numeric', value: LT.amt ? grp(ltAmt()) + ' ' + ltSym() : '', captionShow: false})}</div>
     <div class="ig Container ltp">${ListItem({density: 'Compact', content: {kind: 'slots', html: `<span class="ts-Body-Regular-16 k">Потенциальная доходность</span><span class="ts-Title-Semibold-16 v" id="lt-inc">${esc(sumS(ltInc(), ltSym()))}</span>`}})}</div>
     ${Title({size: 'S', type: 'Icon', iconShow: false, title: 'Способ оплаты'})}
