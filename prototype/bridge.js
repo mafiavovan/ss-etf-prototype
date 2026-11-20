@@ -4,7 +4,7 @@
 (function(){
   const dev = document.getElementById('device'); if (!dev) return;
   const fr = document.createElement('iframe');
-  fr.id = 'dsFrame'; fr.title = 'FR DS'; fr.src = 'ds/index.html'; fr.setAttribute('allowtransparency', 'true');
+  fr.id = 'dsFrame'; fr.title = 'FR DS'; fr.src = 'ds/index.html?v=' + Date.now(); fr.setAttribute('allowtransparency', 'true');
   dev.appendChild(fr);
   let ready = false, queued = null;
   const st = () => { try { return window.__INV ? __INV.state() : null; } catch (_){ return null; } };
