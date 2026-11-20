@@ -7960,7 +7960,6 @@ function idaCard(x, arg){ const j = arg ?? IDAL.indexOf(x), sub = x.co ? `${x.co
 const idaIdea = d => idCard(d);
 /* чипсы — якоря секций: нажатие прокручивает к блоку, при скролле подсвечивается чипс блока под шапкой (idaSpy) */
 function idaBody(){ const out = [], L = IDAL.filter(idaHit), I = idaIdeas(), mark = (h, k) => h.replace('<div class="', `<div data-sec="${k}" class="`);
-  if (IDA.seg === 1) out.push(Notice({size: 'S', state: 'Info', title: 'Вы подписаны: ' + IDA.sub.join(', '), closeShow: false, buttonShow: true, button: 'Настроить', btnAct: 'id-ntf-all'}));
   if (!IDA.rec && idaHit(IDARV)) out.push(mark(Title({size: 'L', type: 'Icon', iconShow: false, title: 'Последний обзор рынка'}), 5) + idaCard(IDARV, 'rv'));
   if (I.length) out.push(`<div class="ida-sh" data-sec="1">${Title({size: 'L', type: 'Icon', iconShow: false, title: 'Инвестидеи'})}<button class="ts-Body-Medium-16 lk" data-act="id-all-list">Все</button></div><div class="bleed ida-row">${I.map(idaIdea).join('')}</div>`);
   if (L.length) out.push(Title({size: 'L', type: 'Icon', iconShow: false, title: 'Свежая аналитика'}) + L.map(idaCard).join(''));
