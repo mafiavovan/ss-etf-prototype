@@ -7995,6 +7995,8 @@ function idaBody(){ const out = [], I = idaIdeas(), T = t => Title({size: 'L', t
   if (IDA.f === 1){ out.push(T('Инвестидеи') + (I.length ? I.map(idaIdea).join('') : nothing())); return out.join(''); }
   if (IDA.f > 1){ const c = IDAFC[IDA.f], L = [IDARV].concat(IDAL).filter(x => x.cat === c && idaHit(x));
     out.push(T(IDAF[IDA.f]) + (L.length ? L.map(idaCardAny).join('') : nothing())); return out.join(''); }
+  if (idaFn(IDA.F)){ const M = (idaHit(IDARV) ? [IDARV] : []).concat(IDAL.filter(idaHit)), n = I.length + M.length;
+    out.push(T('Найдено: ' + n) + (n ? I.map(idaIdea).join('') + M.map(idaCardAny).join('') : nothing())); return out.join(''); }
   const L = IDAL.filter(idaHit), rv = idaHit(IDARV);
   if (rv) out.push(T('Последний обзор рынка') + idaCard(IDARV, 'rv'));
   if (I.length) out.push(`<div class="ida-sh">${T('Инвестидеи')}<button class="ts-Body-Medium-16 lk" data-act="ida-f" data-arg="1">Все</button></div><div class="bleed ida-row">${I.map(idaIdea).join('')}</div>`);
