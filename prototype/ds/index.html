@@ -8002,7 +8002,8 @@ function nbIdaPage(){ const nb = Navbar({alignment: 'Center', layout: 'Inline', 
     ${lockNotice('Обзоры, отчёты и уведомления', 'Обзоры рынка, отчёты по компаниям, макро и уведомления об аналитике — после открытия брокерского счёта', 'Открыть счёт')}
     ${Title({size: 'L', type: 'Icon', iconShow: false, title: 'Инвестидеи'})}${NBI.map(nbiCard).join('')}
     <span class="ts-Caption-Regular-13 nbi-end">Больше материалов нет</span>${lockList}</div><div class="tabpad"></div>`}; }
-P.ideas = () => INV.acc ? idaPage() : nbIdaPage();
+/* «Идеи» одинаковые для новичка и клиента; то, что требует счёта, у новичка ведёт на открытие счёта */
+P.ideas = () => idaPage();
 Object.assign(ACT, {
   'nbi-open'(j){ const x = NBI[+j]; if (!x) return; if (x.idx != null){ IDS.i = x.idx; IDS.per = 2; IDS.sec = 0; ACT.push('idea2'); } else { IDA.cur = 'nb' + j; ACT.push('ida-rep'); } },
   'nbi-bell'(){ openOv({type: 'noacc', sub: 'Уведомления о новых идеях и материалах аналитиков станут доступны после открытия брокерского счёта.'}); }
@@ -8174,8 +8175,8 @@ Object.assign(ACT, {
     if (el && sc){ clearTimeout(IDS._lk); IDS._lock = true; IDS._lk = setTimeout(() => { IDS._lock = false; }, 700);
       sc.scrollTo({top: i ? el.offsetTop - chipTop() - (ch ? ch.offsetHeight : 0) : 0, behavior: 'smooth'}); } },
   'id-ntf'(i){ openOv({type: 'id-ntf', i: +i}); },
-  'id-ntf-cur'(){ openOv({type: 'id-ntf', i: IDS.i}); },
-  'id-ntf-all'(){ openOv({type: 'id-ntf', i: null}); },
+  'id-ntf-cur'(){ if (!INV.acc){ ACT['nbi-bell'](); return; } openOv({type: 'id-ntf', i: IDS.i}); },
+  'id-ntf-all'(){ if (!INV.acc){ ACT['nbi-bell'](); return; } openOv({type: 'id-ntf', i: null}); },
   'id-subs'(){ closeOv(); setTimeout(() => mkSnack('Подписки сохранены'), 300); },
   'id-news-set'(){ mkSnack('Откроются настройки уведомлений приложения'); },
   'id-au'(au){ IDS.tab = 0; ACT.back(); setTimeout(() => mkSnack('Идеи автора: ' + AU[au][1]), 300); },
