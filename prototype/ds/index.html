@@ -7966,7 +7966,7 @@ function nbIdaPage(){ const nb = Navbar({alignment: 'Center', layout: 'Inline', 
     <span class="ts-Caption-Regular-13 nbi-end">Больше материалов нет</span>${lockList}</div><div class="tabpad"></div>`}; }
 P.ideas = () => INV.acc ? idaPage() : nbIdaPage();
 Object.assign(ACT, {
-  'nbi-open'(j){ const x = NBI[+j]; if (x && x.idx != null){ IDS.i = x.idx; IDS.per = 2; IDS.sec = 0; ACT.push('idea2'); } else mkSnack('Полная идея — в приложении Freedom Broker'); },
+  'nbi-open'(j){ const x = NBI[+j]; if (x && x.idx != null){ IDS.i = x.idx; IDS.per = 2; IDS.sec = 0; ACT.push('idea2'); } },
   'nbi-bell'(){ openOv({type: 'noacc', sub: 'Уведомления о новых идеях и материалах аналитиков станут доступны после открытия брокерского счёта.'}); }
 });
 /* «Все» в секции «Инвестидеи» — полный список идей (лента 13.1) со стрелкой назад */
