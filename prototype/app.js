@@ -4303,14 +4303,16 @@ const CUSVG={"USD": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=
   const W3=(document.querySelector('#scrKind [data-kind="ss"] .k3d')||{}).src||'';
   const tkPx=(k,ss)=>ss?(k==='aapl'?r2(midPx()*SSF()):ssP(k)):(k==='aapl'?midPx():TK[k].p);
   const hidTile=i=>{ const h=HID.find(z=>z[1]===i); return '<div class="tile hid-c tk10i" role="button" tabindex="0" data-hid="'+i+'"><span class="hid-t">Аналитика Freedom</span><i class="hid-ln"></i><b class="hid-k">'+TK[h[0]].t+'</b><b class="hid-p">'+h[2]+'</b><span class="hid-s">'+h[3]+'</span><button class="hid-b" data-hid-all>Все идеи</button></div>'; };
-  function tkTile(x,cls){ if(x.startsWith('idea:')) return hidTile(+x.slice(5)); if(x==='promo') return '<button class="promo tile ct-bn ct-b-fut" data-promo data-nblt data-bn="fut"><span class="bt">Долгосрочные инвестиции</span><span class="bs">Доход известен заранее</span><span class="bp">до 6,8 %</span></button>';
+  function tkTile(x,cls){ if(x.startsWith('idea:')) return hidTile(+x.slice(5)); if(x.startsWith('opi:')) return ctOpIdea(+x.slice(4)); if(x==='promo') return '<button class="promo tile ct-bn ct-b-fut" data-promo data-nblt data-bn="fut"><span class="bt">Долгосрочные инвестиции</span><span class="bs">Доход известен заранее</span><span class="bp">до 6,8 %</span></button>';
     const ss=x.startsWith('ss:'), k=ss?x.slice(3):x, t=TK[k], p=tkPx(k,ss), y=t.y;
     return '<div class="'+(cls||'tile')+(ss?' sst':'')+' tk10" role="button" tabindex="0" data-tk="'+k+'" data-x="'+x+'">'+(ss?'<span class="sst-lg">'+lgHTML(k)+'<img class="k3d" src="'+W3+'" alt=""></span>':lgHTML(k))+
       '<span class="n">'+(ss?t.s+' · 1/100':t.n)+'</span><hr><span class="p"'+(k==='aapl'?' data-apx="'+(ss?'s':'w')+'"':'')+'>'+fmt2(p)+'</span><span class="c'+(y<0?' dn':'')+'">'+(y<0?MIN:'+')+dec(Math.abs(y))+' % за год</span>'+
       '<button class="b">'+(ss?'Купить от '+fmt2(p):t.cat==='etf'?'Купить фонд':'Купить')+'</button></div>'; }
   const CATX=CATL.slice(); CATX.splice(3,0,'idea:0'); CATX.splice(12,0,'idea:2'); CATX.splice(22,0,'idea:1');
-  const catHit=x=>{ if(!CF) return true; if(x==='promo'||x.startsWith('idea:')) return false; const ss=x.startsWith('ss:'); if(CF==='ss') return ss; if(ss) return false; return TK[x].fl.includes(' '+CF+' '); };
-  function catFill(){ $('catG').innerHTML=CATX.map(x=>tkTile(x)).join(''); if($('nbCatG')) $('nbCatG').innerHTML=CATX.map(x=>tkTile(x)).join(''); }
+  const catHit=x=>{ if(!CF) return true; if(x==='promo'||x.startsWith('idea:')||x.startsWith('opi:')) return false; const ss=x.startsWith('ss:'); if(CF==='ss') return ss; if(ss) return false; return TK[x].fl.includes(' '+CF+' '); };
+  // главная: 12 плиток в 6 рядов, как в макете; полный список — на странице «Каталог»
+  const HOMEX=['aapl','tsla','nvda','idea:0','goog','meta','msft','ss:msft','promo','nflx','visa','opi:0'];
+  function catFill(){ $('catG').innerHTML=HOMEX.map(x=>tkTile(x)).join(''); if($('nbCatG')) $('nbCatG').innerHTML=HOMEX.map(x=>tkTile(x)).join(''); }
   CFL.splice(1,0,['ss','Single Stock ETF']); ['chips','nbChips','ctChips'].forEach(cfBar);
   cfApply=function(){ ['catG','nbCatG'].forEach(id=>{ const g=$(id); if(!g) return; [...g.children].forEach(el=>{ const x=el.dataset.x||(el.dataset.hid!=null?'idea:'+el.dataset.hid:el.classList.contains('promo')?'promo':''); el.classList.toggle('cf-off',!!x&&!catHit(x)); }); });
     CTF=CF; ['chips','nbChips','ctChips'].forEach(id=>{ const b=$(id); if(b) b.querySelectorAll('button[data-f]').forEach(x=>x.classList.toggle('on',x.dataset.f===CF)); }); try{ ctRender(true); }catch(_){} };
