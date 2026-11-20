@@ -7988,20 +7988,18 @@ function idaCard(x, arg){ const j = arg ?? IDAL.indexOf(x), sub = x.co ? `${x.co
     <span class="ts-Caption-Regular-13 sub">${esc(x.au)} · ${esc(x.d)}</span>
     <div class="idv-b">${Button({type: 'Secondary', size: 'M', label: 'Подробнее', act: 'ida-open', arg: j, fill: true})}<button class="idbell" data-act="id-ntf-all" aria-label="Уведомления">${ic('Bell Alert Notification', 20)}</button></div></div>`; }
 const idaIdea = d => idCard(d);
-/* чипсы — фильтры, как в макете 13.6.x: «Все» — обзор рынка, инвестидеи и свежая аналитика; остальные — только своя категория */
+/* «Все»: лента секциями в порядке чипсов; чипсы — якоря, при скролле подсвечивается чипс секции под шапкой (idaSpy). С фильтрами из шторки — плоский список «Найдено: N» */
 const idaCardAny = x => x === IDARV ? idaCard(IDARV, 'rv') : idaCard(x);
 function idaBody(){ const out = [], I = idaIdeas(), T = t => Title({size: 'L', type: 'Icon', iconShow: false, title: t});
   const nothing = () => EmptyState({title: 'Ничего не нашли', subtitle: IDA.seg === 1 ? 'По вашим подпискам материалов нет — добавьте компании или аналитиков' : 'Попробуйте другой запрос или сбросьте фильтры', icon: 'Search'});
-  if (IDA.f === 1){ out.push(T('Инвестидеи') + (I.length ? I.map(idaIdea).join('') : nothing())); return out.join(''); }
-  if (IDA.f > 1){ const c = IDAFC[IDA.f], L = [IDARV].concat(IDAL).filter(x => x.cat === c && idaHit(x));
-    out.push(T(IDAF[IDA.f]) + (L.length ? L.map(idaCardAny).join('') : nothing())); return out.join(''); }
   if (idaFn(IDA.F)){ const M = (idaHit(IDARV) ? [IDARV] : []).concat(IDAL.filter(idaHit)), n = I.length + M.length;
     out.push(T('Найдено: ' + n) + (n ? I.map(idaIdea).join('') + M.map(idaCardAny).join('') : nothing())); return out.join(''); }
-  const L = IDAL.filter(idaHit), rv = idaHit(IDARV);
-  if (rv) out.push(T('Последний обзор рынка') + idaCard(IDARV, 'rv'));
-  if (I.length) out.push(`<div class="ida-sh">${T('Инвестидеи')}<button class="ts-Body-Medium-16 lk" data-act="ida-f" data-arg="1">Все</button></div><div class="bleed ida-row">${I.map(idaIdea).join('')}</div>`);
-  if (L.length) out.push(T('Свежая аналитика') + L.map(idaCard).join(''));
-  if (IDA.seg === 1 ? out.length <= (rv ? 1 : 0) : !out.length) out.push(nothing());
+  const sec = (k, h) => `<div class="ida-sec" data-sec="${k}">${h}</div>`;
+  if (idaHit(IDARV)) out.push(sec(0, T('Последний обзор рынка') + idaCard(IDARV, 'rv')));
+  for (let k = 1; k < IDAF.length; k++){
+    if (k === 1){ if (I.length) out.push(sec(1, `<div class="ida-sh">${T('Инвестидеи')}<button class="ts-Body-Medium-16 lk" data-act="id-all-list">Все</button></div><div class="bleed ida-row">${I.map(idaIdea).join('')}</div>`)); continue; }
+    const L = IDAL.filter(x => x.cat === IDAFC[k] && idaHit(x)); if (L.length) out.push(sec(k, T(IDAF[k]) + L.map(idaCard).join(''))); }
+  if (!out.length) out.push(nothing());
   return out.join(''); }
 const idaChips = () => `<div class="bleed hchips ida-chips">${ChipGroup([Chip({label: 'Фильтры', lead: true, act: 'ida-flt', badge: idaFn(IDA.F) ? String(idaFn(IDA.F)) : ''})].concat(IDAF.map((l, i) => Chip({label: l, selected: IDA.f === i, act: 'ida-f', arg: i}))))}</div>`;
 function idaPage(){ const nb = Navbar({alignment: 'Center', layout: 'Inline', title: 'Идеи', leadingShow: false, trailingShow: true, trailing: 'Single', icon: 'Bell Alert Notification', trailAct: 'id-ntf-all'});
@@ -8052,9 +8050,7 @@ SEGH.idaseg = i => { IDA.seg = i; idaSync(); };
 phone.addEventListener('input', e => { if (e.target.dataset && e.target.dataset.bind === 'ida.q'){ IDA.q = e.target.value; e.target.closest('.sfld') && e.target.closest('.sfld').classList.toggle('has', !!IDA.q); idaSync(); } });
 /* сколько материалов покажет текущая вкладка-чип с черновиком фильтров */
 function idaCount(F){ idaHit.F = F; let n = 0;
-  if (IDA.f === 1) n = idaIdeas().length;
-  else if (IDA.f > 1) n = [IDARV].concat(IDAL).filter(x => x.cat === IDAFC[IDA.f] && idaHit(x)).length;
-  else n = (idaHit(IDARV) ? 1 : 0) + idaIdeas().length + IDAL.filter(idaHit).length;
+  n = (idaHit(IDARV) ? 1 : 0) + idaIdeas().length + IDAL.filter(idaHit).length;
   idaHit.F = null; return n; }
 const idaFsec = (t, k, list, sel, note) => `<div class="ida-fs"><span class="ts-Body-Medium-14 sub">${t}</span>${ChipGroup(list.map((l, i) => Chip({label: l, selected: sel(i, l), act: k, arg: i})), 'Wrap')}${note ? `<span class="ts-Caption-Regular-13 sub">${note}</span>` : ''}</div>`;
 OVS['ida-flt'] = () => { const F = IDA._F || IDA.F;
@@ -8075,8 +8071,10 @@ P['ida-rep'] = () => { const x = IDA.cur === 'rv' ? IDARV : String(IDA.cur).star
     ${INV.acc ? Notice({size: 'L', state: 'Info', title: 'Полный отчёт', subtitle: 'PDF с графиками, моделью и раскрытием информации', closeShow: false, buttonShow: true, button: 'Открыть', btnAct: 'id-pdf'}) : lockNotice('Полный отчёт', 'PDF с графиками, моделью и раскрытием информации — после открытия брокерского счёта', 'Открыть счёт')}`;
   return Object.assign(page(x.cat, body, {nav: {alignment: 'Center', layout: 'Inline'}}), k ? {bottom: ButtonGroup({primary: {label: 'Открыть ' + x.tk, act: 'sd-open', arg: k}, secondary: false})} : {}); };
 Object.assign(ACT, {
-  'ida-f'(i){ i = +i; IDA.f = i; idaChipOn(i); idaSync(); const sc = phone.querySelector('#scroll'), b = phone.querySelector('#ida-body'), ch = phone.querySelector('#ida-ch');
-    if (sc && b && ch && sc.scrollTop > b.offsetTop - chipTop() - ch.offsetHeight - 8) sc.scrollTo({top: b.offsetTop - chipTop() - ch.offsetHeight - 8, behavior: 'smooth'}); },
+  'ida-f'(i){ i = +i; const sc = phone.querySelector('#scroll'), ch = phone.querySelector('#ida-ch'); if (!sc || !ch) return;
+    const el = i ? phone.querySelector('#ida-body [data-sec="' + i + '"]') : null; if (i && !el){ mkSnack('Сейчас нет материалов в этой категории'); return; }
+    IDA.f = i; IDA._tap = i; idaChipOn(i); clearTimeout(IDA._lk); IDA._lock = true; IDA._lk = setTimeout(() => { IDA._lock = false; }, 900);
+    sc.scrollTo({top: el ? el.offsetTop - chipTop() - ch.offsetHeight - 8 : 0, behavior: 'smooth'}); },
   'id-all-list'(){ IDS.tab = 0; ACT.push('ideas13'); },
   'ida-flt'(){ IDA._F = {dir: IDA.F.dir.slice(), sec: IDA.F.sec.slice(), per: IDA.F.per}; openOv({type: 'ida-flt'}); },
   'ida-fd'(i){ const F = IDA._F, l = IDADIR[+i]; F.dir = F.dir.includes(l) ? F.dir.filter(x => x !== l) : F.dir.concat(l); idaFDraw(); },
@@ -8137,8 +8135,12 @@ function idaSpy(){ const sc = phone.querySelector('#scroll'), ch = phone.querySe
   const line = sc.scrollTop + chipTop() + ch.offsetHeight + 24; let k = 0;
   for (const el of phone.querySelectorAll('#ida-body [data-sec]')) if (el.offsetTop <= line) k = +el.dataset.sec;
   if (sc.scrollTop < 8) k = 0;
+  /* упёрлись в конец ленты: короткие последние секции не доезжают до шапки — подсвечиваем нажатый чипс, иначе последнюю секцию */
+  const end = sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 4, secs = phone.querySelectorAll('#ida-body [data-sec]');
+  if (end && secs.length) k = IDA._tap != null && IDA._tap > k ? IDA._tap : Math.max(k, +secs[secs.length - 1].dataset.sec);
+  else if (!end) IDA._tap = null;
   if (k !== IDA.f){ IDA.f = k; idaChipOn(k); } }
-phone.addEventListener('scroll', e => { if (e.target.id === 'scroll'){ chipTop(); idSpy(); } }, true);
+phone.addEventListener('scroll', e => { if (e.target.id === 'scroll'){ chipTop(); idSpy(); idaSpy(); } }, true);
 { const _rc = render; render = function(...a){ const r = _rc.apply(this, a); chipTop(); requestAnimationFrame(chipTop); return r; }; }
 OVS['id-ntf'] = o => { const d = o.i != null ? IDX[o.i] : null, t = d && TT(d.k), sw = (key, on) => ({type: 'Switch', key: 'ntf:' + key, on: !!IDS.n[key]});
   const grp1 = d ? ListGroup({title: 'По этой идее', items: [{content: {title: 'Все материалы по ' + t.t, subtitle: 'Идеи, отчёты и обзоры по ' + t.n.replace(' Inc.', '')}, right: sw(t.t), divider: true}, {content: {title: AU[d.au][1], subtitle: 'Каждый новый материал аналитика'}, right: sw(d.au)}]}) : '';
