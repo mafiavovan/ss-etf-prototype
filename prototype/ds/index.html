@@ -6460,6 +6460,27 @@ html,body{background:transparent!important}
 .kv .v{color:var(--Text-Base-Primary)}
 .sd-pos .pr{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:4px}
 .sd-pos .pr span{color:var(--Text-Base-Secondary)}
+button.sd-pos{display:flex;flex-direction:column;gap:12px;width:100%;text-align:left;font:inherit;color:inherit;border:0;cursor:pointer}
+.sdp-h{display:flex;justify-content:space-between;align-items:center;color:var(--Text-Base-Primary)}
+.sdp-h svg{color:var(--Icon-Base-Secondary,#8E8E93)}
+.sdp-dv{display:block;height:1px;background:var(--Border-Base-Default,#E5E5EA);margin:4px 0}
+.sd-pos .pr b.up,.ps-r b.up,.ps-lv .up{color:var(--Text-Brand-Default,#4EBC73)}
+.sd-pos .pr b.dn,.ps-r b.dn,.ps-lv .dn{color:var(--Text-Error-Default,#E22F2F)}
+.ps-hd{display:flex;align-items:center;gap:12px;padding:4px 0 12px}
+.ps-hd>.lgo{flex:none}
+.ps-hd>span:not(.lgo){flex:1;display:flex;flex-direction:column;min-width:0}
+.ps-c{padding:4px 16px;gap:0}
+.ps-dt{padding:12px 0 4px}
+.ps-r{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:48px}
+.ps-r+.ps-r{border-top:1px solid var(--Border-Base-Default,#F2F2F7)}
+.ps-r>span{display:flex;align-items:center;gap:6px}
+.ps-bdg{background:#2F7BF5;color:#fff;border-radius:999px;padding:1px 10px;font-weight:600;font-size:14px;line-height:20px}
+.ps-nt{margin:12px 4px 12px;text-align:center}
+.ps-o{margin-top:12px;padding:0 16px}
+.ps-oh{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:64px;background:none;border:0;padding:0;font:inherit;color:var(--Text-Base-Primary);cursor:pointer}
+.ps-lv{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--Border-Base-Default,#F2F2F7);min-height:52px}
+.buyql{display:flex;flex-direction:column;gap:2px}
+.buyall{background:none;border:0;padding:0;font:inherit;color:var(--Text-Brand-Default,#4EBC73);font-weight:600;cursor:pointer}
 .sd-ba{display:flex;justify-content:space-between;background:none;border:0;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer}
 .sd-ba>span{display:flex;flex-direction:column;gap:2px}
 .sd-ba .r{align-items:flex-end;text-align:right}
@@ -7704,8 +7725,25 @@ const kv = (k, v, cls = '') => `<div class="kv ${cls}"><span class="ts-Body-Regu
 function sdPos(){ const t = TT(SD.k), p = posOf(SD.k, SD.ss); if (!p.q) return '';
   const px = pxOf(SD.k, SD.ss), val = p.q * px, inv = p.q * p.avg, all = val - inv, day = val * (t.d || 0) / 100;
   const row = (k, v, c) => `<div class="pr"><span class="ts-Body-Regular-14">${k}</span><b class="ts-Body-Medium-16 ${c}">${v}</b></div>`;
-  return card(`${cH('Ваша позиция')}<div class="pg">${kv(SD.ss ? 'Бумаги' : 'Акции', grp(p.q))}${kv('Стоимость позиции', usd(val))}${kv('Средняя цена', usd(p.avg))}${kv('Доля в портфеле', n2(val / PF_TOTAL * 100) + ' %')}</div>
-    ${row('Результат позиции<br>за всё время', sgn$(all) + ' (' + pct2(inv ? all / inv * 100 : 0).replace(' %', '%') + ')', '')}${row('Результат сегодня', sgn$(day) + ' (' + pct2(t.d || 0).replace(' %', '%') + ')', '')}`, 'sd-pos'); }
+  const uc = v => v < 0 ? 'dn' : 'up';
+  return `<button class="ig Container bx sdc sd-pos" data-act="sd-ps"><span class="sdp-h"><b class="ts-Title-Semibold-18">Ваша позиция</b>${ic('chevron-right', 24)}</span><div class="pg">${kv(SD.ss ? 'Бумаги' : 'Акции', grp(p.q))}${kv('Стоимость позиции', usd(val))}${kv('Средняя цена', usd(p.avg))}${kv('Доля в портфеле', n2(val / PF_TOTAL * 100) + ' %')}</div>
+    ${row('Результат позиции<br>за всё время', sgn$(all) + ' (' + pct2(inv ? all / inv * 100 : 0).replace(' %', '%') + ')', uc(all))}<i class="sdp-dv"></i>${row('Результат сегодня', sgn$(day) + ' (' + pct2(t.d || 0).replace(' %', '%') + ')', uc(day))}</button>`; }
+/* ---------- шит «Ваша позиция»: детали позиции, продажа, стоп-лосс / тейк-профит ---------- */
+const PS = {sl: false, tp: false, saved: {sl: false, tp: false}};
+const psChanged = () => PS.sl !== PS.saved.sl || PS.tp !== PS.saved.tp;
+function psLvl(k){ const px = pxOf(SD.k, SD.ss), f = k === 'sl' ? .95 : 1.1;
+  return `<div class="ps-lv"><span class="ts-Body-Regular-14 sub">Сработает при цене</span><b class="ts-Body-Medium-16">${usd(px * f)} <span class="${k === 'sl' ? 'dn' : 'up'}">${k === 'sl' ? '−5 %' : '+10 %'}</span></b></div>`; }
+const psOpt = (k, t) => `<div class="ig Container bx ps-o${PS[k] ? ' on' : ''}" id="ps-${k}"><button class="ps-oh" data-act="ps-tg" data-arg="${k}"><span class="ts-Body-Medium-16">${t}</span>${Switch(PS[k])}</button>${PS[k] ? psLvl(k) : ''}</div>`;
+OVS['sd-ps'] = () => { const t = TT(SD.k), p = posOf(SD.k, SD.ss), px = pxOf(SD.k, SD.ss), nm = tkName(SD.k, SD.ss), val = p.q * px, inv = p.q * p.avg, all = val - inv, day = val * (t.d || 0) / 100, uc = v => v < 0 ? 'dn' : 'up';
+  const r = (k, v, c = '') => `<div class="ps-r"><span class="ts-Body-Regular-14 sub">${k}</span><b class="ts-Body-Medium-16 ${c}">${v}</b></div>`;
+  const body = `<div class="ps-hd">${logo(SD.k, 40)}<span><b class="ts-Title-Semibold-18">${nm}.US</b><span class="ts-Body-Regular-14 sub">${esc(t.n)}</span></span>${Button({type: 'Secondary', size: 'M', iconOnly: true, left: 'Close', label: 'Закрыть', act: 'close-ov'})}</div>
+    <div class="ig Container bx ps-c"><span class="ts-Body-Regular-14 sub ps-dt">07 авг. 2026 14:16</span>
+      ${r(`Куплено <span class="ps-bdg">${grp(p.q)}</span>`, usd(p.avg))}${r('Текущая цена', usd(px))}${r('Вложено', usd(inv))}${r('Стоимость позиции', usd(val))}
+      ${r('Результат позиции', sgn$(all) + ' (' + pct2(inv ? all / inv * 100 : 0).replace(' %', '%') + ')', uc(all))}${r('Результат сегодня', sgn$(day) + ' (' + pct2(t.d || 0).replace(' %', '%') + ')', uc(day))}${r('Доля в портфеле', n2(val / PF_TOTAL * 100) + ' %')}</div>
+    <p class="ts-Caption-Regular-13 sub ps-nt">${SD.ss ? 'Single stock продаются отдельно от целых акций' : 'Целые акции продаются поштучно, отдельно от single stock'}</p>
+    ${Button({set: 'Button/Destructive', type: 'Secondary', size: 'L', label: SD.ss ? 'Продать single stock' : 'Продать целые акции', act: 'ps-sell', full: true})}
+    ${psOpt('sl', 'Стоп-лосс')}${psOpt('tp', 'Тейк-профит')}`;
+  return BottomSheet({height: 'Large', navbarShow: false, body, primary: {label: 'Обновить позицию', act: 'ps-upd', id: 'ps-go', disabled: !psChanged()}, secondary: false}); };
 const ring = (sc) => `<div class="ring"><svg viewBox="0 0 120 120" width="100" height="100"><circle cx="60" cy="60" r="50" stroke="#E5E5EA" stroke-width="12" fill="none"/><circle cx="60" cy="60" r="50" stroke="#1FC42E" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="${sc / 10 * 314} 314" transform="rotate(-90 60 60)"/></svg><span><b class="ts-Title-Bold-28">${n1(sc)}</b><small class="ts-Caption-Regular-11">из 10</small></span></div>`;
 const abar = (l, n, w, c) => `<div class="anb"><div class="r ts-Body-Regular-14"><span>${l}</span><b>${n}</b></div><i><b style="width:${w}%;background:${c}"></b></i></div>`;
 function sdAnalysts(k){ const a = TT(k).an, v = a.buy >= a.hold + a.sell ? ['Success', 'Покупать'] : a.sell > a.buy ? ['Error', 'Продавать'] : ['Neutral', 'Держать'];
@@ -7796,9 +7834,9 @@ const unitW = (n, ss) => ss ? 'шт.' : (n % 10 === 1 && n % 100 !== 11 ? 'ак�
 const KPB = () => `<div class="bkp">${['1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '0', 'del'].map(k => `<button class="bkey ${k === 'del' ? 'del' : k === ',' ? 'dis' : ''}" data-act="bk" data-arg="${k}" ${k === ',' ? 'disabled' : ''} aria-label="${k === 'del' ? 'Удалить' : k}">${k === 'del' ? '<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M10.2 6.5h11.3A2.5 2.5 0 0 1 24 9v10a2.5 2.5 0 0 1-2.5 2.5H10.2a2 2 0 0 1-1.5-.7L3.8 15.3a2 2 0 0 1 0-2.6l4.9-5.5a2 2 0 0 1 1.5-.7Z" fill="#fff"/><path d="m13.5 11 5 6m0-6-5 6" stroke="#0F0F0F" stroke-width="2" stroke-linecap="round"/></svg>' : k}</button>`).join('')}</div>`;
 P.buy = () => { const [b, a] = bidAsk(BUY.k, BUY.ss), sell = BUY.side === 'sell', nm = tkName(BUY.k, BUY.ss);
   const nb = Navbar({alignment: 'Center', layout: 'Inline', title: (sell ? 'Продать ' : 'Купить ') + nm, subtitle: `Bid ${usd(b)} · Ask ${usd(a)}`, trailingShow: true, trailing: 'Single', icon: 'Filter-1', trailAct: 'buy-set'});
-  const body = `<div class="content buyc"><div class="ig Container bx buyr"><div class="r"><span class="ts-Body-Regular-16">Количество ${BUY.ss ? 'бумаг' : 'акций'}</span><b class="ts-Title-Bold-22 q"><span id="buy-q">${BUY.q || '0'}</span><i class="caret"></i></b></div>
+  const body = `<div class="content buyc"><div class="ig Container bx buyr"><div class="r"><span class="buyql"><span class="ts-Body-Regular-16">Количество ${BUY.ss ? 'бумаг' : 'акций'}</span>${sell ? `<span class="ts-Caption-Regular-13 sub">из ${grp(bMax())} · <button class="buyall" data-act="buy-all">продать всё</button></span>` : ''}</span><b class="ts-Title-Bold-22 q"><span id="buy-q">${BUY.q || '0'}</span><i class="caret"></i></b></div>
     <div class="r"><span class="ts-Body-Regular-16">Рыночная цена</span><b class="ts-Title-Bold-22">${usd(bPx())}</b></div><div class="r"><span class="ts-Body-Regular-16">Сумма приказа</span><b class="ts-Title-Bold-22 sm" id="buy-sum">${usd(bSum())}</b></div></div>
-    ${sell ? `<p class="ts-Caption-Regular-13 sub buyh">В портфеле ${grp(bMax())} ${unitW(bMax(), BUY.ss)}</p>` : ''}</div>`;
+</div>`;
   const bot = `<div class="buyb"><button class="bacc" data-act="buy-acc"><span class="av-gl">GL</span><span class="ts-Body-Regular-14 sub">GL 789099</span><b class="ts-Body-Medium-14">${usd(availCash())}</b>${ic('chevron-down', 16)}</button>
     ${Button({type: 'Primary', size: 'L', label: bLbl(), act: 'buy-next', id: 'buy-go', full: true, disabled: !bOk()})}${KPB()}</div>`;
   return {bar: nb.bar, body, bottom: bot, viewClass: 'buyv'}; };
@@ -7830,6 +7868,7 @@ function buyDone(){ const sell = BUY.side === 'sell', q = bQ(), px = bPx(), sum 
   BUY.done = {q, px, sum, fee, tot}; BUY.open = false;
   if (BUY.k !== 'aapl'){ const h = HOLD[BUY.k] = HOLD[BUY.k] || {}, a = BUY.ss ? 's' : 'w', av = a + 'a';
     if (sell) h[a] = Math.max(0, (h[a] || 0) - q); else { h[av] = ((h[a] || 0) * (h[av] || 0) + q * px) / ((h[a] || 0) + q); h[a] = (h[a] || 0) + q; } }
+  else if (!BUY.ss){ const w0 = INV.shW || 0; if (sell) INV.shW = Math.max(0, w0 - q); else { INV.avgW = (w0 * (INV.avgW || 0) + q * px) / (w0 + q); INV.shW = w0 + q; } }
   if (INV.fresh) INV.cash = Math.max(0, Math.round((INV.cash + (sell ? tot : -tot)) * 100) / 100);
   const p = posOf(BUY.k, BUY.ss);
   post({type: 'state', buy: {k: BUY.k, ss: BUY.ss, side: BUY.side, q, px, tot, pos: p.q, avg: p.avg, val: p.q * pxOf(BUY.k, BUY.ss), t: tkName(BUY.k, BUY.ss), n: TT(BUY.k).n}});
@@ -8120,6 +8159,11 @@ Object.assign(ACT, {
   'sr-go'(a){ const [k, ss] = a.split(':'); Object.assign(SD, {k, ss: !!ss, per: 2, cand: false, inf: 0}); ACT.push('sd'); },
   'go-stock'(k){ const ss = k === 'ss'; Object.assign(SD, {k: ss ? 'aapl' : k, ss, per: 2, cand: false, inf: 0}); S.ov = null; ACT.push('sd'); },
   bk(k){ if (k === 'del') BUY.q = BUY.q.slice(0, -1); else if (k !== ',' && BUY.q.length < 6) BUY.q = (BUY.q === '0' ? '' : BUY.q) + k; bSync(); },
+  'sd-ps'(){ PS.sl = PS.saved.sl; PS.tp = PS.saved.tp; openOv({type: 'sd-ps'}); },
+  'ps-tg'(k){ PS[k] = !PS[k]; const c = phone.querySelector('#ps-' + k); if (c) c.outerHTML = psOpt(k, k === 'sl' ? 'Стоп-лосс' : 'Тейк-профит'); const g = phone.querySelector('#ps-go'); if (g) g.disabled = !psChanged(); },
+  'ps-upd'(){ if (!psChanged()) return; PS.saved = {sl: PS.sl, tp: PS.tp}; closeOv(); setTimeout(() => mkSnack('Позиция обновлена'), 260); },
+  'ps-sell'(){ Object.assign(BUY, {k: SD.k, ss: !!(SD.ss && TT(SD.k).ss), side: 'sell', q: '1', open: false}); closeOv(); setTimeout(() => ACT.push('buy'), 220); },
+  'buy-all'(){ BUY.q = String(bMax()); bSync(); },
   'buy-next'(){ if (!bOk()) return; ACT.push('buy-cf'); setTimeout(swBind, 60); },
   'buy-set'(){ mkSnack('Лимитные и стоп-заявки — в полной версии'); },
   'buy-acc'(){ openOv({type: 'buy-acc'}); },
