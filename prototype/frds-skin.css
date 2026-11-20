@@ -1,0 +1,389 @@
+/* ======================================================================
+   FR DS skin — замена стандартных компонентов прототипа на компоненты FR DS.
+   Токены: frds-tokens.css (ui-kit/Tokens → Sandbox/src/tokens.css), значения
+   компонентов — как в FR-T (Button/Accent, Chip Item, Segmented Control,
+   Navbar · Leading/Trailing control, List Item, Bottom Sheet, Input,
+   Checkbox, Snackbar, Tab Bar). Кастомные элементы (графики, клавиатура,
+   свайп-подтверждение, 3D-подарок, карусели, стакан) не трогаем.
+   ====================================================================== */
+#device{--green:var(--Bg-Brand-Default);--green-dk:var(--Bg-Brand-Pressed);--bg:var(--Bg-Base-Page);--line:var(--Border-Base-Default);
+  --ink:var(--Text-Base-Primary);--grey:var(--Text-Base-Secondary);--grey2:var(--Text-Base-Tertiary);--ph:var(--Text-Base-Placeholder)}
+
+/* ---------- Button / Accent · Primary · L (56, r 24, Title Semibold 18, Bg/Brand) ---------- */
+#device :is(.cta:not(.pm-all),.lt-cta,.trade){height:56px;border-radius:var(--Border-2XL);background:var(--Bg-Brand-Default);color:var(--Text-Brand-On);
+  font-size:var(--Title-18-size);line-height:var(--Title-18-lh);font-weight:600;box-shadow:inset 0 -8px 8px rgba(0,0,0,.12)}
+#device :is(.cta:not(.pm-all),.lt-cta,.trade):active{background:var(--Bg-Brand-Pressed);filter:none}
+#device .sh-cta .cta{height:56px;font-size:var(--Title-18-size)}
+#device :is(.cta[disabled],.cta.off,.lt-cta[disabled]){opacity:1;filter:none;background:var(--Bg-Brand-Disabled);color:var(--Text-Brand-OnDisabled);box-shadow:none}
+/* Button / Destructive · Primary */
+#device .trade.sell{background:var(--Bg-Error-Default);box-shadow:inset 0 -8px 8px rgba(0,0,0,.12)}
+/* Button / Accent · Secondary */
+#device .cta.pm-all{height:56px;border-radius:var(--Border-2XL);background:var(--Bg-Neutral-Default);color:var(--Text-Base-Primary);font-size:var(--Title-18-size);line-height:var(--Title-18-lh)}
+
+/* ---------- Navbar · Leading / Trailing control (iOS, 44) ---------- */
+#device .glass:not(.gcap){background:rgba(252,252,252,.74);-webkit-backdrop-filter:blur(6px) saturate(1.6);backdrop-filter:blur(6px) saturate(1.6);
+  box-shadow:0 8px 15px rgba(0,0,0,.02),0 0 0 .5px rgba(0,0,0,.09),inset 0 1px 1px rgba(255,255,255,.9),inset 0 -1px 2px rgba(0,0,0,.03);color:var(--Icon-Base-Primary)}
+#device .glass.dk:not(.gcap){background:rgba(120,120,128,.28);box-shadow:0 8px 15px rgba(0,0,0,.04),0 0 0 .5px rgba(255,255,255,.14),inset 0 1px 1px rgba(255,255,255,.12);color:#fff}
+#device .glass:not(.gcap)::before{opacity:0}
+
+/* ---------- Chip Item · Outline (36, r 16, Body Medium 16) ---------- */
+#device :is(.chips,.ct-chips,.pm-chips) button{height:var(--Chip-Height);padding:0 var(--Padding-M);border:0;border-radius:var(--Chip-Radius);background:transparent;
+  box-shadow:inset 0 0 0 1px var(--Border-Base-Default);font-size:var(--Body-16-size);line-height:var(--Body-16-lh);font-weight:500;color:var(--Text-Base-Primary)}
+#device :is(.chips,.ct-chips,.pm-chips) button.on{background:var(--Bg-Base-Inverse);color:var(--Text-Base-Inverse);box-shadow:none}
+#device :is(.chips,.ct-chips,.pm-chips) button.fl{width:var(--Chip-Height);padding:0}
+#device :is(.chips,.ct-chips,.pm-chips) button:active{background:var(--Bg-State-Pressed)}
+
+/* ---------- Segmented Control (track r FULL, thumb, Body Medium 14) ---------- */
+#device .sx:not(.dk){background:linear-gradient(var(--Component-Segmented-Track-Tint),var(--Component-Segmented-Track-Tint)),var(--Component-Segmented-Track);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--Component-Segmented-Track-Stroke) 50%,transparent)}
+#device .sx:not(.dk) .pl{background:var(--Component-Segmented-Thumb);box-shadow:inset 0 1px 0 var(--Surface-Highlight-Top),var(--shadow-card,0 2px 8px rgba(0,0,0,.08))}
+#device .sx button{font-size:var(--Body-14-size);line-height:var(--Body-14-lh);font-weight:500;color:var(--Component-Segmented-Label-Default)}
+/* Glass on Dark */
+#device .sx.dk{background:rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 0 0 1px rgba(255,255,255,.09)}
+#device .sx.dk .pl{background:rgba(0,0,0,.34);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),inset 0 1px 0 rgba(255,255,255,.18),0 2px 8px rgba(0,0,0,.1)}
+#device .sx.dk button{color:#fff}
+
+/* ---------- Hero actions → Button / Accent · Secondary · M в режиме Glass on Dark ---------- */
+#device .hm-act{height:40px;border-radius:var(--Border-L);background:rgba(255,255,255,.14);color:#fff;font-size:var(--Title-16-size);line-height:var(--Title-16-lh);font-weight:600;
+  justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+#device .hm-act:active{background:rgba(255,255,255,.22)}
+
+/* ---------- List Item · Regular (Content Transaction: Title Semibold 16 / Body Regular 14) ---------- */
+#device .pf-row{min-height:64px}
+#device .pf-row .m .t{font-size:var(--Title-16-size);line-height:var(--Title-16-lh);font-weight:600;color:var(--Text-Base-Primary)}
+#device .pf-row .m .s{font-size:var(--Body-14-size);line-height:var(--Body-14-lh);color:var(--Text-Base-Secondary)}
+#device .pf-row .r .s{font-size:var(--Body-14-size);line-height:var(--Body-14-lh)}
+#device .pf-row:active{background:var(--Bg-State-Pressed)}
+
+/* ---------- Bottom Sheet · Medium (inset 6, r 38, Bg/Base/Modal, Grabber 58×4) ---------- */
+#device .sheet{left:6px;right:6px;bottom:6px;border-radius:38px;background:var(--Bg-Base-Modal);padding-bottom:28px;overflow:hidden}
+#device .sheet .grab{background:var(--Bg-Control-Pressed)}
+#device .lts-h>b{font-size:var(--Title-18-size);line-height:var(--Title-18-lh);font-weight:600;color:var(--Text-Base-Primary)}
+
+/* ---------- Input (Bg/Base/Subtle, r 20, мин. 52, фокус — 1 px Border/Base/Selected) ---------- */
+#device .nbo-f{min-height:var(--Control-Input-Height);padding:8px var(--Padding-L);border-radius:var(--Border-XL);background:var(--Bg-Base-Subtle)}
+#device .nbo-f>span{font-size:13px;line-height:18px;font-weight:500;color:var(--Text-Base-Tertiary)}
+#device .nbo-f:focus-within{background:var(--Bg-Base-Subtle);box-shadow:inset 0 0 0 1px var(--Border-Base-Selected)}
+#device .nbo-f input::placeholder,#device .nbo-f>b.ph{color:var(--Text-Base-Placeholder)}
+
+/* ---------- Checkbox (20, r 4, Bg/Success) ---------- */
+#device :is(.nbo-ok,.ng-ok) .ck{width:20px;height:20px;border-radius:var(--Border-XS);box-shadow:inset 0 0 0 2px var(--Border-Base-Strong)}
+#device :is(.nbo-ok,.ng-ok).on .ck{background:var(--Bg-Success-Default);box-shadow:none}
+
+/* ---------- Snackbar · Neutral (Bg/Base/Inverse, r 24, 12/16) ---------- */
+#device .toast{padding:12px 16px;border-radius:var(--Border-2XL);background:var(--Bg-Base-Inverse);color:var(--Text-Base-Inverse);
+  font-size:var(--Body-14-size);line-height:var(--Body-14-lh);font-weight:500;box-shadow:0 12px 32px rgba(0,0,0,.18)}
+#device .toast i{background:var(--Bg-Success-Default)}
+
+/* ---------- Tab Bar · iOS (подпись Caption 10/600, активная — Icon/Brand) ---------- */
+#device .tabs button{font-size:10px;line-height:12px;font-weight:600;color:var(--Text-Base-Primary)}
+#device .tabs button.on{color:var(--Icon-Brand-Default)}
+
+/* ---------- Меню «Торговать»: Button / Accent · Primary (r 24), «Закрыть» — Secondary ---------- */
+#device .am{border-radius:var(--Border-2XL);background:var(--Bg-Brand-Default);font-size:var(--Title-18-size);line-height:var(--Title-18-lh);box-shadow:inset 0 -8px 8px rgba(0,0,0,.12)}
+#device .am-x{border-radius:var(--Border-2XL)}
+/* ---------- Button / Accent · Tertiary · L (белая на цветном фоне: 56, r 24) ---------- */
+#device :is(.sto-cta,.nr-go){height:56px;border-radius:var(--Border-2XL);background:var(--Bg-Plain-White-Default);color:var(--Text-Static-Dark);font-size:var(--Title-18-size);line-height:var(--Title-18-lh);font-weight:600}
+#device .nr-op{font-size:var(--Title-16-size);line-height:var(--Title-16-lh);font-weight:600}
+/* ---------- «Купить от …» в карточках каталога: Button / Accent · Secondary · S ---------- */
+#device .tile .b{border-radius:var(--Border-FULL);background:var(--Bg-Neutral-Default);color:var(--Text-Base-Primary);font-size:13px;line-height:18px;font-weight:500}
+/* ---------- Фильтры поиска и выбор счёта: Chip Item ---------- */
+#device .se-tabs button{height:var(--Chip-Height);padding:0 var(--Padding-M);border-radius:var(--Chip-Radius);box-shadow:inset 0 0 0 1px var(--Border-Base-Default);font-size:var(--Body-16-size);line-height:var(--Body-16-lh);color:var(--Text-Base-Primary)}
+#device .se-tabs button.on{background:var(--Bg-Base-Inverse);color:var(--Text-Base-Inverse);box-shadow:none}
+#device .chipzone .chip{border-radius:var(--Chip-Radius);background:var(--Bg-Neutral-Default)}
+#device .amenu:not(.on) .am-x{background:var(--Bg-Brand-Default);border-color:var(--Bg-Brand-Default);box-shadow:inset 0 -8px 8px rgba(0,0,0,.12)}
+/* ---------- Анкета: Chip Group · Wrap (Chip Item · Outline) ---------- */
+#device .nbo-ch button{height:var(--Chip-Height);padding:0 var(--Padding-M);border-radius:var(--Chip-Radius);background:transparent;box-shadow:inset 0 0 0 1px var(--Border-Base-Default);
+  font-size:var(--Body-16-size);line-height:var(--Chip-Height);font-weight:500;color:var(--Text-Base-Primary)}
+#device .nbo-ch button.on{background:var(--Bg-Base-Inverse);color:var(--Text-Base-Inverse);box-shadow:none}
+
+/* ---------- Крипто-вкладка скрыта: Tab Bar на 3 пункта (Инвест · Поиск · Идеи) ---------- */
+#device .tabs{grid-template-columns:repeat(3,1fr)}
+#device .tabs>button:nth-of-type(2){display:none}
+#device .tabs .tb-pl{width:calc((100% - 8px) / 3);transform:translateX(calc((var(--ti,0) - clamp(0, var(--ti,0) - 1, 1)) * 100%))}
+
+/* ---------- Главная новичка: hero из макета «Инвестиции · витрина (новая)» — соты с логотипами, без подарка ---------- */
+.nb-hexs{position:relative;height:232px;margin:14px -20px 0;overflow:hidden}
+.nb-hexs .nb-halo{width:300px;height:300px;margin:-150px 0 0 -150px;background:radial-gradient(circle,rgba(150,170,255,.55),rgba(150,170,255,0) 64%)}
+.nb-hx{position:absolute;width:var(--w);height:calc(var(--w) * 1.1);margin:calc(var(--w) * -.55) 0 0 calc(var(--w) / -2);display:grid;place-items:center;
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:linear-gradient(160deg,rgba(255,255,255,.34),rgba(255,255,255,.08));
+  animation:nbHx 6s ease-in-out infinite;animation-delay:calc(var(--i) * -.7s)}
+.nb-hx::before{content:"";position:absolute;inset:1.5px;clip-path:inherit;background:linear-gradient(170deg,rgba(80,110,230,.55),rgba(40,60,170,.35))}
+.nb-hx .lg{position:relative;width:46%;height:46%;filter:drop-shadow(0 2px 6px rgba(0,0,0,.18))}
+.nb-hx.fr::before{background:linear-gradient(170deg,#5a7cff,#2c3fc0)}
+.nb-hx .frl{position:relative;width:46%;height:46%;filter:drop-shadow(0 4px 12px rgba(0,0,40,.35))}
+@keyframes nbHx{50%{translate:0 -6px}}
+@media (prefers-reduced-motion:reduce){.nb-hx{animation:none}}
+
+/* ---------- Container (Bg/Base/Container, r 24) для блоков главной и карточек ---------- */
+#device .hm-blk{border-radius:var(--Border-2XL);background:var(--Bg-Base-Container)}
+#device .cat-g .tile{border-radius:var(--Border-2XL);background:var(--Bg-Base-Container)}
+#device .cat-g .tile .n{font-size:var(--Body-14-size);line-height:var(--Body-14-lh);color:var(--Text-Base-Secondary)}
+/* ---------- Content / Info в шторках и подтверждениях ---------- */
+#device .lts-rw>span{font-size:var(--Body-14-size);line-height:var(--Body-14-lh);color:var(--Text-Base-Secondary)}
+#device .lts-rw>b{font-size:var(--Body-14-size);line-height:var(--Body-14-lh);font-weight:500;color:var(--Text-Base-Primary)}
+
+/* «Счета и карты» — заголовок List Group (Title · S: Caption Medium 13, Text/Base/Tertiary), как в макете главной клиента */
+#device .hm-blk:has(.pf-row.dacc)>.hm-h{font-size:13px;line-height:18px;font-weight:500;color:var(--Text-Base-Tertiary)}
+/* ---------- Прогнозы: «Да» — Button / Accent · Primary, «Нет» — Secondary (M: r 16) ---------- */
+#device .pm-yn :is(.y,.n){height:40px;border-radius:var(--Border-L);font-size:var(--Title-16-size);line-height:40px;font-weight:600}
+#device .pm-yn .y{background:var(--Bg-Brand-Default);color:var(--Text-Brand-On)}
+#device .pm-yn .n{background:var(--Bg-Neutral-Default);color:var(--Text-Base-Primary)}
+/* ---------- Портфели известных людей: «Смотреть» — Button / Accent · Primary · M ---------- */
+#device .fp-big .b{height:40px;border-radius:var(--Border-L);background:var(--Bg-Brand-Default);color:var(--Text-Brand-On);font-size:var(--Title-16-size);line-height:40px;font-weight:600;border:0;box-shadow:none}
+/* ---------- Hero новичка: Button / Glass · Dark · L ---------- */
+#device .nb-go{height:56px;border-radius:var(--Border-FULL);font-size:var(--Title-18-size);line-height:var(--Title-18-lh)}
+
+/* ===== R3 · по Figma «Порог входа» (12.11.2026) ===== */
+/* Главная новичка: картинка из макета 14244:83364 (фон, гексагоны, глобус) */
+#device .nb-dark:has(#nbHero.art){background:#F7F7F7}
+#device #nbHero.art{background:url(media/nb-hero.jpg) center top/100% auto no-repeat}
+#device #nbHero.art .fdots,#device #nbHero.art::before,#device #nbHero.art::after{display:none}
+#device .nb-art-sp{height:244px}
+#device #nbHero.art .nb-h1{margin-top:26px}
+/* D-счёт: Asset Container Rounded L · Duotone Finance/Счет */
+#device .pf-row.dacc .lg-dacc{width:40px;height:40px;border-radius:16px;background:none;box-shadow:none;overflow:visible}
+#device .pf-row.dacc .lg-dacc img{display:block;width:40px;height:40px}
+#device .pf-row.dacc .r small.cur{font-size:14px;font-weight:500;color:var(--Text-Base-Secondary,#8E8E93)}
+/* Новый клиент: только его бумаги */
+#device.fresh #pfSecs .pf-row[data-t],#device.fresh #pfSecs .pf-sec:nth-child(n+2):not(.fr-on){display:none}
+#device.fresh.pf-noshr #pfSecs .pf-sec:first-child,#device.fresh.pf-noshr .pf-an{display:none}
+/* Аналитика портфеля — как 12.1 (14260:132983): сводка слева, одна плашка «+% от вложенных», прогноз — под легендой */
+#device .an-res{text-align:left;align-items:flex-start;padding:0 16px}
+#device .an-res .l,#device .an-res .v{text-align:left;width:100%}
+#device .an-res .c{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.16);border-radius:999px;padding:4px 10px;font-size:13px;line-height:18px;color:rgba(255,255,255,.8);justify-content:flex-start}
+#device .an-res .c .pill{background:none!important;padding:0!important;color:inherit;font:inherit}
+#device .an-foot{flex-direction:column;align-items:flex-start;gap:12px}
+#device .an-fc{height:36px;border-radius:999px;padding:0 14px;font-size:14px;font-weight:600;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
+#device .an-fc svg{display:none}
+#device #dnSvg text{display:none}
+#device .dn-lg i,#device .dn-lg .sw{border-radius:50%!important}
+#device .an-card{border-radius:24px}
+#device .an-res{padding-top:16px}
+#device .an-res .v{justify-content:flex-start;font-size:28px;line-height:34px;height:34px}
+#device .an-res .c{margin-top:8px;font-size:12px;line-height:16px;padding:3px 8px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.12)}
+/* ===== R5: без меню профиля, без прогнозов и портфелей известных людей на главной ===== */
+#device #hmMenu,#device #crMenu,#device #pmHB,#device #fpHB{display:none!important}
+.cf-off{display:none!important}
+/* R6: шапка главной — счёт по центру, крестик справа (Navbar · iOS · Liquid Glass Small) */
+#device #hmAccT{grid-column:2;justify-self:center}
+#device #hmXT{grid-column:3;justify-self:end}
+#device #hmXT,#device #crX{width:44px;height:44px;border-radius:9999px;background:rgba(153,153,153,.17)!important;-webkit-backdrop-filter:blur(10px) saturate(1.4);backdrop-filter:blur(10px) saturate(1.4);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.45),inset 0 -1px 1px rgba(255,255,255,.12),0 0 0 .5px rgba(255,255,255,.28),0 8px 16px rgba(0,0,0,.06)!important;color:#fff}
+#device #hmXT svg{width:24px;height:24px}
+/* «…» рядом с «Вывести» убрана */
+#device .hm-acts .hm-act.sq{display:none!important}
+#device .cat-g .tile.ct-bn{background:#0d4a33 url(media/img-246ee2e81f.webp) center/cover no-repeat!important}
+/* R6: выбор сценария — новый клиент / есть брокерский счёт (Segmented Control) */
+.scp-who{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:2px;margin:0 0 16px;border-radius:9999px;background:rgba(118,118,128,.12)}
+.scp-who .pl{position:absolute;top:2px;left:2px;width:calc(50% - 4px);height:calc(100% - 4px);border-radius:9999px;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.12),0 3px 1px rgba(0,0,0,.04);transition:transform .3s cubic-bezier(.3,1.3,.5,1)}
+.scp-who.r .pl{transform:translateX(calc(100% + 4px))}
+.scp-who button{position:relative;z-index:1;height:40px;border:0;background:none;border-radius:9999px;font-family:inherit;font-size:15px;line-height:20px;font-weight:500;color:#0F0F0F;cursor:pointer}
+/* R7 */
+#device .scp-ic.b.g{background:#E7F7EC;color:#2DBE5A}
+#device .nws .row2{display:none!important}
+#device .cat-more p{display:none}
+#device #hmAccT,#device #hmAccT .a{white-space:nowrap}
+/* R8: Asset · Icon · L (duotone) из FR DS */
+#device .frac{position:relative;flex:none;width:40px;height:40px;border-radius:16px;padding:8px;display:grid;place-items:center;background:rgba(78,188,115,.2);box-shadow:inset 0 6px 10px rgba(255,255,255,.5);color:#4EBC73;box-sizing:border-box}
+#device .frac svg{width:24px;height:24px;display:block}
+/* «Продать» — Button / Destructive */
+#device .amenu .am[data-a="sell"]{background:#EB3333!important;color:#fff}
+/* R8: плитка «Долгосрочные инвестиции» в каталоге и в сценарии Single Stock ETF */
+#device.pm-ss .cat-g .tile.promo:not(.cf-off){display:flex!important}
+#device #pfSecs .pf-sec:has(#pfS_prd){display:none!important}
+/* ===== R10 ===== */
+.pf-gear.pf-arw{background:none;width:28px;height:28px;margin-right:-4px}
+.pf-gear.pf-arw:active{transform:translateX(2px)}
+.pf-gear[hidden]{display:none}
+/* карточки «Аналитика Freedom» на главной */
+.hid-blk{padding-bottom:4px}
+.hid-all{border:0;background:none;color:#2DAE57;font:500 15px/20px inherit;cursor:pointer;font-family:inherit}
+.hid-row{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:12px -16px 0;padding:0 16px 8px;scrollbar-width:none}
+.hid-row::-webkit-scrollbar{display:none}
+.hid-c{flex:0 0 172px;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;text-align:center;padding:16px 12px 12px;border-radius:24px;color:#fff;cursor:pointer;
+  background:radial-gradient(120% 90% at 100% 0%,#5cbf6c 0%,rgba(92,191,108,0) 55%),linear-gradient(160deg,#2f6f3a 0%,#3f9a4b 55%,#4fb257 100%);box-shadow:0 10px 20px -10px rgba(30,110,50,.6)}
+.hid-c:nth-child(2){background:radial-gradient(120% 90% at 100% 0%,#5aa0ff 0%,rgba(90,160,255,0) 55%),linear-gradient(160deg,#1f4f9a 0%,#2f6fcf 55%,#3f85e6 100%);box-shadow:0 10px 20px -10px rgba(30,80,160,.6)}
+.hid-c:nth-child(3){background:radial-gradient(120% 90% at 100% 0%,#8a7bff 0%,rgba(138,123,255,0) 55%),linear-gradient(160deg,#3b2f8f 0%,#5546c2 55%,#6b5be0 100%);box-shadow:0 10px 20px -10px rgba(70,50,170,.6)}
+.hid-t{font-size:15px;line-height:20px;font-weight:600}
+.hid-ln{display:block;width:100%;height:1px;background:rgba(255,255,255,.25);margin:10px 0 12px}
+.hid-k{font-size:36px;line-height:40px;font-weight:700;letter-spacing:-.5px}
+.hid-p{font-size:22px;line-height:28px;font-weight:700;margin-top:4px}
+.hid-s{font-size:14px;line-height:18px;color:rgba(255,255,255,.85);margin-bottom:14px}
+.hid-b{width:100%;height:40px;border:0;border-radius:999px;background:#fff;color:#1E5E2A;font-family:inherit;font-size:15px;line-height:20px;font-weight:600;cursor:pointer}
+.hid-c:nth-child(2) .hid-b{color:#1F4F9A}.hid-c:nth-child(3) .hid-b{color:#3B2F8F}
+/* аналитика портфеля: легенда + «Прогноз на год» в одну строку */
+.an-foot{align-items:flex-start;gap:12px}
+.an-lg{flex-direction:column;gap:4px}
+.an-l1{display:flex!important;gap:14px}
+.an-l1 span{display:flex;align-items:center;gap:6px}
+.an-l2{color:rgba(255,255,255,.6)}
+.an-fc{height:40px;padding:0 16px 0 12px;font-size:15px;background:rgba(255,255,255,.1)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)!important}
+.an-fc.on{background:#fff!important;box-shadow:none!important}
+/* слайдер Сравнение доходности · Бизнес · Цена */
+.an-slw{margin-top:16px}
+.an-sl{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 16px 4px;scrollbar-width:none;align-items:flex-start}
+.an-sl::-webkit-scrollbar{display:none}
+.an-sl .an-card.an-s{flex:0 0 calc(100% - 40px);margin:0;scroll-snap-align:center;box-sizing:border-box;display:flex;flex-direction:column;gap:12px}
+.an-sl .an-card .sub{margin:-8px 0 0}
+.an-dots{display:flex;justify-content:center;gap:6px;margin:10px 0 0}
+.an-tg{align-self:flex-start;display:inline-flex;height:22px;align-items:center;padding:0 8px;border-radius:8px;background:#F2F2F5;box-shadow:inset 0 0 0 1px #E0E0E4;font-size:12px;line-height:16px;font-weight:500;color:#3A3A3C}
+.an-rd{display:block}
+.an-pb{display:flex;flex-direction:column;gap:6px}
+.an-pb .r{display:flex;justify-content:space-between;font-size:15px;line-height:20px;color:#0F0F0F}
+.an-pb>i{display:block;height:4px;border-radius:2px;background:#E5E5EA;overflow:hidden}
+.an-pb>i b{display:block;height:100%;border-radius:2px;background:#4EBC73}
+.an-pb>i b.org{background:#E58A00}
+.an-pb .nt{display:flex;gap:4px;align-items:center;font-size:13px;line-height:18px;color:#636366}
+.an-pb .nt.org{color:#E58A00}.an-pb .nt.grn{color:#2DAE57}
+.an-k{font-size:14px;line-height:20px;color:#636366}
+.an-tks{display:flex;flex-wrap:wrap;gap:6px}
+.an-tks span{height:22px;padding:0 8px;border-radius:999px;display:inline-flex;align-items:center;background:#E3F6E8;box-shadow:inset 0 0 0 1px #A8E2B8;color:#1F8F3E;font-size:12px;font-weight:500}
+.an-sl hr{border:0;height:1px;background:#EBEBEF;margin:4px 0;width:100%}
+.an-fn{margin:0;font-size:13px;line-height:18px;font-weight:600;color:#0F0F0F}
+.cp-seg{margin:0}
+.cp-v{display:flex;gap:16px;padding:0 4px}
+.cp-v span{flex:1;display:flex;flex-direction:column;gap:2px}
+.cp-v em{font-style:normal;font-size:14px;line-height:20px;color:#3A3A3C}
+.cp-v b{font-size:18px;line-height:24px;font-weight:700;color:#0F0F0F}
+.cp-ch{margin:0 -4px}
+.cp-x{display:flex;justify-content:space-between;font-size:12px;color:#8E8E93;margin-top:-6px}
+.cp-lg{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:#3A3A3C}
+.cp-lg span{display:flex;align-items:center;gap:6px}
+.cp-lg i{width:12px;height:2px;border-radius:2px}
+.cp-lg .g{background:#4EBC73}.cp-lg .b{background:#0A84FF}.cp-lg .n{background:#AEAEB2}
+.cp-ch2{display:flex;flex-wrap:wrap;gap:8px}
+.cp-ch2 button{height:36px;padding:0 14px;border-radius:999px;border:0;background:#fff;box-shadow:inset 0 0 0 1px #E0E0E4;font-family:inherit;font-size:15px;line-height:20px;font-weight:500;color:#0F0F0F;cursor:pointer}
+.cp-ch2 button.on{background:#0F0F0F;color:#fff;box-shadow:none}
+.cp-r{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:48px;font-size:14px;line-height:20px;color:#3A3A3C;box-shadow:inset 0 -.5px 0 #EBEBEF}
+.cp-r:last-child,.cp-r:has(+.an-fn){box-shadow:none}
+.cp-r b{font-size:15px;font-weight:600;color:#0F0F0F;text-align:right}
+.an-mk{display:flex;flex-direction:column;gap:12px}
+.an-mk .sub{margin:-8px 0 0}
+.an-mt{margin:0;font-size:17px;line-height:23px;font-weight:500;color:#0F0F0F}
+.an-why{height:48px;border:0;border-radius:999px;background:#EBEBEF;font-family:inherit;font-size:17px;line-height:22px;font-weight:600;color:#0F0F0F;cursor:pointer;margin-top:4px}
+.an-why:active{transform:scale(.98)}
+#device.pm-ss .cat-g .tile.tk10:not(.cf-off){display:flex!important}
+#device .an-foot{flex-direction:row;align-items:center;justify-content:space-between}
+#device .an-foot .an-lg{flex:1;min-width:0}
+#device .an-foot .an-fc{flex:none}
+.cp-ch2 button{width:auto;flex:none}
+#device .cp-ch2{display:flex!important;flex-direction:row;flex-wrap:wrap}
+#device .cp-ch2 button{display:inline-flex;align-items:center;width:auto!important;margin:0}
+#device #pfSecs .pf-row[hidden]{display:none!important}
+#device .cp-ch2 button{padding:0 12px;font-size:14px;height:34px}
+
+/* R10.1 · логотипы новых компаний */
+#device .lg-uber{background-image:url(media/lg-uber.svg)}#device .lg-abnb{background-image:url(media/lg-abnb.svg)}#device .lg-spot{background-image:url(media/lg-spot.svg)}#device .lg-pypl{background-image:url(media/lg-pypl.svg)}#device .lg-shop{background-image:url(media/lg-shop.svg)}#device .lg-sbux{background-image:url(media/lg-sbux.svg)}#device .lg-mcd{background-image:url(media/lg-mcd.svg)}#device .lg-nke{background-image:url(media/lg-nke.svg)}#device .lg-orcl{background-image:url(media/lg-orcl.svg)}#device .lg-adbe{background-image:url(media/lg-adbe.svg)}#device .lg-qcom{background-image:url(media/lg-qcom.svg)}#device .lg-avgo{background-image:url(media/lg-avgo.svg)}#device .lg-ust{background-image:url(media/lg-ust.svg)}#device .lg-kz29{background-image:url(media/lg-kz.svg)}
+
+/* R10.1 · карточки идей внутри сетки каталога */
+#device .cat-g .tile.hid-c,#device .ct-g .tile.hid-c{display:flex!important;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:16px 12px 12px;border-radius:24px;color:#fff;outline:none;
+  background:radial-gradient(120% 90% at 100% 0%,#5cbf6c 0%,rgba(92,191,108,0) 55%),linear-gradient(160deg,#2f6f3a 0%,#3f9a4b 55%,#4fb257 100%)!important;box-shadow:0 10px 20px -10px rgba(30,110,50,.6)}
+#device .cat-g .tile.hid-c[data-hid="2"],#device .ct-g .tile.hid-c[data-hid="2"]{background:radial-gradient(120% 90% at 100% 0%,#5aa0ff 0%,rgba(90,160,255,0) 55%),linear-gradient(160deg,#1f4f9a 0%,#2f6fcf 55%,#3f85e6 100%)!important;box-shadow:0 10px 20px -10px rgba(30,80,160,.6)}
+#device .cat-g .tile.hid-c[data-hid="1"],#device .ct-g .tile.hid-c[data-hid="1"]{background:radial-gradient(120% 90% at 100% 0%,#8a7bff 0%,rgba(138,123,255,0) 55%),linear-gradient(160deg,#3b2f8f 0%,#5546c2 55%,#6b5be0 100%)!important;box-shadow:0 10px 20px -10px rgba(70,50,170,.6)}
+#device .cat-g .tile.hid-c.cf-off,#device .ct-g .tile.hid-c.cf-off{display:none!important}
+#device .tile.hid-c .hid-k{font-size:32px;line-height:38px}
+#device .tile.hid-c .hid-b{margin-top:auto;color:#1E5E2A}
+#device .tile.hid-c[data-hid="2"] .hid-b{color:#1F4F9A}#device .tile.hid-c[data-hid="1"] .hid-b{color:#3B2F8F}
+#device .hid-c:focus,#device .hid-c:focus-visible{outline:none}
+#device .ct-g .tile.promo{min-height:220px}
+/* Page Control (.Page Control: белая капсула 24, точки 8) */
+.pgc{display:inline-flex;align-items:center;gap:8px;height:24px;padding:0 12px;border-radius:9999px;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.05)}
+.pgc i{width:8px;height:8px;border-radius:50%;background:#C7C7CC;transition:background .25s}
+.pgc i.on{background:#0F0F0F}
+#device .an-dots{margin:12px 0 0}
+#device .an-sl{align-items:stretch}
+/* сравнение доходности: отступы */
+#device .an-sl .an-card.an-s{gap:16px;padding:20px 16px 16px}
+#device .an-sl .an-card .sub{margin:-12px 0 0}
+#device #cpB{display:flex;flex-direction:column;gap:16px}
+#device .cp-v{padding:0}
+#device .cp-ch{margin:0;border-radius:12px;overflow:hidden}
+#device .cp-x{margin-top:-10px}
+#device .cp-lg{gap:8px 16px}
+#device .cp-ch2{gap:8px}
+#device .cp-r{min-height:52px}
+#device #cpB .cp-r+.cp-r{margin-top:-16px}
+#device .cp-ch2+.cp-r{margin-top:0}
+/* Движение денег — как в макете */
+#device .mv10 .mv{margin-top:16px}
+#device .mv10 .mr{border-bottom:0;min-height:64px}
+#device .mv10 .mr .k{gap:16px;font-size:16px}
+#device .mv10 .mi{width:48px;height:48px;border-radius:16px;box-shadow:inset 0 6px 10px rgba(255,255,255,.6),0 4px 10px rgba(0,0,0,.04)}
+#device .mv10 .mi.in{background:#DDF3E3;color:#4EBC73}#device .mv10 .mi.out{background:#FCDADC;color:#F2545B}
+#device .mv10 .mi svg{width:24px;height:24px}
+#device .mv10 .mr:nth-child(1) .k{color:#4EBC73}#device .mv10 .mr:nth-child(2) .k{color:#F2545B}
+#device .mv10 .mr .v{font-size:16px;font-weight:600}
+#device .mv10 .mr.tot{margin-top:8px;min-height:48px}
+#device .mv10 .mr.tot .k{font-size:16px;color:#0F0F0F}
+#device .mv10 .mr.tot .v{font-size:20px;line-height:26px;font-weight:700}
+#device .mv10 .stk{height:8px;gap:6px;margin-top:12px}
+#device .mv10 .stk-lg{font-size:14px;line-height:20px;color:#3A3A3C;margin-top:12px}
+#device .mv10 .note{margin:16px 0 0;font-size:14px;line-height:20px;color:#8E8E93}
+#device .hm-h:has(.pf-arw:not([hidden])){justify-content:flex-start;gap:2px;cursor:pointer}
+#device .pf-gear.pf-arw{margin:0;width:24px;height:24px}
+/* R11: без пунктира «Вложено» и хвоста у последней точки */
+#anSvg path[stroke-dasharray="4 3"],#anSvg path[stroke-dasharray="1.5 4"]{display:none}
+#device #anLgInv{display:none!important}
+/* R12: Apple целыми акциями видна и в сценарии Single Stock ETF; продажа — красная зона свайпа */
+#device.pm-ss #pfSecs .pf-row[data-aapl]:not([data-ss]):not([hidden]){display:flex!important}
+#device.selling #scrConfirm:not(.success) .gz{background:linear-gradient(180deg,#E25454,#B83030)}
+#device.selling #scrConfirm .gz .track::before{background:linear-gradient(0deg,rgba(255,120,120,.04),rgba(255,170,170,.3) 55%,rgba(255,220,220,.6))}
+#device.selling #scrConfirm .gz .track{box-shadow:inset 0 2px 24px rgba(0,0,0,.25),inset 2px 2px 2px rgba(60,0,0,.8),inset -2px 2px 2px rgba(60,0,0,.8)}
+#device.selling .chip.sto .n{color:#636366}
+#device #sellTo{position:static!important;inset:auto!important;width:auto!important;height:40px!important;transform:none!important;opacity:1!important;visibility:visible!important;z-index:auto!important;
+  background:var(--Bg-Base-Container,#fff)!important;border-radius:9999px;padding:0 14px 0 6px;align-items:center;gap:8px;box-shadow:0 0 0 .5px rgba(0,0,0,.06);pointer-events:auto!important}
+#device #sellTo .aic{flex:none}
+#device #sellTo .b{font-weight:600;color:#0F0F0F}
+
+/* кнопка ордера не прилипает к клавиатуре: CTA 56px, зона была 64px без нижнего отступа */
+#device .ctazone:has(#go){height:auto;padding:8px 16px 12px}
+
+/* блок «Информация» (Аналитика / Обзор / Отчёты) на странице бумаги убран — дублирует слайдер «Обзор» */
+#device #inf{display:none!important}
+
+/* ---------- Главная: блок «Аналитика Freedom» (клиент и новичок) ---------- */
+#device .haf{padding:8px 0 0;margin-top:16px;margin-bottom:-8px;background:none;border-radius:0;box-shadow:none}
+#device .haf-h{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 16px}
+#device .haf-h>span{display:flex;flex-direction:column;gap:2px;min-width:0}
+#device .haf-h b{font-size:22px;line-height:28px;font-weight:700;color:var(--Text-Base-Primary,#0F0F0F)}
+#device .haf-h small{font-size:14px;line-height:20px;color:var(--Text-Base-Secondary,#3A3A3C)}
+#device .haf-all{flex:none;display:inline-flex;align-items:center;gap:2px;height:36px;padding:0 10px 0 14px;border:0;border-radius:999px;background:var(--Bg-Neutral-Default,#EAECED);font:inherit;font-size:14px;line-height:20px;font-weight:600;color:var(--Text-Base-Primary,#0F0F0F);cursor:pointer}
+#device .haf-row{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 16px;padding:16px 16px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#device .haf-row::-webkit-scrollbar{display:none}
+#device .haf-c{flex:0 0 300px;box-sizing:border-box;scroll-snap-align:start;display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:24px;background:var(--Bg-Base-Container,#fff);box-shadow:0 5px 20px rgba(0,0,0,.05);color:var(--Text-Base-Primary,#0F0F0F)}
+#device .haf-hd{display:flex;gap:12px;align-items:flex-start;padding-bottom:12px;box-shadow:inset 0 -.5px 0 #EAECED;cursor:pointer}
+#device .haf-ic{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:16px;background:rgba(78,188,115,.2);box-shadow:inset 0 6px 10px rgba(255,255,255,.5);color:#4EBC73}
+#device .haf-lg{flex:none;width:40px;height:40px;border-radius:50%;overflow:hidden;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.08)}
+#device .haf-lg img{display:block;width:100%;height:100%;object-fit:cover}
+#device .haf-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+#device .haf-tx small{font-size:13px;line-height:18px;color:var(--Text-Base-Secondary,#3A3A3C);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#device .haf-tx b{font-size:18px;line-height:24px;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#device .haf-d{margin:0;font-size:14px;line-height:20px;color:var(--Text-Base-Secondary,#3A3A3C);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+#device .haf-tags{display:flex;flex-wrap:wrap;gap:6px}
+#device .haf-tag{font-style:normal;display:inline-flex;align-items:center;height:20px;padding:0 8px;border-radius:999px;font-size:11px;line-height:13px;font-weight:500}
+#device .haf-tag.g{color:#2E8452;background:#EAF7EE;box-shadow:inset 0 0 0 1px #fff,inset 0 -3px 6px rgba(78,188,115,.3),inset 0 0 0 .5px rgba(78,188,115,.25)}
+#device .haf-tag.b{color:#005EDB;background:#CCEEFF;box-shadow:inset 0 0 0 1px #fff,inset 0 -3px 6px rgba(0,122,255,.3),inset 0 0 0 .5px rgba(0,122,255,.25)}
+#device .haf-tag.o{color:#DB7600;background:#FFF2CC;box-shadow:inset 0 0 0 1px #fff,inset 0 -3px 6px rgba(255,149,0,.3),inset 0 0 0 .5px rgba(255,149,0,.25)}
+#device .haf-tag.y{color:#B38600;background:#FFF8D6;box-shadow:inset 0 0 0 1px #fff,inset 0 -3px 6px rgba(255,204,0,.3),inset 0 0 0 .5px rgba(255,204,0,.25)}
+#device .haf-g{display:flex;justify-content:space-between;align-items:baseline;font-size:16px;line-height:22px;font-weight:500}
+#device .haf-g .up{font-size:14px;line-height:20px;font-weight:400;color:#2DAE57}
+#device .haf-p{display:block;height:4px;margin-top:-4px;border-radius:2px;background:#E5E5EA;overflow:hidden}
+#device .haf-p b{display:block;height:100%;border-radius:2px;background:#4EBC73}
+#device .haf-au{font-size:13px;line-height:18px;color:var(--Text-Base-Secondary,#3A3A3C);margin-top:auto}
+#device .haf-bt{display:flex;gap:8px;align-items:center}
+#device .haf-more{flex:1;height:38px;border:0;border-radius:16px;background:#EAECED;font:inherit;font-size:16px;line-height:22px;font-weight:600;color:#0F0F0F;cursor:pointer}
+#device .haf-bell{flex:none;display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:#F7F7F7;color:#0F0F0F;cursor:pointer}
+
+/* ---------- Таб «Новичок | Клиент» вне экрана (на десктопе — под телефоном, на телефоне — полоской над экраном) ---------- */
+.sc-tab{display:flex;flex:none;gap:0;padding:4px;border-radius:999px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.sc-tab>button{min-width:116px;height:40px;padding:0 20px;border-radius:999px;font:600 15px/40px "SF Pro Web",-apple-system,sans-serif;color:rgba(255,255,255,.65);transition:background .2s,color .2s}
+.sc-tab>button.on{background:#fff;color:#0F0F0F;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.sc-tab>button:not(.on):hover{color:#fff}
+@media (max-width:520px){
+  body:has(.sc-tab){display:flex;flex-direction:column;align-items:stretch}
+  body:has(.sc-tab) .device{flex:1 1 auto;height:auto;min-height:0}
+  .sc-tab{order:-1;align-self:center;margin:calc(env(safe-area-inset-top,0px) + 6px) 0 6px;background:rgba(0,0,0,.05);box-shadow:none}
+  .sc-tab>button{min-width:110px;height:34px;line-height:34px;font-size:14px;color:#636366}
+  .sc-tab>button.on{box-shadow:0 2px 8px rgba(0,0,0,.12)}
+}

@@ -1,0 +1,19 @@
+:root{
+  --ink: #0F0F0F; /* Text/Primary — основной текст */
+  --ink2: #1E1E1E; /* Text/Primary (dark surface) */
+  --grey: #636366; /* Text/Secondary */
+  --grey2: #8E8E93; /* Text/Tertiary */
+  --grey3: #AEAEB2; /* Text/Disabled */
+  --ph: #C7C7CC; /* Text/Placeholder */
+  --bg: #F7F7F7; /* Background/Secondary — фон экранов */
+  --line: #EAECED; /* Border/Default */
+  --line2: #F2F2F7; /* Border/Subtle */
+  --key: #EAECED; /* Keypad/Key */
+  --key-press: #D9DCDE; /* Keypad/Key pressed */
+  --del: #3A3A3C; /* Keypad/Delete */
+  --green: #4EBC73; /* Brand/Green — кнопки, CTA */
+  --green-dk: #2A984F; /* Brand/Green pressed */
+  --up: #10C810; /* Market/Up (success) — рост, +% */
+  --down: #FF3B47; /* Market/Down (error) — падение, −% */
+  --caret: #10C810; /* Input/Caret */
+}
