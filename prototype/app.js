@@ -4550,7 +4550,7 @@ const CUSVG={"USD": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=
       const TTL=(t,btn,at)=>'<div class="pfz-ttl"><span class="t">'+t+'</span><button class="pfz-gh" '+(at||'')+'>'+btn+CH16+'</button></div>';
       const PB=(t,v,w,c)=>'<div class="pfz-pb'+(c?' '+c:'')+'"><div class="lbl"><span class="t">'+t+'</span><span class="v">'+v+'</span></div><div class="tr"><i style="width:'+w+'%"></i></div></div>';
       pn[0].innerHTML='<p class="pfz-s">По отчётности за последний год · в сравнении с рынком (S&P 500)</p><span class="pfz-tg">Демонстрационные данные</span>'+pfzRadar(PFZ.radar)+
-        '<div class="pfz-lgp">'+PFZ.bz.map((b,i)=>'<button class="pfz-li" data-pfbz="'+i+'"><span class="r"><span class="tt">'+b.t+'</span><span class="mv">'+b.v+'/6</span><span class="ch">'+CH16+'</span></span><span class="pfz-dots">'+b.p.map(p=>pfzPie(p,24)).join('')+'</span></button>').join('')+'</div>'+
+        '<div class="pfz-lgp">'+PFZ.bz.map((b,i)=>'<button class="pfz-li" data-pfbz="'+i+'"><span class="r"><span class="tc"><span class="tt">'+b.t+'</span><span class="st">'+b.v+' из 6 условий</span></span><span class="ch">'+CH16+'</span></span><span class="pfz-dots">'+b.p.map(p=>pfzPie(p,24)).join('')+'</span></button>').join('')+'</div>'+
         '<p class="pfz-ds">Описывает прошлое и текущее состояние. Не прогноз и не рекомендация.</p>';
       pn[1].innerHTML='<p class="pfz-s">За год, по 25 сен · в сравнении с рынком (S&P 500)</p>'+
         TTL('Колебания цены','почти в 2 раза сильнее')+PB('Портфель','25,2 % в год',50)+PB('Рынок','13,0 % в год',26,'info')+

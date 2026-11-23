@@ -22,12 +22,14 @@
 .pfz-gh svg{width:16px;height:16px;color:var(--Icon-Brand-Default);flex:none}
 .pfz-gh:active{color:var(--Text-Brand-Pressed)}
 
-/* List Item · Compact · Right Part=Arrow + круги долей под строкой; между строками Divider */
+/* List Item · Regular (Content/Default: Title + Subtitle) · Right Part=Arrow + круги долей под строкой; между строками Divider */
 .pfz-lgp{display:flex;flex-direction:column}
 .pfz-li{display:flex;flex-direction:column;gap:var(--Padding-S);width:100%;padding:var(--Padding-M) 0;background:none;border:0;text-align:left;font:inherit;color:inherit;cursor:pointer}
 .pfz-li+.pfz-li{box-shadow:0 -1px 0 var(--Border-Base-Default)}
 .pfz-li .r{display:flex;align-items:center;gap:var(--Padding-M);min-height:24px}
-.pfz-li .tt{flex:1;min-width:0;font-size:var(--Title-16-size);line-height:var(--Title-16-lh);font-weight:600;color:var(--Text-Base-Primary)}
+.pfz-li .tc{flex:1;min-width:0;display:flex;flex-direction:column}
+.pfz-li .st{font-size:var(--Body-14-size);line-height:var(--Body-14-lh);color:var(--Text-Base-Tertiary)}
+.pfz-li .tt{font-size:var(--Title-16-size);line-height:var(--Title-16-lh);font-weight:600;color:var(--Text-Base-Primary)}
 .pfz-li .mv{font-size:var(--Body-14-size);line-height:var(--Body-14-lh);font-weight:500;color:var(--Text-Base-Secondary)}
 .pfz-li .ch{width:24px;height:24px;flex:none;color:var(--Icon-Control-Default)}
 .pfz-li:active{opacity:.7}
