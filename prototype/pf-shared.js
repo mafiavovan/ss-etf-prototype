@@ -12,10 +12,10 @@ var PFZ = {
   top: [{t: 'NVDA', w: '40,4', d: [['Нет', '12 месяцев', '+27,5 %', '+35,7 %'], ['Да', '6 месяцев', '+31,7 %', '+29,7 %']]}, {t: 'TSLA', w: '23,9', d: [['Нет', '12 месяцев', '−16,0 %', '−10,4 %'], ['Да', '6 месяцев', '0,0 %', '−2,4 %']]}]
 };
 /* круг-индикатор доли: серый круг и зелёный сектор p % */
-function pfzPie(p, s){ s = s || 22; const r = s / 2;
-  if (p >= 100) return '<svg class="pfz-pie" width="' + s + '" height="' + s + '" viewBox="0 0 ' + s + ' ' + s + '"><circle class="f" cx="' + r + '" cy="' + r + '" r="' + r + '"/></svg>';
-  const a = p / 100 * 2 * Math.PI, x = r + r * Math.sin(a), y = r - r * Math.cos(a);
-  return '<svg class="pfz-pie" width="' + s + '" height="' + s + '" viewBox="0 0 ' + s + ' ' + s + '"><circle class="t" cx="' + r + '" cy="' + r + '" r="' + r + '"/>' + (p > 0 ? '<path class="f" d="M' + r + ' ' + r + 'L' + r + ' 0A' + r + ' ' + r + ' 0 ' + (p > 50 ? 1 : 0) + ' 1 ' + x.toFixed(2) + ' ' + y.toFixed(2) + 'Z"/>' : '') + '</svg>'; }
+function pfzPie(p, s){ s = s || 22; const c = s / 2, ir = .57, w = c * (1 - ir), r = c - w / 2, L = 2 * Math.PI * r, d = Math.min(100, Math.max(0, p)) / 100 * L;
+  /* кольцо доли — как «Круг доли · локальный» в Figma: дорожка Bg/Neutral/Default, дуга Bg/Brand/Default от 12 часов по часовой, внутренний радиус 57 % */
+  return '<svg class="pfz-pie" width="' + s + '" height="' + s + '" viewBox="0 0 ' + s + ' ' + s + '"><circle class="t" cx="' + c + '" cy="' + c + '" r="' + r.toFixed(2) + '" stroke-width="' + w.toFixed(2) + '"/>' +
+    (p > 0 ? '<circle class="f" cx="' + c + '" cy="' + c + '" r="' + r.toFixed(2) + '" stroke-width="' + w.toFixed(2) + '" stroke-dasharray="' + d.toFixed(2) + ' ' + L.toFixed(2) + '" transform="rotate(-90 ' + c + ' ' + c + ')"/>' : '') + '</svg>'; }
 /* бумаги на шкале: таблетки с риской сверху, ряды не перекрываются */
 function pfzPills(list){ const rows = Math.max.apply(null, list.map(x => x[2])) + 1;
   return '<div class="pfz-pl" style="height:' + (rows * 32 + 4) + 'px">' + list.map(x => '<span class="pfz-tk" style="left:' + x[1] + '%;top:' + (x[2] * 32) + 'px"><i></i><b class="pfz-tag">' + x[0] + '</b></span>').join('') + '</div>'; }
