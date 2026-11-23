@@ -6273,6 +6273,7 @@ html,body{background:transparent!important}
 /* Поиск */
 .srb{display:flex;align-items:center;gap:8px;padding:6px 16px 8px}
 .srb .sfld{flex:1}
+.srbk{padding-left:16px}.srbk .srbi{flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:0}.srbk>.ctl{flex:none}
 .srh{padding-top:4px}
 .srr{display:flex;flex-direction:column;gap:16px}
 .tabpad{height:96px}
@@ -7314,6 +7315,8 @@ const srSync = () => { const r = phone.querySelector('#sr-res'); if (r) r.innerH
 P.srch = () => ({bar: `<div class="srb${SR.q ? ' has' : ''}">${SearchField('sr-q', SR.q, 'Акции, фонды, тикеры', 'sr.q')}<button class="ctl ${S.pf} srx" data-act="sr-x" aria-label="Закрыть">${ic('Close', 24)}</button></div>`,
   body: `<div class="content srh"><div id="sr-tabs">${srTabs()}</div><div id="sr-res" class="srr">${srRes()}</div></div><div class="tabpad"></div>`});
 
+/* Поиск из «Каталога»: тот же экран, выдача и логика, что у раздела «Поиск», слева — «Назад» в каталог, таббар скрыт */
+P.srchc = () => { const r = P.srch(); return {bar: r.bar.replace('<div class="srb', `<div class="srb srbk">${LeadCtl('chevron-left', 'back')}<div class="srbi`).replace('</button></div>', '</button></div></div>'), body: r.body.replace('<div class="tabpad"></div>', '')}; };
 /* ---------------- Новости ---------------- */
 const NEWS = [
   {src: 'Freedom Research · 1 час назад', t: 'Утро в Нью-Йорке: торговые угрозы провоцируют коррекцию', tags: [['AAPL', -1.2], ['NVDA', -2.4]], img: 'news-nyse.jpg', big: true,
@@ -7494,6 +7497,7 @@ addEventListener('message', e => {
     dep: () => { Object.assign(DEP, {from: null, to: INV.fresh ? 'gl' : null, amt: '', fav: false}); S.stack = [{id: 'dep'}]; },
     lt: () => { Object.assign(LT, {term: 3, cur: 'usd', amt: '', pay: 0}); S.stack = [{id: 'lt'}]; },
     srch: () => { SR.q = ''; SR.tab = 0; S.stack = [{id: 'srch'}]; },
+    srchc: () => { SR.q = ''; SR.tab = 0; S.stack = [{id: 'srchc'}]; },
     ideas: () => { S.stack = [{id: 'ideas'}]; },
     news: () => { S.stack = [{id: 'news'}]; },
     'an-ins': () => { S.stack = [{id: 'an-ins'}]; },
@@ -8369,7 +8373,7 @@ addEventListener('message', e => {
 });
 /* после кнопки «назад» с первой страницы бумаги — обратно в прототип */
 const _bk10 = ACT.back;
-ACT.back = () => { if (S.stack.length === 1 && ['sd', 'buy', 'idea2', 'news'].includes(cur().id)){ exitDs(); return; } _bk10(); };
+ACT.back = () => { if (S.stack.length === 1 && ['sd', 'buy', 'idea2', 'news', 'srchc'].includes(cur().id)){ exitDs(); return; } _bk10(); };
 const _r10 = render;
 render = function(a){ _r10(a); phone.classList.toggle('ok2', cur().id === 'buy-ok'); if (cur().id === 'buy-cf') setTimeout(swBind, 30); };
 

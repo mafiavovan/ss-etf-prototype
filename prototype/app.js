@@ -1009,7 +1009,7 @@
   const SECS=[
     {k:'Акции',id:'stk',open:true,rows:()=>'<button class="pf-row me" data-aapl>'+lgHTML('aapl')+'<span class="m"><span class="t">AAPL.US</span><span class="s" id="pfAs">4 шт. по 152,00 $</span></span><span class="r"><span class="t" id="pfAv">610,08</span><span class="s" id="pfAd">+$2,08 +0,34%</span></span></button>'+
       '<button class="pf-row me" data-aapl data-ss>'+lgHTML('aapl')+'<span class="m"><span class="t">AAPL/100</span><span class="s" id="pfSs">37 шт. по 1,50 $</span></span><span class="r"><span class="t" id="pfSv">56,43</span><span class="s" id="pfSd"></span></span></button>'+
-      STK.map((r,i)=>'<button class="pf-row" data-t="В прототипе открывается только Apple">'+lgHTML(r.lg)+'<span class="m"><span class="t">'+r.tk+(r.m?MOON:'')+'</span><span class="s">'+r.q+' шт. по '+r.p+' $</span></span><span class="r"><span class="t">'+dec(r.val)+'</span><span class="s" id="pfR'+i+'"></span></span></button>').join('')},
+      STK.map((r,i)=>'<button class="pf-row" data-t="В прототипе открывается только Apple">'+lgHTML(r.lg)+'<span class="m"><span class="t">'+r.tk+'</span><span class="s">'+r.q+' шт. по '+r.p+' $</span></span><span class="r"><span class="t">'+dec(r.val)+'</span><span class="s" id="pfR'+i+'"></span></span></button>').join('')},
     {k:'Облигации',id:'bnd',v:'$400,00',pc:3.6,rows:()=>'<button class="pf-row" data-t="В прототипе открывается только Apple">'+lgHTML('ishr')+'<span class="m"><span class="t">AGG.US</span><span class="s">4 шт. по 96,21 $</span></span><span class="r"><span class="t">384,84</span><span class="s" id="pfRb"></span></span></button>'},
     {k:'Долгосрочные инвестиции',id:'lng',v:'$1 000,00',pc:0,rows:()=>''},
     {k:'Мои прогнозы',id:'prd',v:'$0,00',rows:()=>''},
@@ -2835,7 +2835,7 @@
     dev.classList.add('on-ct'); $('scrCt').setAttribute('aria-hidden','false'); syncStatus(); }
   function ctBack(){ dev.classList.remove('on-ct'); $('scrCt').setAttribute('aria-hidden','true'); syncStatus(); }
   $('ctBack').innerHTML=$('cnBack').innerHTML; $('ctBack').onclick=ctBack; $('ctGo').onclick=goCt;
-  $('ctSrch').onclick=()=>toast('Поиск по каталогу — скоро');
+  $('ctSrch').onclick=()=>{ if(window.__DS) window.__DS.open('srchc'); else toast('Поиск'); };
   $('ctScroll').addEventListener('scroll',()=>$('ctNav').classList.toggle('scrolled',$('ctScroll').scrollTop>6),{passive:true});
   $('ctChips').addEventListener('click',ev=>{ const b=ev.target.closest('button'); if(!b) return; if(b.classList.contains('fl')){ toast('Фильтры — скоро'); return; }
     const on=CTF!==b.dataset.f; CTF=on?b.dataset.f:''; $('ctChips').querySelectorAll('button').forEach(x=>x.classList.toggle('on',on&&x===b));
@@ -4275,7 +4275,7 @@ const CUSVG={"USD": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=
     dev.classList.toggle('pf-empty',SHARES<1e-9&&!LIN.lt); dev.classList.toggle('pf-noshr',SHARES<1e-9);
     const wr=document.querySelector('#pfSecs .pf-row[data-aapl]:not([data-ss])'); if(wr) wr.hidden=!SH_W;
     const an=document.querySelectorAll('.pf-an .row .v'); if(an[1]) an[1].textContent=usdTxt(inv); if(an[2]){ an[2].textContent=(all<0?MIN:'+')+'$'+dec(Math.abs(all))+' ('+dec(inv?Math.abs(all)/inv*100:0,1)+' %)'; an[2].className='v '+(all<0?'dn':'up'); }
-    const lv=document.querySelectorAll('#pfSecs .pf-sec')[2]; if(lv){ lv.classList.toggle('fr-on',LIN.lt>0); const v=lv.querySelector('.pf-sh .v'); if(v) v.firstChild.textContent=usdTxt(LIN.lt); }
+    const lv=document.querySelectorAll('#pfSecs .pf-sec')[2]; if(lv){ lv.classList.toggle('fr-on',LIN.lt>0); const v=lv.querySelector('.pf-sh .v'); if(v){ let lt=LIN.lt; try{ lt=Math.max(lt,ltUsd()); }catch(_){} v.firstChild.textContent=usdTxt(lt); } }
     try{ pfLive(); hmDraw(false); }catch(_){}
     try{ position(); }catch(_){} try{ if(dev.classList.contains('on-order')) render(); }catch(_){} }
   function freshStart(){ FRESH=true; Object.assign(LIN,{cash:0,lt:LIN.pend||0,pend:0}); SH_W=0; SH_S=0; AVG_W=0; AVG_S=0; syncHold(); TRADES.length=0; dev.classList.add('fresh'); freshSync(); }
@@ -4313,7 +4313,7 @@ const CUSVG={"USD": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=
   const CATX=CATL.slice(); CATX.splice(3,0,'idea:0'); CATX.splice(12,0,'idea:2'); CATX.splice(22,0,'idea:1');
   const catHit=x=>{ if(!CF) return true; if(x==='promo'||x.startsWith('idea:')||x.startsWith('opi:')) return false; const ss=x.startsWith('ss:'); if(CF==='ss') return ss; if(ss) return false; return TK[x].fl.includes(' '+CF+' '); };
   // главная: 12 плиток в 6 рядов, как в макете; полный список — на странице «Каталог»
-  const HOMEX=['aapl','tsla','nvda','idea:0','goog','meta','msft','ss:msft','promo','nflx','visa','opi:0'];
+  const HOMEX=['aapl','tsla','nvda','idea:0','goog','meta','msft','ss:msft','promo','nflx','visa'];
   function catFill(){ $('catG').innerHTML=HOMEX.map(x=>tkTile(x)).join(''); if($('nbCatG')) $('nbCatG').innerHTML=HOMEX.map(x=>tkTile(x)).join(''); }
   CFL.splice(1,0,['ss','Single Stock ETF']); ['chips','nbChips','ctChips'].forEach(cfBar);
   cfApply=function(){ ['catG','nbCatG'].forEach(id=>{ const g=$(id); if(!g) return; [...g.children].forEach(el=>{ const x=el.dataset.x||(el.dataset.hid!=null?'idea:'+el.dataset.hid:el.classList.contains('promo')?'promo':''); el.classList.toggle('cf-off',!!x&&!catHit(x)); }); });
