@@ -6214,6 +6214,10 @@ html,body{background:transparent!important}
 .obf .fld.sel{justify-content:space-between;text-align:left}
 .obf .fld.sel .sv,.obf .fld.sel .sp{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .obf .fld.sel .sp{color:var(--Text-Base-Tertiary,#AEAEB2)}
+.ob-src{display:flex;flex-direction:column;gap:8px;padding:0 16px 12px}
+.ob-srcl{color:var(--Text-Base-Secondary)}
+.ob-src .cgroup.Wrap{display:flex;flex-wrap:wrap;gap:8px}
+.ob-src .chip{font-size:var(--Caption-13-size,13px)!important;line-height:var(--Caption-13-lh,18px)!important;font-weight:500;max-width:100%}
 .ob-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 16px 12px}
 .ob-chips .chip{max-width:100%}
 .ob-chips .chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -7223,11 +7227,13 @@ const OB = {mail: '', job: null, pos: null, co: '', src: [], ast: [], av: {}, in
 const OBL = {
   job: {t: 'Сфера деятельности', multi: false, v: ['Стратегические бизнес-консультации, планирование и оценка организационных систем', 'Торговля, поставка и переработка морской рыбы', 'Производство, экспорт, импорт и хранение алкогольной продукции', 'Сфера энергетики: нефтяная и газовая промышленность, нефтепродукты, добыча угля, генерация и производство всех типов энергии, экспорт, реэкспорт, продажа или поставка', 'Банковская организация', 'IT и связь', 'Пенсионер', 'Студент', 'Не работаю', 'Другая деятельность, не включённая в список']},
   pos: {t: 'Должность', multi: false, v: ['Исполнительное или высшее руководство', 'Руководитель среднего звена', 'Специалист', 'Индивидуальный предприниматель', 'Другое']},
-  src: {t: 'Источники дохода', multi: true, v: ['Заработная плата, гонорар, вознаграждение', 'Стипендия, пособие, пенсия', 'Доход от бизнеса', 'Сбережения', 'Наследство', 'Другое']},
+  src: {t: 'Источники дохода', multi: true, v: ['Заработная плата, гонорар, вознаграждение', 'Стипендия, пособие, пенсия', 'Сбережения', 'Заемные средства', 'Проценты, дивиденды, акции, доли капитала', 'Наследство, дарение, безвозмездная помощь', 'Продажа недвижимости или другого имущества']},
   ast: {t: 'Ваши основные активы', multi: true, v: ['Недвижимость', 'Финансовые инструменты', 'Драгоценные металлы', 'Банковские депозиты']}
 };
 const obValid = () => true;
 const obFilled = () => /.+@.+\..+/.test(OB.mail) && OB.job && OB.pos && OB.src.length > 0;
+/* «Источники дохода» — как в макете (14961:169993): Chip Group · Wrap (gap 8) из Chip Item · Outline, мультивыбор прямо в форме, выбранные — Selected=On */
+const obSrc = () => `<div class="ob-src"><span class="ob-srcl ts-Caption-Regular-13">Источники дохода</span>${ChipGroup(OBL.src.v.map(v => Chip({label: v, selected: OB.src.includes(v), act: 'ob-src', arg: v})), 'Wrap')}</div>`;
 const obSel = (key, label) => { const v = OB[key], has = Array.isArray(v) ? v.length : v;
   const txt = !has ? '' : Array.isArray(v) ? (key === 'src' && v.length > 1 ? 'Выбрано ' + v.length : v.join(', ')) : v;
   return Input({id: 'ob-' + key, label, captionShow: false, act: 'ob-sheet', arg: key,
@@ -7238,8 +7244,7 @@ P['ob-form'] = () => {
       ${Input({id: 'ob-mail', bind: 'ob.mail', label: 'Ваш e-mail', placeholder: 'Введите e-mail', type: 'email', value: OB.mail, caption: 'Для входа в приложение Freedom Broker'})}
       ${obSel('job', 'Сфера деятельности')}${obSel('pos', 'Должность')}
       ${Input({id: 'ob-co', bind: 'ob.co', label: 'Название компании', placeholder: 'Введите название компании', value: OB.co, captionShow: false})}
-      ${obSel('src', 'Источники дохода')}
-      ${OB.src.length ? `<div class="ob-chips">${OB.src.map(v => Chip({label: v, trail: 'Close', act: 'ob-unsrc', arg: v})).join('')}</div>` : ''}
+      ${obSrc()}
     </div>
     <div class="ig Container bx obf">${obSel('ast', 'Ваши основные активы')}
       ${OB.ast.filter(a => a !== 'Недвижимость').map(a => `<div class="ob-ah ts-Title-Semibold-16">${esc(a)}</div>${Input({id: 'ob-a' + OBL.ast.v.indexOf(a), bind: 'ob.av:' + a, label: 'Стоимость в USD', placeholder: 'от 2 000 $', mode: 'numeric', value: OB.av[a] || '', captionShow: false})}`).join('')}
@@ -7466,6 +7471,7 @@ Object.assign(ACT, {
     if (L.multi){ const a = OB[k], i = a.indexOf(v); if (i < 0) a.push(v); else a.splice(i, 1); const cb = el.querySelector('.cb'); if (cb){ cb.className = 'cb ' + (i < 0 ? 'on' : 'off'); cb.innerHTML = '<i>' + (i < 0 ? ic('tick', 16) : '') + '</i>'; } return; }
     OB[k] = v; renderOverlay(); setTimeout(() => { closeOv(); }, 160); },
   'ob-unsrc'(v){ OB.src = OB.src.filter(x => x !== v); render(); },
+  'ob-src'(v, el){ OB.src = OB.src.includes(v) ? OB.src.filter(x => x !== v) : OB.src.concat(v); if (el) el.classList.toggle('on', OB.src.includes(v)); if (typeof obSync === 'function') obSync(); },
   'ob-save'(){ if (!obFilled()) Object.assign(OB, {mail: OB.mail || 'client@mail.kz', job: OB.job || 'Банковская организация', pos: OB.pos || 'Специалист', src: OB.src.length ? OB.src : ['Заработная плата, гонорар, вознаграждение']}); ACT.push('ob-docs'); },
   'ob-skip'(){ ACT['ob-save'](); },
   'ob-doc'(){ mkSnack('Документ откроется в просмотрщике PDF'); },
@@ -7675,8 +7681,7 @@ P['ob-form'] = () => {
       ${obOther() ? Input({id: 'ob-jobx', bind: 'ob.jobx', label: 'Введите деятельность', placeholder: 'Введите деятельность', value: OB.jobx, captionShow: false}) : ''}
       ${obNeedPos() ? obSel('pos', 'Должность') : ''}
       ${obNeedCo() ? Input({id: 'ob-co', bind: 'ob.co', label: 'Название компании', placeholder: 'Введите название компании', value: OB.co, captionShow: false}) : ''}
-      ${obSel('src', 'Источники дохода')}
-      ${OB.src.length ? `<div class="ob-chips">${OB.src.map(v => Chip({label: v, trail: 'Close', act: 'ob-unsrc', arg: v})).join('')}</div>` : ''}
+      ${obSrc()}
     </div>
     <div class="ig Container bx obf">${obSel('ast', 'Ваши основные активы')}
       ${OB.ast.filter(a => a !== 'Недвижимость' && a !== 'Другое').map(a => `<div class="ob-ah ts-Title-Semibold-16">${esc(a)}</div>${Input({id: 'ob-a' + OBL.ast.v.indexOf(a), bind: 'ob.av:' + a, label: 'Стоимость в USD', placeholder: 'от 2 000 $', mode: 'numeric', value: OB.av[a] ? grp(+OB.av[a]) + ' $' : '', captionShow: false})}`).join('')}
