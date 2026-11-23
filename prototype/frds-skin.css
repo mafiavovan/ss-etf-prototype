@@ -391,23 +391,32 @@
 /* аналитика портфеля · «Режим рынка» (4-я карточка карусели) */
 #device .an-sl .an-card.an-mk2{gap:12px}
 .an-mk2 h3{margin:-6px 0 0}
-.mk-eb{font-size:13px;line-height:18px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--Text-Brand-Default,#2DAE57)}
-.mk-tag{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:12px;background:#F2F2F5;font-size:15px;font-weight:500;color:#3A3A3C}
-.mk-tag i{width:10px;height:10px;border-radius:50%;background:#4EBC73}
-.mk-t{margin:4px 0 0;font-size:20px;line-height:26px;font-weight:600;color:#0F0F0F}
-.mk-meta{display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:20px;color:#3A3A3C}
-.mk-d{color:#8E8E93}
+/* Режим рынка (14908:90865): надзаголовок Text/Success/Default · Caption Semibold 13; Tag · Subtle · Neutral · M; заголовок Title 20 Semibold;
+   дата Body 14 Text/Base/Secondary; точки — Bg/Brand/Default, пустая — обводка Border/Base/Strong; «Почему так» — Button/Accent · Primary · M */
+.mk-eb{font-size:var(--Caption-13-size);line-height:var(--Caption-13-lh);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--Text-Success-Default)}
+.mk-tag{align-self:flex-start;display:inline-flex;align-items:center;height:24px;padding:0 var(--Padding-S);border-radius:var(--Border-FULL);background:var(--Tag-Neutral-Subtle,var(--Bg-Neutral-Subtle));
+  font-size:var(--Caption-13-size);line-height:var(--Caption-13-lh);font-weight:500;color:var(--Text-Base-Secondary);
+  box-shadow:inset 0 -3px 6px color-mix(in srgb,var(--Text-Base-Tertiary) 30%,transparent),inset 0 0 0 .5px color-mix(in srgb,var(--Text-Base-Tertiary) 25%,transparent)}
+.mk-tag i{display:none}
+.mk-t{margin:4px 0 0;font-size:var(--Title-22-size,20px);font-size:20px;line-height:26px;font-weight:600;color:var(--Text-Base-Primary)}
+.mk-meta{display:flex;flex-direction:column;gap:6px;font-size:var(--Body-14-size);line-height:var(--Body-14-lh);color:var(--Text-Base-Secondary)}
+.mk-d{color:var(--Text-Base-Secondary)}
 .mk-r{display:flex;align-items:center;gap:8px}
-.mk-dots{display:inline-flex;gap:4px}.mk-dots i{width:9px;height:9px;border-radius:50%;box-sizing:border-box;border:1.5px solid #AEAEB2}.mk-dots i.on{background:#4EBC73;border-color:#4EBC73}
+.mk-dots{display:inline-flex;gap:4px}.mk-dots i{width:9px;height:9px;border-radius:50%;box-sizing:border-box;border:1.5px solid var(--Border-Base-Strong)}.mk-dots i.on{background:var(--Bg-Brand-Default);border-color:var(--Bg-Brand-Default)}
 .mk-q{display:flex;gap:4px;margin:4px 0 0 -4px}
 .mk-row{display:flex;gap:6px;align-items:stretch}
-.mk-yl{writing-mode:vertical-rl;transform:rotate(180deg);display:flex;justify-content:space-between;white-space:nowrap;font-size:11px;line-height:14px;color:#8E8E93}
-.mk-yl b{color:#0F0F0F;font-weight:600}.mk-yl em,.mk-xl em{font-style:normal}
+.mk-yl{writing-mode:vertical-rl;transform:rotate(180deg);display:flex;justify-content:space-between;white-space:nowrap;font-size:11px;line-height:14px;font-weight:600;color:var(--Text-Base-Secondary)}
+.mk-yl b{color:var(--Text-Base-Primary);font-weight:600}.mk-yl em,.mk-xl em{font-style:normal}
 .mk-qm{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
 .mk-map{display:block;flex:1;min-width:0;height:auto;aspect-ratio:326/250}
-.mk-xl{display:flex;justify-content:space-between;font-size:12px;line-height:16px;color:#8E8E93;padding-left:20px}.mk-xl b{color:#0F0F0F;font-weight:600}
-.mk-why{align-self:flex-start;height:44px;padding:0 20px;border:0;border-radius:999px;background:#5AC83A;color:#fff;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;margin-top:4px}
-.mk-fn{margin:0;font-size:13px;line-height:18px;color:#8E8E93}
+.mk-map .z0{fill:var(--Bg-Base-Inset)}.mk-map .z1{fill:var(--Bg-Base-Subtle)}.mk-map .ax{stroke:var(--Border-Base-Strong)}
+.mk-map .tr{stroke:var(--Bg-Info-Default)}.mk-map .pt{fill:var(--Bg-Info-Default)}.mk-map .now{fill:var(--Bg-Info-Default);stroke:var(--Bg-Base-Container)}
+.mk-map .lb{fill:var(--Text-Base-Secondary)}.mk-map .nl{fill:var(--Text-Info-On,#fff)}
+.mk-xl{display:flex;justify-content:space-between;font-size:12px;line-height:16px;color:var(--Text-Base-Tertiary);padding-left:20px}.mk-xl b{color:var(--Text-Base-Primary);font-weight:600}
+.mk-why{align-self:flex-start;height:40px;padding:0 var(--Padding-2XL);border:0;border-radius:var(--Border-FULL);background:var(--Bg-Brand-Default);color:var(--Text-Brand-On);
+  font-family:inherit;font-size:var(--Title-16-size);line-height:var(--Title-16-lh);font-weight:600;cursor:pointer;margin-top:4px;box-shadow:inset 0 -8px 8px rgba(0,0,0,.12)}
+.mk-why:active{background:var(--Bg-Brand-Pressed)}
+.mk-fn{margin:0;font-size:var(--Caption-13-size);line-height:var(--Caption-13-lh);color:var(--Text-Base-Tertiary)}
 
 /* аналитика портфеля · карточка с табами «Бизнес / Цена / Режим рынка» (макет 12.1) */
 #device .an-card.an-tabs{display:flex;flex-direction:column;gap:16px;padding:16px}
@@ -415,7 +424,7 @@
 .an-tp{display:flex;flex-direction:column;gap:12px}
 .an-tp[hidden]{display:none}
 .an-tp>.sub:first-child{margin:0!important}
-.an-tp hr{border:0;height:1px;background:#EBEBEF;margin:4px 0;width:100%;align-self:stretch}
+.an-tp hr{border:0;height:1px;background:var(--Border-Base-Default);margin:4px 0;width:100%;align-self:stretch}
 .an-tp .an-tks{display:flex;flex-wrap:wrap;gap:6px}
 
 /* «Сравнение доходности» вне карусели: отступ 16 (Padding/L) от подзаголовка до Segmented Control — как между блоками карточки */

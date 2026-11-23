@@ -4491,12 +4491,12 @@ const CUSVG={"USD": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=
   // «Режим рынка» — 4-я карточка карусели: сигналы точками и карта «спрос на риск × давление ставок и цен» с траекторией за 7 месяцев
   const MKP=[[-.78,.6,'мар'],[-.12,.48],[.75,.7],[.6,-.3],[-.08,-.16],[-.1,-.05],[.28,.66,'сейчас']];
   function mkMap(){ const W=326,H=250,X=v=>W/2+v*(W/2-18),Y=v=>H/2-v*(H/2-18),n=MKP.length;
-    let h='<svg class="mk-map" viewBox="0 0 '+W+' '+H+'" width="100%"><rect width="'+W+'" height="'+H+'" rx="20" fill="#F4F4F6"/><rect x="'+(W*.35)+'" y="0" width="'+(W*.3)+'" height="'+H+'" fill="#EAEAED"/><rect x="0" y="'+(H*.35)+'" width="'+W+'" height="'+(H*.3)+'" fill="#EAEAED"/>'+
-      '<line x1="'+(W/2)+'" y1="10" x2="'+(W/2)+'" y2="'+(H-10)+'" stroke="#AEAEB2"/><line x1="10" y1="'+(H/2)+'" x2="'+(W-10)+'" y2="'+(H/2)+'" stroke="#AEAEB2"/>';
-    for(let i=1;i<n;i++){ const a=MKP[i-1],b=MKP[i],o=(.35+.65*i/(n-1)).toFixed(2); h+='<line x1="'+X(a[0]).toFixed(1)+'" y1="'+Y(a[1]).toFixed(1)+'" x2="'+X(b[0]).toFixed(1)+'" y2="'+Y(b[1]).toFixed(1)+'" stroke="#2F7BF5" stroke-opacity="'+o+'" stroke-width="2" stroke-dasharray="2 4" stroke-linecap="round"/>'; }
-    MKP.forEach((p,i)=>{ const last=i===n-1,o=(.35+.65*i/(n-1)).toFixed(2); h+=last?'<circle cx="'+X(p[0]).toFixed(1)+'" cy="'+Y(p[1]).toFixed(1)+'" r="11" fill="#2F7BF5" stroke="#fff" stroke-width="4"/>':'<circle cx="'+X(p[0]).toFixed(1)+'" cy="'+Y(p[1]).toFixed(1)+'" r="5" fill="#2F7BF5" fill-opacity="'+o+'"/>';
-      if(p[2]==='мар') h+='<text x="'+(X(p[0])+9).toFixed(1)+'" y="'+(Y(p[1])+5).toFixed(1)+'" font-size="13" fill="#8E8E93">мар</text>';
-      if(last){ const lx=X(p[0])-20,ly=Y(p[1]); h+='<rect x="'+(lx-76)+'" y="'+(ly-15)+'" width="70" height="30" rx="15" fill="#2F7BF5"/><text x="'+(lx-41)+'" y="'+(ly+5)+'" text-anchor="middle" font-size="15" font-weight="600" fill="#fff">сейчас</text>'; } });
+    let h='<svg class="mk-map" viewBox="0 0 '+W+' '+H+'" width="100%"><rect width="'+W+'" height="'+H+'" rx="20" class="z0"/><rect x="'+(W*.35)+'" y="0" width="'+(W*.3)+'" height="'+H+'" class="z1"/><rect x="0" y="'+(H*.35)+'" width="'+W+'" height="'+(H*.3)+'" class="z1"/>'+
+      '<line x1="'+(W/2)+'" y1="10" x2="'+(W/2)+'" y2="'+(H-10)+'" class="ax"/><line x1="10" y1="'+(H/2)+'" x2="'+(W-10)+'" y2="'+(H/2)+'" class="ax"/>';
+    for(let i=1;i<n;i++){ const a=MKP[i-1],b=MKP[i],o=(.35+.65*i/(n-1)).toFixed(2); h+='<line x1="'+X(a[0]).toFixed(1)+'" y1="'+Y(a[1]).toFixed(1)+'" x2="'+X(b[0]).toFixed(1)+'" y2="'+Y(b[1]).toFixed(1)+'" class="tr" stroke-opacity="'+o+'" stroke-width="2" stroke-dasharray="2 4" stroke-linecap="round"/>'; }
+    MKP.forEach((p,i)=>{ const last=i===n-1,o=(.35+.65*i/(n-1)).toFixed(2); h+=last?'<circle cx="'+X(p[0]).toFixed(1)+'" cy="'+Y(p[1]).toFixed(1)+'" r="11" class="now" stroke-width="4"/>':'<circle cx="'+X(p[0]).toFixed(1)+'" cy="'+Y(p[1]).toFixed(1)+'" r="5" class="pt" fill-opacity="'+o+'"/>';
+      if(p[2]==='мар') h+='<text x="'+(X(p[0])+9).toFixed(1)+'" y="'+(Y(p[1])+5).toFixed(1)+'" font-size="13" class="lb">мар</text>';
+      if(last){ const lx=X(p[0])-20,ly=Y(p[1]); h+='<rect x="'+(lx-76)+'" y="'+(ly-15)+'" width="70" height="30" rx="15" class="pt"/><text x="'+(lx-41)+'" y="'+(ly+5)+'" text-anchor="middle" font-size="15" font-weight="600" class="nl">сейчас</text>'; } });
     return h+'</svg>'; }
   const mkDots=(n,of)=>'<span class="mk-dots">'+Array.from({length:of},(_,i)=>'<i class="'+(i<n?'on':'')+'"></i>').join('')+'</span>';
   const mkRegime=()=>'<div class="an-card an-s an-mk2"><span class="mk-eb">По рыночным данным</span><h3>Режим рынка</h3><span class="mk-tag"><i></i>Смешанные сигналы</span>'+
