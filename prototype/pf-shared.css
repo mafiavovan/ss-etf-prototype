@@ -1,0 +1,32 @@
+/* «Профиль портфеля · по составу»: табы «Бизнес» / «Цена» аналитики портфеля и их шторки */
+.pfz-rd{display:block;margin:0 auto}
+.pfz-s{margin:0;font-size:14px;line-height:20px;color:#8E8E93}
+.pfz-tg{align-self:flex-start;display:inline-flex;align-items:center;height:28px;padding:0 10px;border-radius:10px;background:#F2F2F5;font-size:13px;font-weight:500;color:#636366}
+.pfz-br{display:flex;flex-direction:column;gap:10px;padding:14px 0;background:none;border:0;border-top:1px solid #EEEEF0;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
+.pfz-bh{display:flex;align-items:center;gap:8px}.pfz-bh b{flex:1;font-size:18px;line-height:24px;font-weight:600;color:#0F0F0F}.pfz-bh span{font-size:16px;color:#3A3A3C}.pfz-bh svg{color:#8E8E93;flex:none}
+.pfz-dots{display:flex;gap:12px}.pfz-pie{display:block;flex:none}
+.pfz-hd{display:flex;align-items:center;justify-content:space-between;gap:8px;background:none;border:0;padding:0;font:inherit;width:100%;text-align:left;cursor:pointer}
+.pfz-hd b{font-size:20px;line-height:26px;font-weight:600;color:#0F0F0F;white-space:nowrap}.pfz-hd span{display:flex;align-items:center;gap:2px;font-size:14px;color:#3A3A3C;white-space:nowrap}.pfz-hd svg{color:#8E8E93}
+.pfz-bar{display:flex;flex-direction:column;gap:8px}.pfz-bar .r{display:flex;justify-content:space-between;font-size:16px;color:#636366}.pfz-bar .r b{color:#0F0F0F}.pfz-bar .r em{font-style:normal;color:#8E8E93}
+.pfz-bar>i{display:block;height:16px;border-radius:6px;background:#EEEEF0;overflow:hidden}.pfz-bar>i>b{display:block;height:100%;border-radius:6px}
+.pfz-k{font-size:15px;color:#8E8E93}
+.pfz-pl{position:relative;margin:0 24px}
+.pfz-tk{position:absolute;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center}
+.pfz-tk i{width:1px;height:8px;background:#5AC83A}.pfz-tk b{background:#5AC83A;color:#fff;font-size:13px;font-weight:600;line-height:18px;padding:4px 9px;border-radius:999px;white-space:nowrap}
+.pfz-sc{position:relative;height:30px;display:flex;align-items:center}
+.pfz-sg{display:flex;gap:4px;width:100%}.pfz-sg i{flex:1;height:16px;border-radius:4px;background:#EEEEF0}.pfz-sg i.on{background:#B6E5A8}
+.pfz-sc em{position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:#0F0F0F}
+.pfz-sc>b{position:absolute;top:50%;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;background:#5AC83A;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.15);box-sizing:border-box}
+.pfz-lg{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#8E8E93}.pfz-lg b{color:#0F0F0F;font-weight:600;display:flex;align-items:center;gap:6px}.pfz-lg b:before{content:'';width:2px;height:13px;background:#0F0F0F}
+.pfz-fn{margin:0;font-size:15px;line-height:21px;font-weight:600;color:#0F0F0F}.pfz-ds{margin:0;font-size:14px;line-height:20px;color:#8E8E93}
+.pfz-hr{display:block;height:1px;background:#EEEEF0;margin:4px 0}
+/* шторки */
+.pfz-sh{display:flex;flex-direction:column;gap:16px;padding-bottom:24px}
+.pfz-sum{display:flex!important;flex-direction:row!important;align-items:center;justify-content:space-between}.pfz-sum>b{font-size:40px;line-height:48px;font-weight:700;color:#0F0F0F}.pfz-sum .pfz-dots{gap:8px}
+.pfz-li{display:flex;gap:16px;padding:14px 0;border-top:1px solid #EEEEF0}.pfz-li:first-child{border-top:0;padding-top:4px}.pfz-li>span:last-child{display:flex;flex-direction:column;gap:4px}
+.pfz-li b{font-size:17px;line-height:23px;font-weight:500;color:#0F0F0F}.pfz-pc{font-size:15px;font-weight:600;color:#8E8E93}.pfz-pc.on{color:#2DAE57}
+.pfz-dc{display:flex!important;flex-direction:column;gap:12px}
+.pfz-ld{margin:0;font-size:18px;line-height:25px;font-weight:600;color:#636366}
+.pfz-tp{display:flex;gap:12px;padding:14px 0;border-top:1px solid #EEEEF0}.pfz-tp:first-of-type{border-top:0}
+.pfz-tp>i{flex:none;width:14px;height:14px;border-radius:50%;background:#5AC83A;margin-top:5px}
+.pfz-tp>span{display:flex;flex-direction:column;gap:4px}.pfz-tp b{font-size:17px;line-height:23px;font-weight:500;color:#0F0F0F}.pfz-tp p{margin:0;font-size:15px;line-height:21px;color:#8E8E93}.pfz-tp p em{font-style:normal;font-weight:600;color:#0F0F0F}
