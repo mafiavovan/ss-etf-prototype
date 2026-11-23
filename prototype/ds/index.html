@@ -6265,7 +6265,21 @@ html,body{background:transparent!important}
 .ltl .li{padding-left:0;padding-right:0}
 .ltl .ct{display:flex!important;flex-direction:row!important;align-items:center;justify-content:space-between;gap:8px}
 .ltc{color:var(--Text-Base-Primary)}.ltr{color:var(--Text-Base-Secondary)}
-.ltn{display:flex;gap:10px;align-items:flex-start;color:var(--Text-Base-Secondary)}
+.ltn{display:flex;gap:8px;align-items:center;color:var(--Text-Base-Tertiary)}
+/* Opening Deposits (14849:190777): валюты 48 через 4, Duotone 32; сумма + доходность в одной карточке (16), «Способ оплаты» над карточкой через 12, карточка оплаты 16/16/8 */
+.ltl{display:flex;flex-direction:column;gap:4px}
+.ltl .li.Compact{min-height:48px;padding-top:8px;padding-bottom:8px;gap:12px}
+.ltd{display:grid;place-items:center;width:32px;height:32px;color:var(--Icon-Brand-Default)}
+.ltl .lp .lslot{display:none}
+.ltsum{gap:16px!important}
+.ltsum>.l{color:var(--Text-Base-Tertiary)!important;margin-bottom:-4px}
+.ltsum .in input{font-weight:500}
+.ltinc{display:flex;align-items:center;gap:8px}
+.ltinc .k{flex:1;min-width:0;color:var(--Text-Base-Tertiary)}
+.ltinc .v{color:var(--Text-Brand-Default)}
+.ltpw{display:flex;flex-direction:column;gap:12px}
+.ltpk{color:var(--Text-Base-Secondary)}
+.lt-pay.ig.Container{padding:16px 16px 8px!important;gap:8px!important}
 .ltn .ic{flex:none;color:var(--Text-Base-Primary)}
 .ltp .ct,.anf{display:flex!important;flex-direction:row!important;justify-content:space-between;align-items:center;width:100%}
 .ltp .k{color:var(--Text-Base-Secondary)}.ltp .v{color:var(--Text-Base-Primary)}
@@ -7255,14 +7269,15 @@ const ltPayItem = () => LT.pay === 0
   ? {left: {type: 'Avatar', avType: 'Initials', initials: 'GL'}, content: {subhead: 'GL-789099', title: sumS(INV.cash, '$')}, right: {type: 'Arrow', icon: 'chevron-down'}, act: 'lt-sheet'}
   : {left: {type: 'Card'}, content: {subhead: 'Freedom Card · USD **5212', title: sumS(12640.79, '$')}, right: {type: 'Arrow', icon: 'chevron-down'}, act: 'lt-sheet'};
 P.lt = () => {
-  const cur = (k, t, d) => ListItem({left: {type: 'Icon', duo: d}, content: {kind: 'slots', html: `<span class="ltc ts-Title-Semibold-16">${t}</span><span class="ltr ts-Body-Regular-16">${String(LTR[k][LT.term]).replace('.', ',')}% годовых</span>`}, right: {type: 'Radio', on: LT.cur === k}, act: 'lt-cur', arg: k});
+  /* строка валюты как в макете Opening Deposits (14849:190777): 48, поля 8/0, Duotone 32 без подложки, Body Medium 16 + Body Regular 16, Radiobutton */
+  const cur = (k, t, d) => ListItem({density: 'Compact', left: {type: 'Slots'}, content: {kind: 'slots', html: `<span class="ltc ts-Body-Medium-16">${t}</span><span class="ltr ts-Body-Regular-16">${String(LTR[k][LT.term]).replace('.', ',')}% годовых</span>`}, right: {type: 'Radio', on: LT.cur === k}, act: 'lt-cur', arg: k}).replace('<span class="lslot"></span>', `<span class="ltd">${duo(d, 32)}</span>`);
   const body = `<div class="ig Container bx lt-c"><div class="ltg"><div class="lth ts-Title-Semibold-18">Выберите срок</div>${Segmented('ltterm', LTT, {value: LTT[LT.term]})}</div>
       <div class="ltg"><div class="lth ts-Title-Semibold-18">Выберите валюту</div><div class="ltl">${cur('usd', 'Доллары США', 'Currency/Доллар')}${cur('eur', 'Евро', 'Currency/Евро')}</div>
       <div class="ltn">${ic('Info round', 24)}<span class="ts-Caption-Regular-13">Проценты по вкладу обновляются на основании ставок: для доллара США — SOFR, для евро — EURIBOR</span></div></div></div>
-    <div class="ig Container bx camt"><span class="l ts-Caption-Regular-13">Сумма инвестирования</span>${Input({id: 'lt-amt', bind: 'lt.amt', labelShow: false, placeholder: 'от 1 000 ' + ltSym(), mode: 'numeric', value: LT.amt ? grp(ltAmt()) + ' ' + ltSym() : '', captionShow: false})}</div>
-    <div class="ig Container ltp">${ListItem({density: 'Compact', content: {kind: 'slots', html: `<span class="ts-Body-Regular-16 k">Потенциальная доходность</span><span class="ts-Title-Semibold-16 v" id="lt-inc">${esc(sumS(ltInc(), ltSym()))}</span>`}})}</div>
-    ${Title({size: 'S', type: 'Icon', iconShow: false, title: 'Способ оплаты'})}
-    <div class="ig Container bx lt-pay">${INV.acc ? Segmented('ltpay', ['Брокерский счёт', 'Карта'], {value: LT.pay ? 'Карта' : 'Брокерский счёт'}) : ''}${ListItem(ltPayItem())}</div>`;
+    <div class="ig Container bx camt ltsum"><span class="l ts-Caption-Medium-13">Сумма инвестирования</span>${Input({id: 'lt-amt', bind: 'lt.amt', labelShow: false, placeholder: 'от 1 000 ' + ltSym(), mode: 'numeric', value: LT.amt ? grp(ltAmt()) + ' ' + ltSym() : '', captionShow: false})}
+      ${Divider()}<div class="ltinc">${Asset({type: 'Icon', size: 'M', duo: 'Documents/Самозанятый'})}<span class="k ts-Body-Medium-14">Потенциальная доходность</span><span class="v ts-Title-Bold-18" id="lt-inc">${esc(sumS(ltInc(), ltSym()))}</span></div></div>
+    <div class="ltpw"><span class="ltpk ts-Caption-Medium-13">Способ оплаты</span>
+    <div class="ig Container bx lt-pay">${INV.acc ? Segmented('ltpay', ['Брокерский счёт', 'Карта'], {value: LT.pay ? 'Карта' : 'Брокерский счёт'}) : ''}${ListItem(ltPayItem())}</div></div>`;
   return page('Долгосрочные инвестиции', body, {nav: {alignment: 'Leading', layout: 'Inline'}, bottom: ButtonGroup({primary: {label: ltBtn(), disabled: !ltValid(), act: 'lt-next', id: 'lt-go'}, secondary: false})});
 };
 SEGH.ltterm = i => { LT.term = i; setTimeout(render, 200); };
