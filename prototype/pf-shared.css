@@ -73,3 +73,4 @@
 .pfz-sh .ig.Container>.ttl{padding:0}
 .pfz-sh>.ttl{padding:var(--Padding-S) 0 0}
 .pfz-sh .lslot{display:grid;place-items:center;width:32px;height:32px;background:none!important;border:0!important;box-shadow:none!important}
+.pfz-dyn{display:flex;flex-direction:column;gap:inherit;cursor:pointer}.pfz-dyn:active{opacity:.7}
