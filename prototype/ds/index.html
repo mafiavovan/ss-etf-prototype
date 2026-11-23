@@ -6514,6 +6514,16 @@ button.sd-pos{display:flex;flex-direction:column;gap:12px;width:100%;text-align:
 .sd-g b{color:var(--Text-Base-Primary)}
 /* слайдер Обзор · Бизнес · Цена */
 /* акция · табы «Обзор / Бизнес / Цена» и шторки (токены FR-T) */
+.sdf{gap:0!important}
+.sdf-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;color:var(--Text-Base-Primary)}
+.sdf-h .btn{padding-left:0;padding-right:0}
+.sdf-i{display:flex;flex-direction:column;gap:4px;width:100%;padding:12px 0;border:0;border-bottom:1px solid var(--Border-Base-Default);background:none;text-align:left;font:inherit;cursor:pointer}
+.sdf-i:active{opacity:.7}
+.sdf-m{display:flex;justify-content:space-between;align-items:center}
+.sdf-c{color:var(--Text-Success-Default);text-transform:uppercase;letter-spacing:.04em}
+.sdf-t{color:var(--Text-Base-Primary);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sdf .sub{color:var(--Text-Base-Tertiary)}
+.sdf .li{padding-left:0!important;padding-right:0!important}
 .sdt2{gap:16px!important}
 .sdt-b{display:flex;flex-direction:column;gap:12px}
 .sdt-b>.sub,.sdt-b p.sub{margin:0;color:var(--Text-Base-Tertiary)}
@@ -7957,11 +7967,20 @@ P.sd = () => { const t = TT(SD.k), ss = SD.ss && t.ss, px = pxOf(SD.k, ss), st =
     <div id="sd-pill">${sdPill()}</div><div class="sd-ch" id="sd-ch">${sdChart()}</div>
     <div class="sd-per"><div class="f">${Segmented('sdp', SDP, {value: SDP[SD.per]})}</div><button class="sd-cnd ${SD.cand ? 'on' : ''}" data-act="sd-cand" aria-label="Свечи"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 3v3M7 15v4M17 5v4M17 17v3" stroke="#3C3C43" stroke-width="1.6" stroke-linecap="round"/><rect x="5" y="6" width="4" height="9" rx="1" fill="#10C810"/><rect x="15" y="9" width="4" height="8" rx="1" fill="#E22F2F"/></svg></button></div>
     ${ss ? Notice({size: 'L', state: 'Info', title: 'Что такое Single Stock ETF?', subtitle: `Фонд на одну акцию ${t.s}, поделённый на 100 частей. Цена — 1/100 акции, рост и дивиденды — как у акции.`, closeShow: false, buttonShow: false}) : ''}
-    ${sdPos()}${st ? sdAnalysts(SD.k) + sdIdea(SD.k) : ''}${sdTabs(SD.k)}${sdNews(SD.k)}${sdSimilar(SD.k)}</div>`;
+    ${sdPos()}${st ? sdAnalysts(SD.k) + sdIdea(SD.k) : ''}${sdTabs(SD.k)}${sdNews(SD.k)}${sdFreedom(SD.k)}${sdSimilar(SD.k)}</div>`;
   return {bar: nb.bar, body, bottom: ButtonGroup({primary: {label: 'Торговать', act: 'sd-trade'}, secondary: false})}; };
 SEGH.sdm = i => { SD.ss = i === 1; setTimeout(() => render(), 200); };
 SEGH.sdp = i => { SD.per = i; const c = phone.querySelector('#sd-ch'), p = phone.querySelector('#sd-pill'); if (c) c.innerHTML = sdChart(); if (p) p.innerHTML = sdPill(); };
 SEGH.sdtab = i => { SD.tab = i; const b = phone.querySelector('#sd-tb'); if (b) b.innerHTML = sdTabBody(SD.k); };
+/* ---------- Акция: «Аналитика Freedom» — материалы по бумаге + уведомления (после «Новостей») ---------- */
+function sdMat(k){ const t = TT(k), nm = (t.s || t.n).replace(/,? Inc\.?$/, ''), base = {cat: 'Компания', co: t.n, tk: t.t, s: t.sec, v: 'Покупать', g: k === 'aapl' ? 185 : Math.round(pxOf(k, false) * 1.18), p: k === 'aapl' ? 21.3 : 18.0, au: 'Аналитики Freedom'};
+  const L = k === 'aapl' ? [['4 ноя', 'Apple продаёт всё, что может произвести, но с каждого доллара оставляет себе меньше'], ['1 мая', 'Сильный квартал и оптимистичный гайденс затмевают нарастающее давление на маржу'], ['30 янв', 'Результаты Apple Inc. (AAPL) за I кв. 2026 ФГ']]
+    : [['4 ноя', `${nm}: квартал лучше ожиданий, прогноз на год повышен`], ['1 мая', `${nm}: что заложено в цену после отчёта`], ['30 янв', `Результаты ${t.n} (${t.t}) за I кв. 2026 ФГ`]];
+  return L.map(([d, tt]) => Object.assign({}, base, {d, t: tt})); }
+function sdFreedom(k){ const t = TT(k), nm = (t.s || t.n).replace(/,? Inc\.?$/, ''), M = sdMat(k);
+  return card(`<div class="sdf-h"><b class="ts-Title-Semibold-18">Аналитика Freedom</b>${Button({type: 'Ghost', size: 'S', label: 'Все', act: 'push', arg: 'ideas13', right: false})}</div>
+    ${M.map((x, i) => `<button class="sdf-i" data-act="ida-open" data-arg="sa${i}"><span class="sdf-m"><span class="sdf-c ts-Caption-Medium-13">${x.cat}</span><span class="ts-Caption-Regular-13 sub">${x.d}</span></span><b class="ts-Title-Semibold-16 sdf-t">${esc(x.t)}</b><span class="ts-Caption-Regular-13 sub">${esc(nm)}: основная бумага</span></button>`).join('')}
+    ${ListItem({density: 'Compact', content: {title: `Уведомления об аналитике по ${nm}`, subtitle: `Новые идеи, отчёты и обзоры с ${t.t}`}, right: {type: 'Switch', on: S.sel['sdntf' + k] !== false, key: 'sdntf' + k}})}`, 'sdf'); }
 /* ======================================================================
    Акция: «Обзор · Бизнес · Цена» — табы в Container (макет 14849:193362) вместо карусели «Профиль компании».
    Строки «Бизнеса» и блоки «Цены» открывают шторки (Bottom Sheet Large): критерий n/6 со списком условий, «Колебания цены», «Динамика цены».
@@ -8290,7 +8309,7 @@ function idaFDraw(){ const F = IDA._F, b = phone.querySelector('#ida-flt'); if (
   b.querySelectorAll('.ida-fs').forEach((g, gi) => g.querySelectorAll('.chip').forEach((c, i) => c.classList.toggle('on', gi === 0 ? F.dir.includes(IDADIR[i]) : gi === 1 ? F.sec.includes(IDASEC[i]) : F.per === i)));
   const l = phone.querySelector('#ida-show .lbl'); if (l) l.textContent = 'Показать ' + idaCount(F); }
 const nbRep = j => { const n = NBI[j]; return {cat: 'Компании', t: n.t, co: n.co, tk: n.tk, v: n.v, g: n.g, p: n.p, au: n.au, d: n.d}; };
-P['ida-rep'] = () => { const x = IDA.cur === 'rv' ? IDARV : String(IDA.cur).startsWith('nb') ? nbRep(+String(IDA.cur).slice(2)) : IDAL[+IDA.cur], k = x.tk && TK[x.tk.toLowerCase()] ? x.tk.toLowerCase() : null;
+P['ida-rep'] = () => { const x = IDA.cur === 'rv' ? IDARV : String(IDA.cur).startsWith('sa') ? sdMat(SD.k)[+String(IDA.cur).slice(2)] : String(IDA.cur).startsWith('nb') ? nbRep(+String(IDA.cur).slice(2)) : IDAL[+IDA.cur], k = x.tk && TK[x.tk.toLowerCase()] ? x.tk.toLowerCase() : null;
   const txt = x.v ? `Аналитики Freedom Broker ${x.v === 'Держать' ? 'рекомендуют держать' : x.v === 'Продавать' ? 'рекомендуют продавать' : 'сохраняют рекомендацию «Покупать» по'} ${esc(x.co.replace(/\.$/, ""))}. Целевая цена — $${x.g}, это ${x.p < 0 ? 'ниже' : 'выше'} цены на дату отчёта на ${String(Math.abs(x.p)).replace('.', ',')} %.` : esc(x.x);
   const body = `<div class="ida-rp">${idaTop(x.cat, x.dl || x.d + ' 2026')}<h1 class="ts-Title-Bold-22">${esc(x.t)}</h1>${x.co ? `<span class="ts-Body-Regular-14 sub">${esc(x.co)} · ${x.tk}</span>` : x.sec ? `<span class="ts-Body-Regular-14 sub">Отрасль: ${esc(x.sec)}</span>` : ''}
     ${x.v ? `<span class="ida-rec">${Tag({label: x.v, color: x.v === 'Покупать' ? 'Green' : x.v === 'Продавать' ? 'Red' : 'Neutral', style: 'Subtle', size: 'M'})}<span class="ts-Body-Regular-14">Цель <b>$${x.g}</b> · ${idaPct(x.p)} к цене отчёта</span></span>` : ''}
