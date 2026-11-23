@@ -417,3 +417,6 @@
 .an-tp>.sub:first-child{margin:0!important}
 .an-tp hr{border:0;height:1px;background:#EBEBEF;margin:4px 0;width:100%;align-self:stretch}
 .an-tp .an-tks{display:flex;flex-wrap:wrap;gap:6px}
+
+/* «Сравнение доходности» вне карусели: отступ 16 (Padding/L) от подзаголовка до Segmented Control — как между блоками карточки */
+#device .an-card.an-cmp>.sub+div{margin-top:var(--Padding-L)}
