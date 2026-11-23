@@ -4544,19 +4544,20 @@ const CUSVG={"USD": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=
       P.forEach((c,i)=>{ const h=c.querySelector(':scope>h3'); if(h&&i<2) h.remove(); if(i===2){ const h2=c.querySelector(':scope>h3'); if(h2) h2.remove(); } const pn=document.createElement('div'); pn.className='an-tp'+(c.classList.contains('an-mk2')?' an-mk2':''); pn.hidden=i>0; while(c.firstChild) pn.appendChild(c.firstChild); tb.appendChild(pn); });
       sl.replaceWith(tb);
       // «Бизнес» и «Цена» — новый формат «Профиля портфеля» (12.1): круги долей по критериям, шкалы с бумагами; строки открывают шторки
-      const CHV='<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
       const pn=tb.querySelectorAll('.an-tp');
+      const CH16='<svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      // Title · L · Type=Button (Ghost S); List Item · Compact + Arrow; Progress Bar · S — по метрикам и токенам FR-T
+      const TTL=(t,btn,at)=>'<div class="pfz-ttl"><span class="t">'+t+'</span><button class="pfz-gh" '+(at||'')+'>'+btn+CH16+'</button></div>';
+      const PB=(t,v,w,c)=>'<div class="pfz-pb'+(c?' '+c:'')+'"><div class="lbl"><span class="t">'+t+'</span><span class="v">'+v+'</span></div><div class="tr"><i style="width:'+w+'%"></i></div></div>';
       pn[0].innerHTML='<p class="pfz-s">По отчётности за последний год · в сравнении с рынком (S&P 500)</p><span class="pfz-tg">Демонстрационные данные</span>'+pfzRadar(PFZ.radar)+
-        '<div>'+PFZ.bz.map((b,i)=>'<button class="pfz-br" data-pfbz="'+i+'"><span class="pfz-bh"><b>'+b.t+'</b><span>'+b.v+'/6</span>'+CHV+'</span><span class="pfz-dots">'+b.p.map(p=>pfzPie(p,24)).join('')+'</span></button>').join('')+'</div>'+
+        '<div class="pfz-lgp">'+PFZ.bz.map((b,i)=>'<button class="pfz-li" data-pfbz="'+i+'"><span class="r"><span class="tt">'+b.t+'</span><span class="mv">'+b.v+'/6</span><span class="ch">'+CH16+'</span></span><span class="pfz-dots">'+b.p.map(p=>pfzPie(p,24)).join('')+'</span></button>').join('')+'</div>'+
         '<p class="pfz-ds">Описывает прошлое и текущее состояние. Не прогноз и не рекомендация.</p>';
-      const bar=(l,v,w,c)=>'<div class="pfz-bar"><div class="r"><span>'+l+'</span><span><b>'+v+'</b> <em>в год</em></span></div><i><b style="width:'+w+'%;background:'+c+'"></b></i></div>';
       pn[1].innerHTML='<p class="pfz-s">За год, по 25 сен · в сравнении с рынком (S&P 500)</p>'+
-        '<div class="pfz-hd"><b>Колебания цены</b><span>почти в 2 раза сильнее'+CHV+'</span></div>'+bar('Портфель','25,2 %',50,'#5AC83A')+bar('Рынок','13,0 %',26,'#4285F4')+
+        TTL('Колебания цены','почти в 2 раза сильнее')+PB('Портфель','25,2 % в год',50)+PB('Рынок','13,0 % в год',26,'info')+
         '<span class="pfz-k">Бумаги портфеля</span>'+pfzPills(PFZ.vol)+'<i class="pfz-hr"></i>'+
-        '<button class="pfz-hd" data-pfdyn><b>Динамика цены</b><span>близко к рынку'+CHV+'</span></button>'+pfzScale(PFZ.dyn.dot)+pfzPills(PFZ.dyn.t)+
+        TTL('Динамика цены','близко к рынку','data-pfdyn')+pfzScale(PFZ.dyn.dot)+pfzPills(PFZ.dyn.t)+
         '<div class="pfz-lg"><span>меньше</span><b>как у рынка</b><span>больше</span></div>'+
         '<p class="pfz-fn">Динамика — по 90 % портфеля (без QQQ и AGG); колебания — по всему портфелю</p><p class="pfz-ds">Описывает прошлое и текущее состояние. Не прогноз и не рекомендация.</p>';
-      tb.addEventListener('click',e=>{ const r=e.target.closest('[data-pfbz]'); if(r){ dsOpen('pfbz',{i:+r.dataset.pfbz}); return; } if(e.target.closest('[data-pfdyn]')) dsOpen('pfdyn'); });
       seg($('anTab'),i=>{ tb.querySelectorAll('.an-tp').forEach((p,j)=>p.hidden=j!==i); }); }
   } }
   { const mv=[...document.querySelectorAll('#scrAn .an-card')].find(c=>/Движение денег/.test(c.textContent)); if(mv){ mv.classList.add('mv10');

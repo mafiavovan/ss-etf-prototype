@@ -12,12 +12,13 @@ var PFZ = {
   top: [{t: 'NVDA', w: '40,4', d: [['Нет', '12 месяцев', '+27,5 %', '+35,7 %'], ['Да', '6 месяцев', '+31,7 %', '+29,7 %']]}, {t: 'TSLA', w: '23,9', d: [['Нет', '12 месяцев', '−16,0 %', '−10,4 %'], ['Да', '6 месяцев', '0,0 %', '−2,4 %']]}]
 };
 /* круг-индикатор доли: серый круг и зелёный сектор p % */
-function pfzPie(p, s){ s = s || 22; const r = s / 2; if (p >= 100) return '<svg class="pfz-pie" width="' + s + '" height="' + s + '" viewBox="0 0 ' + s + ' ' + s + '"><circle cx="' + r + '" cy="' + r + '" r="' + r + '" fill="#5AC83A"/></svg>';
+function pfzPie(p, s){ s = s || 22; const r = s / 2;
+  if (p >= 100) return '<svg class="pfz-pie" width="' + s + '" height="' + s + '" viewBox="0 0 ' + s + ' ' + s + '"><circle class="f" cx="' + r + '" cy="' + r + '" r="' + r + '"/></svg>';
   const a = p / 100 * 2 * Math.PI, x = r + r * Math.sin(a), y = r - r * Math.cos(a);
-  return '<svg class="pfz-pie" width="' + s + '" height="' + s + '" viewBox="0 0 ' + s + ' ' + s + '"><circle cx="' + r + '" cy="' + r + '" r="' + r + '" fill="#E5E5EA"/>' + (p > 0 ? '<path d="M' + r + ' ' + r + 'L' + r + ' 0A' + r + ' ' + r + ' 0 ' + (p > 50 ? 1 : 0) + ' 1 ' + x.toFixed(2) + ' ' + y.toFixed(2) + 'Z" fill="#5AC83A"/>' : '') + '</svg>'; }
+  return '<svg class="pfz-pie" width="' + s + '" height="' + s + '" viewBox="0 0 ' + s + ' ' + s + '"><circle class="t" cx="' + r + '" cy="' + r + '" r="' + r + '"/>' + (p > 0 ? '<path class="f" d="M' + r + ' ' + r + 'L' + r + ' 0A' + r + ' ' + r + ' 0 ' + (p > 50 ? 1 : 0) + ' 1 ' + x.toFixed(2) + ' ' + y.toFixed(2) + 'Z"/>' : '') + '</svg>'; }
 /* бумаги на шкале: таблетки с риской сверху, ряды не перекрываются */
 function pfzPills(list){ const rows = Math.max.apply(null, list.map(x => x[2])) + 1;
-  return '<div class="pfz-pl" style="height:' + (rows * 32 + 4) + 'px">' + list.map(x => '<span class="pfz-tk" style="left:' + x[1] + '%;top:' + (x[2] * 32) + 'px"><i></i><b>' + x[0] + '</b></span>').join('') + '</div>'; }
+  return '<div class="pfz-pl" style="height:' + (rows * 32 + 4) + 'px">' + list.map(x => '<span class="pfz-tk" style="left:' + x[1] + '%;top:' + (x[2] * 32) + 'px"><i></i><b class="pfz-tag">' + x[0] + '</b></span>').join('') + '</div>'; }
 /* сегментная шкала: 10 сегментов, медиана посередине, точка — портфель */
 function pfzScale(dot){ const lo = Math.min(dot, 50), hi = Math.max(dot, 50);
   return '<div class="pfz-sc"><span class="pfz-sg">' + Array.from({length: 10}, (_, i) => { const a = i * 10, b = a + 10; return '<i class="' + (b > lo + .01 && a < hi - .01 ? 'on' : '') + '"></i>'; }).join('') + '</span><em></em><b style="left:' + dot + '%"></b></div>'; }
@@ -27,5 +28,5 @@ function pfzRadar(v){ const cx = 163, cy = 108, R = 64, ang = i => -Math.PI / 2 
   for (let i = 0; i < n; i++){ const p0 = pts[(i + n - 1) % n], p1 = pts[i], p2 = pts[(i + 1) % n], p3 = pts[(i + 2) % n]; if (!i) d = 'M' + p1[0].toFixed(1) + ' ' + p1[1].toFixed(1);
     d += 'C' + (p1[0] + (p2[0] - p0[0]) / 6).toFixed(1) + ' ' + (p1[1] + (p2[1] - p0[1]) / 6).toFixed(1) + ' ' + (p2[0] - (p3[0] - p1[0]) / 6).toFixed(1) + ' ' + (p2[1] - (p3[1] - p1[1]) / 6).toFixed(1) + ' ' + p2[0].toFixed(1) + ' ' + p2[1].toFixed(1); }
   const lab = [['Цена бизнеса', cx, cy - R - 12, 'middle'], ['Прогноз|роста', cx + R + 14, cy - 28, 'start'], ['Прошлые|результаты', cx + R * .62 + 10, cy + R * .85 + 6, 'start'], ['Финансовая|устойчивость', cx - R * .62 - 10, cy + R * .85 + 6, 'end'], ['Дивиденды', cx - R - 14, cy - 22, 'end']];
-  return '<svg class="pfz-rd" viewBox="0 0 326 216" width="100%"><g fill="none" stroke="#E5E5EA">' + [1, .66, .33].map(k => '<circle cx="' + cx + '" cy="' + cy + '" r="' + (R * k).toFixed(1) + '"/>').join('') + [0, 1, 2, 3, 4].map(i => '<line x1="' + cx + '" y1="' + cy + '" x2="' + P(i, R)[0].toFixed(1) + '" y2="' + P(i, R)[1].toFixed(1) + '"/>').join('') + '</g><path d="' + d + 'Z" fill="rgba(90,200,58,.25)" stroke="#5AC83A" stroke-width="2.2"/>' +
-    lab.map(([t, x, y, a]) => '<text x="' + x + '" y="' + y + '" text-anchor="' + a + '" font-size="12.5" font-weight="500" fill="#8E8E93">' + t.split('|').map((q, j) => '<tspan x="' + x + '" dy="' + (j ? 15 : 0) + '">' + q + '</tspan>').join('') + '</text>').join('') + '</svg>'; }
+  return '<svg class="pfz-rd" viewBox="0 0 326 216" width="100%"><g class="pfz-rg">' + [1, .66, .33].map(k => '<circle cx="' + cx + '" cy="' + cy + '" r="' + (R * k).toFixed(1) + '"/>').join('') + [0, 1, 2, 3, 4].map(i => '<line x1="' + cx + '" y1="' + cy + '" x2="' + P(i, R)[0].toFixed(1) + '" y2="' + P(i, R)[1].toFixed(1) + '"/>').join('') + '</g><path d="' + d + 'Z" class="pfz-ra"/>' +
+    lab.map(([t, x, y, a]) => '<text x="' + x + '" y="' + y + '" text-anchor="' + a + '" class="pfz-rt">' + t.split('|').map((q, j) => '<tspan x="' + x + '" dy="' + (j ? 15 : 0) + '">' + q + '</tspan>').join('') + '</text>').join('') + '</svg>'; }

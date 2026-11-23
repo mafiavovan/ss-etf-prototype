@@ -1,32 +1,73 @@
-/* «Профиль портфеля · по составу»: табы «Бизнес» / «Цена» аналитики портфеля и их шторки */
+/* «Профиль портфеля · по составу»: табы «Бизнес» / «Цена» аналитики портфеля и их шторки.
+   Только токены FR-T (frds-tokens). Компоненты ДС повторены по метрикам FR-T:
+   Title L · Type=Button (Ghost S), List Item · Compact, Progress Bar · S, Tag · M (Neutral Subtle / Green Filled), Divider.
+   Нет в FR-T (локальные, кандидаты в ДС): радар, круги долей, бумаги на шкале, сегментная шкала с медианой и легендой. */
+
+/* тексты */
+.pfz-s{margin:0;font-size:var(--Body-14-size);line-height:var(--Body-14-lh);font-weight:400;color:var(--Text-Base-Tertiary)}
+.pfz-k{font-size:var(--Caption-13-size);line-height:var(--Caption-13-lh);font-weight:500;color:var(--Text-Base-Tertiary)}
+.pfz-fn{margin:0;font-size:var(--Title-14-size);line-height:var(--Title-14-lh);font-weight:600;color:var(--Text-Base-Primary)}
+.pfz-ds{margin:0;font-size:var(--Caption-13-size);line-height:var(--Caption-13-lh);font-weight:400;color:var(--Text-Base-Tertiary)}
+.pfz-ld{margin:0;font-size:var(--Body-16-size);line-height:var(--Body-16-lh);font-weight:400;color:var(--Text-Base-Secondary)}
+
+/* Tag · M · Neutral · Subtle */
+.pfz-tg{align-self:flex-start;display:inline-flex;align-items:center;height:24px;padding:0 var(--Padding-S);border-radius:var(--Border-FULL);
+  background:var(--Tag-Neutral-Subtle,var(--Bg-Neutral-Subtle));color:var(--Text-Base-Secondary);font-size:var(--Caption-13-size);line-height:var(--Caption-13-lh);font-weight:500;white-space:nowrap}
+
+/* Title · L · Type=Button: заголовок Title/Bold 18, справа Button/Accent Ghost S (поля 0) с шевроном 16 */
+.pfz-ttl{display:flex;align-items:center;gap:var(--Padding-S);min-height:34px}
+.pfz-ttl .t{flex:1;min-width:0;font-size:var(--Title-18-size);line-height:var(--Title-18-lh);font-weight:700;color:var(--Text-Base-Primary)}
+.pfz-gh{display:inline-flex;align-items:center;gap:var(--Padding-XS);height:32px;padding:0;border:0;background:none;font:inherit;cursor:pointer;
+  font-size:var(--Caption-13-size);line-height:var(--Caption-13-lh);font-weight:500;color:var(--Text-Brand-Default);white-space:nowrap}
+.pfz-gh svg{width:16px;height:16px;color:var(--Icon-Brand-Default);flex:none}
+.pfz-gh:active{color:var(--Text-Brand-Pressed)}
+
+/* List Item · Compact · Right Part=Arrow + круги долей под строкой; между строками Divider */
+.pfz-lgp{display:flex;flex-direction:column}
+.pfz-li{display:flex;flex-direction:column;gap:var(--Padding-S);width:100%;padding:var(--Padding-M) 0;background:none;border:0;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.pfz-li+.pfz-li{box-shadow:0 -1px 0 var(--Border-Base-Default)}
+.pfz-li .r{display:flex;align-items:center;gap:var(--Padding-M);min-height:24px}
+.pfz-li .tt{flex:1;min-width:0;font-size:var(--Title-16-size);line-height:var(--Title-16-lh);font-weight:600;color:var(--Text-Base-Primary)}
+.pfz-li .mv{font-size:var(--Body-14-size);line-height:var(--Body-14-lh);font-weight:500;color:var(--Text-Base-Secondary)}
+.pfz-li .ch{width:24px;height:24px;flex:none;color:var(--Icon-Control-Default)}
+.pfz-li:active{opacity:.7}
+
+/* Progress Bar · S: подписи Body/Regular 14, линия 4 px. «Рынок» — синяя линия: в FR-T нет состояния Info (GAP) */
+.pfz-pb{display:flex;flex-direction:column;gap:var(--Padding-S)}
+.pfz-pb .lbl{display:flex;gap:var(--Padding-S);align-items:baseline;font-size:var(--Body-14-size);line-height:var(--Body-14-lh)}
+.pfz-pb .lbl .t{flex:1;min-width:0;color:var(--Text-Base-Primary)}.pfz-pb .lbl .v{color:var(--Text-Base-Secondary)}
+.pfz-pb .tr{height:4px;border-radius:var(--Border-FULL);background:var(--Bg-Neutral-Default);overflow:hidden}
+.pfz-pb .tr i{display:block;height:100%;border-radius:inherit;background:var(--Bg-Brand-Default)}
+.pfz-pb.info .tr i{background:var(--Bg-Info-Default)}
+
+/* Divider */
+.pfz-hr{display:block;height:1px;background:var(--Border-Base-Default);margin:var(--Padding-XS) 0}
+
+/* ЛОКАЛЬНОЕ · круги долей */
+.pfz-dots{display:flex;gap:var(--Padding-S)}
+.pfz-pie{display:block;flex:none}.pfz-pie .t{fill:var(--Bg-Neutral-Default)}.pfz-pie .f{fill:var(--Bg-Brand-Default)}
+/* ЛОКАЛЬНОЕ · радар */
 .pfz-rd{display:block;margin:0 auto}
-.pfz-s{margin:0;font-size:14px;line-height:20px;color:#8E8E93}
-.pfz-tg{align-self:flex-start;display:inline-flex;align-items:center;height:28px;padding:0 10px;border-radius:10px;background:#F2F2F5;font-size:13px;font-weight:500;color:#636366}
-.pfz-br{display:flex;flex-direction:column;gap:10px;padding:14px 0;background:none;border:0;border-top:1px solid #EEEEF0;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
-.pfz-bh{display:flex;align-items:center;gap:8px}.pfz-bh b{flex:1;font-size:18px;line-height:24px;font-weight:600;color:#0F0F0F}.pfz-bh span{font-size:16px;color:#3A3A3C}.pfz-bh svg{color:#8E8E93;flex:none}
-.pfz-dots{display:flex;gap:12px}.pfz-pie{display:block;flex:none}
-.pfz-hd{display:flex;align-items:center;justify-content:space-between;gap:8px;background:none;border:0;padding:0;font:inherit;width:100%;text-align:left;cursor:pointer}
-.pfz-hd b{font-size:20px;line-height:26px;font-weight:600;color:#0F0F0F;white-space:nowrap}.pfz-hd span{display:flex;align-items:center;gap:2px;font-size:14px;color:#3A3A3C;white-space:nowrap}.pfz-hd svg{color:#8E8E93}
-.pfz-bar{display:flex;flex-direction:column;gap:8px}.pfz-bar .r{display:flex;justify-content:space-between;font-size:16px;color:#636366}.pfz-bar .r b{color:#0F0F0F}.pfz-bar .r em{font-style:normal;color:#8E8E93}
-.pfz-bar>i{display:block;height:16px;border-radius:6px;background:#EEEEF0;overflow:hidden}.pfz-bar>i>b{display:block;height:100%;border-radius:6px}
-.pfz-k{font-size:15px;color:#8E8E93}
+.pfz-rg{fill:none;stroke:var(--Border-Base-Default)}
+.pfz-ra{fill:color-mix(in srgb,var(--Bg-Brand-Default) 24%,transparent);stroke:var(--Bg-Brand-Default);stroke-width:2}
+.pfz-rt{font-size:var(--Caption-13-size);font-weight:500;fill:var(--Text-Base-Tertiary)}
+/* ЛОКАЛЬНОЕ · бумаги на шкале: риска + Tag · M · Green · Filled */
 .pfz-pl{position:relative;margin:0 24px}
 .pfz-tk{position:absolute;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center}
-.pfz-tk i{width:1px;height:8px;background:#5AC83A}.pfz-tk b{background:#5AC83A;color:#fff;font-size:13px;font-weight:600;line-height:18px;padding:4px 9px;border-radius:999px;white-space:nowrap}
-.pfz-sc{position:relative;height:30px;display:flex;align-items:center}
-.pfz-sg{display:flex;gap:4px;width:100%}.pfz-sg i{flex:1;height:16px;border-radius:4px;background:#EEEEF0}.pfz-sg i.on{background:#B6E5A8}
-.pfz-sc em{position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:#0F0F0F}
-.pfz-sc>b{position:absolute;top:50%;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;background:#5AC83A;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.15);box-sizing:border-box}
-.pfz-lg{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#8E8E93}.pfz-lg b{color:#0F0F0F;font-weight:600;display:flex;align-items:center;gap:6px}.pfz-lg b:before{content:'';width:2px;height:13px;background:#0F0F0F}
-.pfz-fn{margin:0;font-size:15px;line-height:21px;font-weight:600;color:#0F0F0F}.pfz-ds{margin:0;font-size:14px;line-height:20px;color:#8E8E93}
-.pfz-hr{display:block;height:1px;background:#EEEEF0;margin:4px 0}
-/* шторки */
-.pfz-sh{display:flex;flex-direction:column;gap:16px;padding-bottom:24px}
-.pfz-sum{display:flex!important;flex-direction:row!important;align-items:center;justify-content:space-between}.pfz-sum>b{font-size:40px;line-height:48px;font-weight:700;color:#0F0F0F}.pfz-sum .pfz-dots{gap:8px}
-.pfz-li{display:flex;gap:16px;padding:14px 0;border-top:1px solid #EEEEF0}.pfz-li:first-child{border-top:0;padding-top:4px}.pfz-li>span:last-child{display:flex;flex-direction:column;gap:4px}
-.pfz-li b{font-size:17px;line-height:23px;font-weight:500;color:#0F0F0F}.pfz-pc{font-size:15px;font-weight:600;color:#8E8E93}.pfz-pc.on{color:#2DAE57}
-.pfz-dc{display:flex!important;flex-direction:column;gap:12px}
-.pfz-ld{margin:0;font-size:18px;line-height:25px;font-weight:600;color:#636366}
-.pfz-tp{display:flex;gap:12px;padding:14px 0;border-top:1px solid #EEEEF0}.pfz-tp:first-of-type{border-top:0}
-.pfz-tp>i{flex:none;width:14px;height:14px;border-radius:50%;background:#5AC83A;margin-top:5px}
-.pfz-tp>span{display:flex;flex-direction:column;gap:4px}.pfz-tp b{font-size:17px;line-height:23px;font-weight:500;color:#0F0F0F}.pfz-tp p{margin:0;font-size:15px;line-height:21px;color:#8E8E93}.pfz-tp p em{font-style:normal;font-weight:600;color:#0F0F0F}
+.pfz-tk i{width:1px;height:8px;background:var(--Bg-Brand-Default)}
+.pfz-tag{display:inline-flex;align-items:center;height:24px;padding:0 var(--Padding-S);border-radius:var(--Border-FULL);background:var(--Bg-Brand-Default);color:var(--Text-Brand-On);
+  font-size:var(--Caption-13-size);line-height:var(--Caption-13-lh);font-weight:500;white-space:nowrap}
+/* ЛОКАЛЬНОЕ · сегментная шкала с медианой и легенда */
+.pfz-sc{position:relative;height:28px;display:flex;align-items:center}
+.pfz-sg{display:flex;gap:var(--Padding-XS);width:100%}.pfz-sg i{flex:1;height:12px;border-radius:var(--Border-XS);background:var(--Bg-Neutral-Default)}.pfz-sg i.on{background:var(--Bg-Brand-Subtle)}
+.pfz-sc em{position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--Bg-Base-Inverse)}
+.pfz-sc>b{position:absolute;top:50%;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;background:var(--Bg-Brand-Default);border:3px solid var(--Bg-Base-Container);box-shadow:var(--shadow-card,0 2px 8px rgba(0,0,0,.12));box-sizing:border-box}
+.pfz-lg{display:flex;justify-content:space-between;align-items:center;font-size:var(--Caption-13-size);line-height:var(--Caption-13-lh);color:var(--Text-Base-Tertiary)}
+.pfz-lg b{color:var(--Text-Base-Primary);font-weight:500;display:flex;align-items:center;gap:6px}.pfz-lg b:before{content:'';width:2px;height:13px;background:var(--Bg-Base-Inverse)}
+
+/* шторки (в DS — Bottom Sheet Large; внутри Title, List Group, List Item, Tag из функций ДС) */
+.pfz-sh{display:flex;flex-direction:column;gap:var(--Padding-L);padding:0 0 var(--Padding-2XL)}
+.pfz-sh .ig.Container{display:flex;flex-direction:column;gap:var(--Padding-M);padding:var(--Padding-L)}
+.pfz-sh .ig.Container>.ttl{padding:0}
+.pfz-sh>.ttl{padding:var(--Padding-S) 0 0}
+.pfz-sh .lslot{display:grid;place-items:center;width:32px;height:32px;background:none!important;border:0!important;box-shadow:none!important}
