@@ -136,7 +136,9 @@
       $('ssNote').classList.toggle('bad',want>0&&lots===0);
       $('ssNote').innerHTML=want===0?'Минимум — 1/100 акции, '+fmt2(lot):lots===0?'Минимум — 1/100 акции, '+fmt2(lot):rest>=0.01?'Купим на <b>'+fmt2(cost)+'</b>, '+fmt2(rest)+' останется на счёте':'Купим ровно на <b>'+fmt2(cost)+'</b>';
       $('go').classList.toggle('off',bad||lots===0); }
-    if(FRESH){ const lack=!sell&&order().total>ACCS[0].bal+1e-9&&S.acc==='gl'; $('go').dataset.dep=lack?'1':''; $('go').textContent=lack?'Пополнить счёт':'Продолжить'; if(lack) $('go').classList.remove('off'); }
+    /* кнопка заявки: «Купить» / «Продать» (без «Пополнить счёт»); у нового клиента при нехватке денег она по-прежнему ведёт на пополнение */
+    $('go').textContent=sell?'Продать':'Купить';
+    if(FRESH){ const lack=!sell&&order().total>ACCS[0].bal+1e-9&&S.acc==='gl'; $('go').dataset.dep=lack?'1':''; if(lack) $('go').classList.remove('off'); } else $('go').dataset.dep='';
   }
 
   // ── input ──
