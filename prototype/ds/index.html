@@ -6513,6 +6513,41 @@ button.sd-pos{display:flex;flex-direction:column;gap:12px;width:100%;text-align:
 .sd-g>div{display:flex;flex-direction:column;gap:4px;min-width:0}
 .sd-g b{color:var(--Text-Base-Primary)}
 /* слайдер Обзор · Бизнес · Цена */
+/* акция · табы «Обзор / Бизнес / Цена» и шторки (токены FR-T) */
+.sdt2{gap:16px!important}
+.sdt-b{display:flex;flex-direction:column;gap:12px}
+.sdt-b>.sub,.sdt-b p.sub{margin:0;color:var(--Text-Base-Tertiary)}
+.sdt-b>.tag{align-self:flex-start}
+.sdt-rows{display:flex;flex-direction:column;gap:16px}
+.sdt-r{display:block;width:100%;padding:0;border:0;background:none;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.sdt-r:active{opacity:.7}
+.sdt-r .pb{padding:0!important}
+.sdt-r .pb .lbl{align-items:center}
+.sdt-chv{display:inline-flex;margin-left:-4px;color:var(--Icon-Control-Default)}
+.sdt-k{color:var(--Text-Base-Tertiary);margin-top:4px}
+.bzst{display:block;flex:none}
+.bzst circle{fill:var(--Bg-Neutral-Default)}.bzst{color:var(--Icon-Base-Tertiary)}
+.bzst.y circle{fill:var(--Bg-Brand-Default)}.bzst.y{color:var(--Icon-Brand-On)}
+.bzst.x circle{fill:var(--Bg-Neutral-Subtle)}.bzst.x{color:var(--Icon-Base-Disabled)}
+.sdsh{display:flex;flex-direction:column;gap:16px;padding-bottom:24px}
+.sdsh .lslot{display:grid!important;place-items:center;width:24px;height:24px;background:none!important;box-shadow:none!important;border:0!important;margin-top:1px}
+.sdsh-sum{display:flex!important;flex-direction:row!important;align-items:center;justify-content:space-between;gap:12px}
+.sdsh-sum b{color:var(--Text-Base-Primary)}
+.sdsh-dots{display:flex;gap:4px}
+.sdsh-fc{display:flex!important;flex-direction:column;gap:12px}
+.sdsh-fc .pb{padding:0!important}
+.sdsh-fc .pb.Default .pl-tr i{background:var(--Bg-Neutral-Pressed,var(--Border-Base-Strong))}
+.sdsh-fc .li{padding:0!important;min-height:28px!important}
+.sdsh-fh{display:flex;align-items:center;gap:8px;color:var(--Text-Base-Primary)}
+.sdsh-y27{position:relative}.sdsh-gr{position:absolute;left:112px;top:-2px}
+.sdsh-ld{margin:0;color:var(--Text-Base-Secondary)}
+.sdsh-sc{display:flex!important;flex-direction:column;gap:12px}
+.sdsh-h{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sdsh-h .ttl{padding:0!important;flex:none;min-height:0}
+.sdsh-tx{text-align:right;color:var(--Text-Base-Secondary)}
+.sdsh-yn{display:block;width:12px;height:12px;border-radius:50%;box-sizing:border-box;border:2px solid var(--Border-Base-Strong)}
+.sdsh-yn.y{background:var(--Bg-Brand-Default);border-color:var(--Bg-Brand-Default)}
+.sdsh-ds{margin:0;color:var(--Text-Base-Tertiary)}
 .sd-sl{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 16px 4px;scrollbar-width:none;align-items:stretch}
 .sd-sl::-webkit-scrollbar{display:none}
 .sl-c{flex:0 0 calc(100% - 40px);scroll-snap-align:center;background:var(--Bg-Base-Container,#fff);border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:12px;box-sizing:border-box}
@@ -7889,8 +7924,8 @@ function pfRadar(v){ const cx = 163, cy = 108, R = 64, ang = i => -Math.PI / 2 +
     if (!i) d = `M${p1[0].toFixed(1)} ${p1[1].toFixed(1)}`; const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6], c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
     d += `C${c1.map(z => z.toFixed(1)).join(' ')} ${c2.map(z => z.toFixed(1)).join(' ')} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`; }
   const lab = [['Цена бизнеса', cx, cy - R - 12, 'middle'], ['Прогноз\nроста', cx + R + 14, cy - 28, 'start'], ['Прошлые\nрезультаты', cx + R * .62 + 10, cy + R * .85 + 6, 'start'], ['Финансовая\nустойчивость', cx - R * .62 - 10, cy + R * .85 + 6, 'end'], ['Дивиденды', cx - R - 14, cy - 22, 'end']];
-  return `<svg class="radar" viewBox="0 0 326 216" width="100%"><g fill="none" stroke="#E5E5EA">${[1, .66, .33].map(k => `<circle cx="${cx}" cy="${cy}" r="${(R * k).toFixed(1)}"/>`).join('')}${[0, 1, 2, 3, 4].map(i => `<line x1="${cx}" y1="${cy}" x2="${P(i, R)[0].toFixed(1)}" y2="${P(i, R)[1].toFixed(1)}"/>`).join('')}</g>
-    <path d="${d}Z" fill="rgba(78,188,115,.28)" stroke="#4EBC73" stroke-width="2.2"/>${lab.map(([t, x, y, a]) => `<text x="${x}" y="${y}" text-anchor="${a}" font-size="12.5" fill="#8E8E93" font-weight="500">${t.split('\n').map((q, j) => `<tspan x="${x}" dy="${j ? 15 : 0}">${q}</tspan>`).join('')}</text>`).join('')}</svg>`; }
+  return `<svg class="radar" viewBox="0 0 326 216" width="100%"><g class="pfz-rg">${[1, .66, .33].map(k => `<circle cx="${cx}" cy="${cy}" r="${(R * k).toFixed(1)}"/>`).join('')}${[0, 1, 2, 3, 4].map(i => `<line x1="${cx}" y1="${cy}" x2="${P(i, R)[0].toFixed(1)}" y2="${P(i, R)[1].toFixed(1)}"/>`).join('')}</g>
+    <path d="${d}Z" class="pfz-ra"/>${lab.map(([t, x, y, a]) => `<text x="${x}" y="${y}" text-anchor="${a}" class="pfz-rt">${t.split('\n').map((q, j) => `<tspan x="${x}" dy="${j ? 15 : 0}">${q}</tspan>`).join('')}</text>`).join('')}</svg>`; }
 function pfBiz(k){ const t = TT(k), V = k === 'aapl' ? [1, 3, 6, 4, 4] : t.bz.map(v => Math.round(v)), MX = [6, 6, 6, 5, 6];
   return `<div class="sl-c pf">${pfHead('Бизнес', 'По отчётности за квартал до 26 сентября 2026 · сектор и рынок — 500 крупнейших компаний S&P 1500')}${pfRadar(V)}
     <div class="pf-bz">${BZL.map((l, i) => `<button class="pf-br" data-act="noop"><span class="pf-bh"><b class="ts-Title-Semibold-18">${l}</b><span class="ts-Body-Regular-16">${V[i]}/${MX[i]}</span>${ic('chevron-right', 20)}</span><span class="pf-dots">${pfBizDots(k, i, V[i], MX[i]).map(c => `<i class="${c}">${PFDOT[c]}</i>`).join('')}</span></button>`).join('')}</div>${pfNote}</div>`; }
@@ -7922,11 +7957,80 @@ P.sd = () => { const t = TT(SD.k), ss = SD.ss && t.ss, px = pxOf(SD.k, ss), st =
     <div id="sd-pill">${sdPill()}</div><div class="sd-ch" id="sd-ch">${sdChart()}</div>
     <div class="sd-per"><div class="f">${Segmented('sdp', SDP, {value: SDP[SD.per]})}</div><button class="sd-cnd ${SD.cand ? 'on' : ''}" data-act="sd-cand" aria-label="Свечи"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 3v3M7 15v4M17 5v4M17 17v3" stroke="#3C3C43" stroke-width="1.6" stroke-linecap="round"/><rect x="5" y="6" width="4" height="9" rx="1" fill="#10C810"/><rect x="15" y="9" width="4" height="8" rx="1" fill="#E22F2F"/></svg></button></div>
     ${ss ? Notice({size: 'L', state: 'Info', title: 'Что такое Single Stock ETF?', subtitle: `Фонд на одну акцию ${t.s}, поделённый на 100 частей. Цена — 1/100 акции, рост и дивиденды — как у акции.`, closeShow: false, buttonShow: false}) : ''}
-    ${sdPos()}${st ? sdAnalysts(SD.k) + sdIdea(SD.k) : ''}${sdSlider(SD.k)}${sdNews(SD.k)}${sdSimilar(SD.k)}</div>`;
+    ${sdPos()}${st ? sdAnalysts(SD.k) + sdIdea(SD.k) : ''}${sdTabs(SD.k)}${sdNews(SD.k)}${sdSimilar(SD.k)}</div>`;
   return {bar: nb.bar, body, bottom: ButtonGroup({primary: {label: 'Торговать', act: 'sd-trade'}, secondary: false})}; };
 SEGH.sdm = i => { SD.ss = i === 1; setTimeout(() => render(), 200); };
 SEGH.sdp = i => { SD.per = i; const c = phone.querySelector('#sd-ch'), p = phone.querySelector('#sd-pill'); if (c) c.innerHTML = sdChart(); if (p) p.innerHTML = sdPill(); };
-SEGH.sdtab = i => { SD.tab = i; const b = phone.querySelector('#sd-tb'); if (b){ const T = slTabs(SD.k); b.innerHTML = T[Math.min(i, T.length - 1)][1](SD.k); } };
+SEGH.sdtab = i => { SD.tab = i; const b = phone.querySelector('#sd-tb'); if (b) b.innerHTML = sdTabBody(SD.k); };
+/* ======================================================================
+   Акция: «Обзор · Бизнес · Цена» — табы в Container (макет 14849:193362) вместо карусели «Профиль компании».
+   Строки «Бизнеса» и блоки «Цены» открывают шторки (Bottom Sheet Large): критерий n/6 со списком условий, «Колебания цены», «Динамика цены».
+   ====================================================================== */
+const sdTabL = k => TT(k).cat === 'stock' ? ['Обзор', 'Бизнес', 'Цена'] : ['Обзор', 'Цена'];
+function sdTabs(k){ const L = sdTabL(k); SD.tab = Math.min(SD.tab || 0, L.length - 1);
+  return card(`${Segmented('sdtab', L, {value: L[SD.tab]})}<div id="sd-tb">${sdTabBody(k)}</div>`, 'sd-tabs sdt2'); }
+function sdTabBody(k){ const L = sdTabL(k), n = L[Math.min(SD.tab || 0, L.length - 1)]; return n === 'Обзор' ? slOverview(k) : n === 'Бизнес' ? sdBizTab(k) : sdPriceTab(k); }
+/* данные критериев: s — y (выполнено) / n (нет) / x (не считается); c — [условие, расчёт] */
+const BZC = [
+  ['Цена ниже цели Freedom на 20 % и больше', 'Цена ниже цели Freedom на 40 % и больше', 'Цена к прибыли ниже, чем у рынка', 'Цена к прибыли ниже, чем у сектора', 'Цена к прибыли с учётом прогноза роста (PEG) от 0 до 1', 'Цена к капиталу ниже, чем у сектора'],
+  ['Прибыль по прогнозу растёт быстрее доходности 10-летних облигаций США', 'Прибыль по прогнозу растёт быстрее медианы компаний S&P 500 с прогнозом Freedom', 'Выручка по прогнозу растёт быстрее медианы компаний S&P 500 с прогнозом Freedom', 'Прибыль по прогнозу растёт быстрее 20 % в год', 'Выручка по прогнозу растёт быстрее 20 % в год', 'Оценочная прибыль к прогнозу выручки выше 20 %'],
+  ['Прибыль на акцию за год выросла сильнее, чем у сектора', 'Прибыль на акцию выше, чем 5 лет назад', 'Прибыль на акцию за год выросла сильнее, чем в среднем за 5 лет', 'Прибыль на капитал выше 20 %', 'Отдача на вложенный капитал выше, чем 3 года назад', 'Прибыль на активы выше, чем у сектора'],
+  ['Краткосрочные активы больше краткосрочных обязательств', 'Краткосрочные активы больше долгосрочных обязательств', 'Долг к капиталу не вырос за 5 лет', 'Долг меньше 40 % капитала', 'Операционный денежный поток покрывает больше 20 % долга', 'Операционная прибыль больше процентов по долгу в 5 раз'],
+  ['Дивиденды к цене выше, чем у нижней четверти плательщиков S&P 500', 'Дивиденды к цене выше, чем у трёх четвертей плательщиков S&P 500', 'Выплаты не снижались больше чем на 10 % за 10 лет', 'Выплаты выросли за 10 лет', 'Дивиденды меньше 90 % прибыли', 'Дивиденды меньше 90 % прогнозной прибыли']];
+const BZA = {s: ['nnnnnn', 'ynnnny', 'yyyyyy', 'nyynyx', 'nnyyyy'], d: [
+  ['цена 152,52 $ · цель 185 $ (карточка «Идея Freedom») · демо · ниже цели на 17,6 %', 'цена 152,52 $ · цель 185 $ (карточка «Идея Freedom») · демо · порог 40 %', 'P/E 45,7× · рынок 26,1×', 'P/E 45,7× · сектор 45,2×', 'PEG 4,97 · P/E 45,7× · рост прибыли на акцию +9,2 % · демо', 'P/B 58,0× · сектор 9,4×'],
+  ['рост прибыли на акцию +9,2 % · облигации 5,18 % · демо', 'рост прибыли на акцию +9,2 % · медиана 49 компаний S&P 500 с прогнозом Freedom +12,1 % · демо', 'рост выручки +7,0 % · медиана 53 компаний S&P 500 с прогнозом Freedom +7,4 % · демо', 'рост прибыли на акцию +9,2 % · порог 20 % · демо', 'рост выручки +7,0 % · порог 20 % · демо', 'на 2027: оценочная прибыль 133,5 млрд $ (прогноз прибыли на акцию × число акций за 2025) · прогноз выручки 476,2 млрд $ · 28,0 % · порог 20 % · демо'],
+  ['рост прибыли на акцию +22,7 % · сектор +10,4 %', '7,46 $ · 5 лет назад 3,28 $', 'за год +22,7 % · в среднем за 5 лет +17,9 %', 'прибыль на капитал 127,0 % · порог 20 %', '61,3 % · 3 года назад 57,0 %', '29,5 % · сектор 7,0 %'],
+  ['158,1 млрд $ · обязательства 162,4 млрд $', '158,1 млрд $ · долгосрочные обязательства 128,7 млрд $', '102,6 % · 5 лет назад 169,2 %', 'долг к капиталу 102,6 % · порог 40 %', 'поток 111,5 млрд $ · 123 % долга 90,5 млрд $', 'не считается: процентный расход в отчётности не раскрыт'],
+  ['0,31 % · граница 1,00 %', '0,31 % · граница 3,08 %', 'снижений больше 10 % нет · 2016–2025', '1,03 $ на акцию в 2025 · 0,56 $ в 2016', 'дивиденды 1,03 $ и прибыль 7,46 $ на акцию за 2025 · 14 %', 'дивиденды за 12 месяцев 1,06 $ к прогнозу прибыли на акцию на 2027 8,90 $ · 12 % · демо']]};
+function bzData(k, i){ if (k === 'aapl') return {s: BZA.s[i].split(''), d: BZA.d[i]};
+  const t = TT(k), v = Math.round(t.bz[i]), r = pfSeed(k + i), idx = [0, 1, 2, 3, 4, 5].sort((a, b) => r(a) - r(b)), on = new Set(idx.slice(0, v));
+  return {s: [0, 1, 2, 3, 4, 5].map(j => on.has(j) ? 'y' : 'n'), d: BZC[i].map(() => 'по отчётности за последний год · демо')}; }
+const bzScore = D => { const y = D.s.filter(c => c === 'y').length, of = D.s.filter(c => c !== 'x').length; return [y, of]; };
+/* статус условия — локальный компонент «Статус условия» (нет в FR-T): выполнено / нет / не считается */
+const BZST = {y: '<path d="m7.5 12.2 3 3 6-6.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>', n: '<path d="m9 9 6 6m0-6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>', x: '<path d="M8.5 12h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>'};
+const bzSt = (c, sz = 24) => `<svg class="bzst ${c}" width="${sz}" height="${sz}" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12"/>${BZST[c]}</svg>`;
+const sdChv = h => h.replace(/(<span class="v num">[^<]*<\/span>)/, `$1<span class="sdt-chv">${ic('chevron-right', 20)}</span>`);
+function sdBizTab(k){ const t = TT(k);
+  const rows = BZL.map((l, i) => { const D = bzData(k, i), [y, of] = bzScore(D), q = y / of, n = bzNote(i, q * 6, t);
+    const st = q === 0 ? 'Error' : q < .5 ? 'Warning' : q >= .8 ? 'Success' : 'Default';
+    return `<button class="sdt-r" data-act="sd-bz" data-arg="${i}">${sdChv(ProgressBar({title: l, value: `${y}/${of}`, pct: Math.max(2, q * 100), state: st, caption: n.txt}))}</button>`; }).join('');
+  return `<div class="sdt-b"><span class="ts-Body-Regular-14 sub">По отчётности за последний год · среди 74 компаний сектора «${esc(t.sec)}»</span>${Tag({label: 'Демонстрационные данные', color: 'Neutral', style: 'Subtle', size: 'S'})}
+    ${pfRadar(BZL.map((_, i) => { const [y, of] = bzScore(bzData(k, i)); return y / of * 6; }))}<div class="sdt-rows">${rows}</div><p class="ts-Caption-Regular-13 sub">Описывает прошлое и текущее состояние. Не прогноз и не рекомендация.</p></div>`; }
+/* «Цена»: колебания и динамика — относительно середины сектора */
+function prData(k){ const t = TT(k), a = k === 'aapl';
+  const vol = a ? 24.6 : t.vola, dyn = a ? 35.7 : t.dyn;
+  return {t: t.t, n: t.s || t.n,
+    vol: {v: vol, mid: 51.0, pos: a ? 0 : Math.max(0, Math.min(1, .5 + (vol - 51) / 54)), txt: a ? 'ниже, чем у всех остальных компаний сектора' : vol < 51 ? 'ниже, чем у большинства компаний сектора' : 'выше, чем у большинства компаний сектора',
+      it: [['n', 'За год цена менялась от дня к дню сильнее, чем у типичной компании сектора', `${n1(vol)} %`, '51,0 %'], ['n', 'Наибольшее падение за год было глубже, чем у типичной компании сектора', a ? '13,8 %' : n1(vol * .56) + ' %', '37,9 %']]},
+    dyn: {v: dyn, mid: 27.5, pos: Math.max(0, Math.min(1, .5 + (dyn - 27.5) / 160)), txt: Math.abs(dyn - 27.5) < 15 ? 'примерно в середине сектора' : dyn > 27.5 ? 'сильнее большинства компаний сектора' : 'слабее большинства компаний сектора',
+      it: [[dyn > 27.5 ? 'y' : 'n', 'За 12 месяцев цена выросла сильнее, чем у типичной компании сектора', `${dyn < 0 ? '−' : '+'}${n1(Math.abs(dyn))} %`, '+27,5 %'], [a || dyn > 29.7 ? 'y' : 'n', 'За 6 месяцев цена выросла сильнее, чем у типичной компании сектора', a ? '+35,1 %' : `${dyn < 0 ? '−' : '+'}${n1(Math.abs(dyn * .6))} %`, '+29,7 %']]}}; }
+function sdPriceTab(k){ const D = prData(k), cap = x => x.txt[0].toUpperCase() + x.txt.slice(1) + ' · середина сектора ' + (x === D.vol ? '51,0 %' : '+27,5 %');
+  const blk = (lbl, x, arg, val, good) => `<span class="ts-Caption-Medium-13 sub sdt-k">${lbl}</span><button class="sdt-r" data-act="sd-pr" data-arg="${arg}">${sdChv(ProgressBar({title: D.t, value: val, pct: Math.max(4, x.pos * 100), state: good ? 'Success' : 'Default', caption: cap(x)}))}</button>`;
+  return `<div class="sdt-b"><span class="ts-Body-Regular-14 sub">За год, по 25 сен · среди 74 компаний сектора «${esc(TT(k).sec)}»</span>
+    ${blk('Колебания цены', D.vol, 0, n1(D.vol.v) + ' %', D.vol.v < 51)}${blk('Динамика цены', D.dyn, 1, (D.dyn.v < 0 ? '−' : '+') + n1(Math.abs(D.dyn.v)) + ' %', D.dyn.v >= 27.5)}
+    <p class="ts-Caption-Regular-13 sub">Описывает прошлое и текущее состояние. Не прогноз и не рекомендация.</p></div>`; }
+const sdNav = {alignment: 'Leading', layout: 'Stacked', leadingShow: false, trailingShow: true, trailing: 'Single', icon: 'Close'};
+const sdClose = h => h.replace(/(<div class="sheet-nav">[\s\S]*?)data-act="noop"/, '$1data-act="close-ov"');
+const SDDS = '<p class="ts-Caption-Regular-13 sub sdsh-ds">Описывает прошлое и текущее состояние. Не прогноз и не рекомендация.</p>';
+Object.assign(ACT, {'sd-bz'(i){ openOv({type: 'sdbz', i: +i}); }, 'sd-pr'(i){ openOv({type: 'sdpr', i: +i}); }});
+OVS.sdbz = o => { const k = SD.k, i = o.i || 0, D = bzData(k, i), [y, of] = bzScore(D); let j = 0;
+  const list = ListGroup({type: 'Container', items: BZC[i].map((c, m) => ({density: 'Regular', align: 'Top', left: {type: 'Slots'}, content: {title: c, subtitle: D.d[m]}, divider: true}))})
+    .replace(/<span class="lslot"><\/span>/g, () => `<span class="lslot">${bzSt(D.s[j++])}</span>`);
+  const fc = i === 1 ? `<div class="ig Container bx sdsh-fc"><div class="sdsh-fh"><b class="ts-Title-Semibold-16">Прогноз аналитиков Freedom</b>${Tag({label: 'демо', color: 'Neutral', style: 'Subtle', size: 'S'})}</div>
+      ${ProgressBar({title: '2026', value: '445,0 млрд $', pct: 93, state: 'Default', captionShow: false})}<div class="sdsh-y27">${ProgressBar({title: '2027 · прогноз', value: '476,2 млрд $', pct: 100, state: 'Success', captionShow: false})}<span class="sdsh-gr">${Tag({label: '+7,0 %', color: 'Green', style: 'Subtle', size: 'S'})}</span></div>
+      ${ListItem({density: 'Compact', content: {kind: 'info', label: 'Цель', value: '$185'}})}${ListItem({density: 'Compact', content: {kind: 'info', label: 'Рейтинг', value: 'Покупать'}})}</div>` : '';
+  return sdClose(BottomSheet({height: 'Large', title: BZL[i], buttonGroupShow: false, nav: sdNav,
+    body: `<div class="sdsh"><div class="ig Container bx sdsh-sum"><b class="ts-Title-Bold-32">${y}/${of}</b><span class="sdsh-dots">${D.s.map(c => bzSt(c, 24)).join('')}</span></div>${list}${fc}${SDDS}</div>`})); };
+OVS.sdpr = o => { const D = prData(SD.k), x = o.i ? D.dyn : D.vol, lead = o.i ? 'Насколько изменилась цена за 12 месяцев, с учётом дивидендов' : 'Насколько сильно цена менялась от дня к дню за год';
+  const dot = x.pos * 100, lo = Math.min(dot, 50), hi = Math.max(dot, 50), cells = Array.from({length: 10}, (_, m) => { const a = m * 10, b = a + 10; return `<i class="${b > lo + .01 && a < hi - .01 ? 'on' : ''}"></i>`; }).join('');
+  const items = x.it.map(([s, t, v, m], q) => ({density: 'Regular', align: 'Top', left: {type: 'Slots'}, content: {title: t, subtitle: `${s === 'y' ? 'Да' : 'Нет'} · ${D.t} ${v} · середина сектора ${m}`}, divider: q < x.it.length - 1}));
+  let j = 0; const list = ListGroup({type: 'Container', title: D.n, items}).replace(/<span class="lslot"><\/span>/g, () => `<span class="lslot"><i class="sdsh-yn ${x.it[j++][0]}"></i></span>`);
+  return sdClose(BottomSheet({height: 'Large', title: o.i ? 'Динамика цены' : 'Колебания цены', buttonGroupShow: false, nav: sdNav,
+    body: `<div class="sdsh"><p class="ts-Body-Regular-16 sub sdsh-ld">${lead}</p>
+      <div class="ig Container bx sdsh-sc"><div class="sdsh-h">${Title({size: 'L', type: 'Icon', iconShow: false, title: D.t})}<span class="ts-Body-Regular-14 sub sdsh-tx">${x.txt}</span></div>
+        <div class="pfz-sc"><span class="pfz-sg">${cells}</span><em></em><b style="left:${dot}%"></b></div><div class="pfz-lg"><span>меньше</span><b>середина сектора</b><span>больше</span></div></div>${list}${SDDS}</div>`})); };
+
 SEGH.sdi = i => { SD.inf = i; const p = phone.querySelector('#sd-inf'); if (p){ p.style.opacity = 0; setTimeout(() => { p.textContent = INFT(SD.k)[i]; p.style.opacity = 1; }, 150); } };
 /* точки слайдера */
 /* высота карусели — по текущей карточке: во время свайпа плавно между соседними, блоки ниже подтягиваются */
@@ -8236,7 +8340,7 @@ P.idea2 = () => { const d = IDX[IDS.i], t = TT(d.k), now = pxOf(d.k, false), a =
     <div class="ig Container bx idch2"><b class="ts-Title-Semibold-18">Цена ${t.t} и уровни идеи</b><span class="ts-Caption-Regular-13 sub">Закрытие дня. Уровни — из идеи от ${d.dl}</span><b class="ts-Title-Bold-28 up">${usd(now)}</b><span class="ts-Body-Regular-14">${pct2((now / d.entry - 1) * 100, 1)} к входу $${d.entry} · закрытие 21 окт</span>
       <div id="id-ch">${idPriceChart(d, IDS.per == null ? 2 : IDS.per)}</div>${Segmented('idper', ['1М', '3М', '6М', '1Г', 'Всё'], {value: ['1М', '3М', '6М', '1Г', 'Всё'][IDS.per == null ? 2 : IDS.per]})}<span class="ts-Caption-Regular-13 sub">• Пунктиры — цель и стоп-лосс, точка на оси — дата идеи. Цены — демо</span></div>
     <div class="idrep">${ic('Info round', 20)}<span class="ts-Body-Medium-14">Данные из отчёта от ${d.dl}</span></div>
-    ${sec('ids1', 'Инвестиционный тезис')}${Accordion({key: 'idw' + IDS.i, title: 'Кто такая ' + t.s, text: d.who})}
+    ${sec('ids1', 'Инвестиционный тезис')}${Accordion({key: 'idw' + IDS.i, title: 'Что такое ' + t.s + '?', text: d.who})}
     ${sec('ids2', 'Ключевые аргументы')}${d.args.map((x, j) => Accordion({key: 'ida' + IDS.i + j, title: (j + 1) + '. ' + x[0], text: x[1]})).join('')}
     ${IDASUM[d.t] ? `<div class="ig Container bx ida-sum"><span class="ts-Caption-Medium-13 ida-sk">Краткое содержание</span>${idaParas(IDASUM[d.t]).map(q => `<p class="ts-Body-Regular-16">${esc(q)}</p>`).join('')}</div>` : ''}
     ${acc ? Notice({size: 'L', state: 'Info', title: 'Полный отчёт', subtitle: 'Отчёт с графиками и раскрытием информации — PDF, 14 страниц', closeShow: false, buttonShow: true, button: 'Открыть', btnAct: 'id-pdf'}) : lockNotice('Полный отчёт', 'Отчёт с графиками и раскрытием информации — после открытия брокерского счёта')}
