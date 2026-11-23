@@ -4536,6 +4536,14 @@ const CUSVG={"USD": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=
     const bindCp=()=>{ seg($('cpSeg'),i=>{ cpP=i; $('cpB').innerHTML=cpBody(); bindCp(); }); }; bindCp10=bindCp;
     bindCp();
     $('cpB').addEventListener('click',e=>{ const b=e.target.closest('[data-cpi]'); if(!b) return; cpI=+b.dataset.cpi; $('cpB').innerHTML=cpBody(); bindCp(); });
+    // макет 12.1: «Сравнение доходности» — отдельной карточкой, «Бизнес / Цена / Режим рынка» — одна карточка с табами (вместо карусели)
+    { const car=$('anSl'), cards=[...car.children], cmp=cards[0], P=cards.slice(1), L=['Бизнес','Цена','Режим рынка'];
+      cmp.classList.remove('an-s'); cmp.classList.add('an-cmp'); sl.before(cmp);
+      const tb=document.createElement('div'); tb.className='an-card an-tabs';
+      tb.innerHTML='<div class="sx an-tsg" id="anTab" style="--n:3;--i:0"><span class="pl"></span>'+L.map(l=>'<button>'+l+'</button>').join('')+'</div>';
+      P.forEach((c,i)=>{ const h=c.querySelector(':scope>h3'); if(h&&i<2) h.remove(); if(i===2){ const h2=c.querySelector(':scope>h3'); if(h2) h2.remove(); } const pn=document.createElement('div'); pn.className='an-tp'+(c.classList.contains('an-mk2')?' an-mk2':''); pn.hidden=i>0; while(c.firstChild) pn.appendChild(c.firstChild); tb.appendChild(pn); });
+      sl.replaceWith(tb);
+      seg($('anTab'),i=>{ tb.querySelectorAll('.an-tp').forEach((p,j)=>p.hidden=j!==i); }); }
   } }
   { const mv=[...document.querySelectorAll('#scrAn .an-card')].find(c=>/Движение денег/.test(c.textContent)); if(mv){ mv.classList.add('mv10');
     const t=mv.querySelector('.mr.tot .k'); if(t) t.innerHTML='Портфель сейчас'; } }

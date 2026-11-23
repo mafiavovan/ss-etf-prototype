@@ -408,3 +408,12 @@
 .mk-xl{display:flex;justify-content:space-between;font-size:12px;line-height:16px;color:#8E8E93;padding-left:20px}.mk-xl b{color:#0F0F0F;font-weight:600}
 .mk-why{align-self:flex-start;height:44px;padding:0 20px;border:0;border-radius:999px;background:#5AC83A;color:#fff;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;margin-top:4px}
 .mk-fn{margin:0;font-size:13px;line-height:18px;color:#8E8E93}
+
+/* аналитика портфеля · карточка с табами «Бизнес / Цена / Режим рынка» (макет 12.1) */
+#device .an-card.an-tabs{display:flex;flex-direction:column;gap:16px;padding:16px}
+.an-tabs .an-tsg{margin:0}
+.an-tp{display:flex;flex-direction:column;gap:12px}
+.an-tp[hidden]{display:none}
+.an-tp>.sub:first-child{margin:0!important}
+.an-tp hr{border:0;height:1px;background:#EBEBEF;margin:4px 0;width:100%;align-self:stretch}
+.an-tp .an-tks{display:flex;flex-wrap:wrap;gap:6px}
