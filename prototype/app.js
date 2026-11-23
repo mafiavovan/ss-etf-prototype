@@ -4488,6 +4488,22 @@ const CUSVG={"USD": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=
       '<polygon points="'+pts.map(p=>p.map(x=>x.toFixed(1)).join(',')).join(' ')+'" fill="rgba(78,188,115,.32)" stroke="#4EBC73" stroke-width="2"/>'+pts.map(p=>'<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3.5" fill="#4EBC73"/>').join('')+
       L.map(([t,x,y,an])=>'<text x="'+x+'" y="'+y+'" text-anchor="'+an+'" font-size="12" fill="#3C3C43">'+t.split('|').map((s,j)=>'<tspan x="'+x+'" dy="'+(j?15:0)+'">'+s+'</tspan>').join('')+'</text>').join('')+'</svg>'; };
   const pb=(l,v,w,c,n,nc)=>'<div class="an-pb"><div class="r"><span>'+l+'</span><span>'+v+'</span></div><i><b class="'+c+'" style="width:'+w+'%"></b></i>'+(n?'<span class="nt '+(nc||'')+'">'+(nc==='grn'?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>':'')+n+'</span>':'')+'</div>';
+  // «Режим рынка» — 4-я карточка карусели: сигналы точками и карта «спрос на риск × давление ставок и цен» с траекторией за 7 месяцев
+  const MKP=[[-.78,.6,'мар'],[-.12,.48],[.75,.7],[.6,-.3],[-.08,-.16],[-.1,-.05],[.28,.66,'сейчас']];
+  function mkMap(){ const W=326,H=250,X=v=>W/2+v*(W/2-18),Y=v=>H/2-v*(H/2-18),n=MKP.length;
+    let h='<svg class="mk-map" viewBox="0 0 '+W+' '+H+'" width="100%"><rect width="'+W+'" height="'+H+'" rx="20" fill="#F4F4F6"/><rect x="'+(W*.35)+'" y="0" width="'+(W*.3)+'" height="'+H+'" fill="#EAEAED"/><rect x="0" y="'+(H*.35)+'" width="'+W+'" height="'+(H*.3)+'" fill="#EAEAED"/>'+
+      '<line x1="'+(W/2)+'" y1="10" x2="'+(W/2)+'" y2="'+(H-10)+'" stroke="#AEAEB2"/><line x1="10" y1="'+(H/2)+'" x2="'+(W-10)+'" y2="'+(H/2)+'" stroke="#AEAEB2"/>';
+    for(let i=1;i<n;i++){ const a=MKP[i-1],b=MKP[i],o=(.35+.65*i/(n-1)).toFixed(2); h+='<line x1="'+X(a[0]).toFixed(1)+'" y1="'+Y(a[1]).toFixed(1)+'" x2="'+X(b[0]).toFixed(1)+'" y2="'+Y(b[1]).toFixed(1)+'" stroke="#2F7BF5" stroke-opacity="'+o+'" stroke-width="2" stroke-dasharray="2 4" stroke-linecap="round"/>'; }
+    MKP.forEach((p,i)=>{ const last=i===n-1,o=(.35+.65*i/(n-1)).toFixed(2); h+=last?'<circle cx="'+X(p[0]).toFixed(1)+'" cy="'+Y(p[1]).toFixed(1)+'" r="11" fill="#2F7BF5" stroke="#fff" stroke-width="4"/>':'<circle cx="'+X(p[0]).toFixed(1)+'" cy="'+Y(p[1]).toFixed(1)+'" r="5" fill="#2F7BF5" fill-opacity="'+o+'"/>';
+      if(p[2]==='мар') h+='<text x="'+(X(p[0])+9).toFixed(1)+'" y="'+(Y(p[1])+5).toFixed(1)+'" font-size="13" fill="#8E8E93">мар</text>';
+      if(last){ const lx=X(p[0])-20,ly=Y(p[1]); h+='<rect x="'+(lx-76)+'" y="'+(ly-15)+'" width="70" height="30" rx="15" fill="#2F7BF5"/><text x="'+(lx-41)+'" y="'+(ly+5)+'" text-anchor="middle" font-size="15" font-weight="600" fill="#fff">сейчас</text>'; } });
+    return h+'</svg>'; }
+  const mkDots=(n,of)=>'<span class="mk-dots">'+Array.from({length:of},(_,i)=>'<i class="'+(i<n?'on':'')+'"></i>').join('')+'</span>';
+  const mkRegime=()=>'<div class="an-card an-s an-mk2"><span class="mk-eb">По рыночным данным</span><h3>Режим рынка</h3><span class="mk-tag"><i></i>Смешанные сигналы</span>'+
+    '<p class="mk-t">Давление ставок и цен за 3 месяца усилилось. По спросу на риск сигналы расходятся</p><div class="mk-meta"><span class="mk-d">25 сен 2026 · за 3 месяца</span>'+
+    '<span class="mk-r">'+mkDots(2,3)+'Спрос на риск — 2 из 3</span><span class="mk-r">'+mkDots(3,3)+'Давление ставок и цен — 3 из 3</span></div>'+
+    '<div class="mk-q"><div class="mk-qm"><div class="mk-row"><span class="mk-yl"><em>← слабее</em><b>Давление ставок и цен</b><em>сильнее →</em></span>'+mkMap()+'</div><div class="mk-xl"><em>← слабее</em><b>Спрос на риск</b><em>сильнее →</em></div></div></div>'+
+    '<button class="mk-why" id="anWhy">Почему так</button><p class="mk-fn">Описывает прошлое и текущее состояние. Не прогноз и не рекомендация.</p></div>';
   const IXS=[['S&P 500 · SPY','SPY · S&P 500','S&P 500',968.08],['Nasdaq-100 · QQQ','QQQ · Nasdaq-100','Nasdaq-100',1412.30],['Russell 2000 · IWM','IWM · Russell 2000','Russell 2000',402.15]];
   const CPP=[['Всё время',1],['За год',.62],['За месяц',.11]];
   let cpI=0, cpP=0, bindCp10=null;
@@ -4511,10 +4527,9 @@ const CUSVG={"USD": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=
         pb('Финансовая устойчивость','5,5/6',91.7,'grn','У большинства компаний низкий долг','grn')+pb('Дивиденды','2,8/6',46.7,'org','Доходность ниже рынка','org')+'</div>'+
       '<div class="an-card an-s"><h3>Цена</h3><p class="sub">За год, по 25 сен · в сравнении с рынком (S&P 500)</p><span class="an-k">Колебания цены</span>'+pb('Портфель','25,2 % в год',84,'org','Почти в 2 раза сильнее рынка','org')+pb('Рынок','13,0 % в год',43,'grn','','')+
         '<span class="an-k">Бумаги портфеля — от спокойных к резким</span><div class="an-tks">'+['AGG','KO','QQQ','AAPL','MSFT','AMZN','NVDA','TSLA'].map(t=>'<span>'+t+'</span>').join('')+'</div><hr>'+
-        '<span class="an-k">Динамика цены</span><div class="cp-r"><span>Портфель</span><b>Близко к рынку</b></div><div class="cp-r"><span>Как рынок</span><b>MSFT, NVDA, TSLA, AAPL</b></div><div class="cp-r"><span>Сильнее рынка</span><b>AMZN, KO</b></div><p class="an-fn">Динамика — по 90 % портфеля (без QQQ и AGG), колебания — по всему портфелю</p></div></div>'+
-      '<div class="an-dots"><span class="pgc" id="anDots"><i class="on"></i><i></i><i></i></span></div>'+
-      '<div class="an-card an-mk"><h3>Режим рынка</h3><p class="sub">По рыночным данным · 25 сен 2026 · за 3 месяца</p><span class="an-tg">Смешанные сигналы</span><p class="an-mt">Давление ставок и цен за 3 месяца усилилось. По спросу на риск сигналы расходятся</p>'+
-        pb('Давление ставок и цен','3 из 3',100,'org','Все сигналы указывают на усиление','org')+pb('Спрос на риск','2 из 3',66.7,'grn','Сигналы расходятся','')+'<button class="an-why" id="anWhy">Почему так</button></div>';
+        '<span class="an-k">Динамика цены</span><div class="cp-r"><span>Портфель</span><b>Близко к рынку</b></div><div class="cp-r"><span>Как рынок</span><b>MSFT, NVDA, TSLA, AAPL</b></div><div class="cp-r"><span>Сильнее рынка</span><b>AMZN, KO</b></div><p class="an-fn">Динамика — по 90 % портфеля (без QQQ и AGG), колебания — по всему портфелю</p></div>'+
+      mkRegime()+'</div>'+
+      '<div class="an-dots"><span class="pgc" id="anDots"><i class="on"></i><i></i><i></i><i></i></span></div>';
     mv.after(sl);
     $('anSl').addEventListener('scroll',()=>{ const s=$('anSl'), i=Math.round(s.scrollLeft/(s.firstElementChild.offsetWidth+12)); $('anDots').querySelectorAll('i').forEach((d,j)=>d.classList.toggle('on',j===i)); },{passive:true});
     $('anWhy').onclick=()=>dsOpen('why');

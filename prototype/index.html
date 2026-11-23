@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Freedom · партнёрам · Single Stock ETF</title>
-<link rel="stylesheet" href="app.css?v=20261123102808">
-<link rel="stylesheet" href="frds-tokens.css?v=20261123102808">
-<link rel="stylesheet" href="frds-skin.css?v=20261123102808">
-<link rel="stylesheet" href="bridge.css?v=20261123102808">
+<link rel="stylesheet" href="app.css?v=20261123103508">
+<link rel="stylesheet" href="frds-tokens.css?v=20261123103508">
+<link rel="stylesheet" href="frds-skin.css?v=20261123103508">
+<link rel="stylesheet" href="bridge.css?v=20261123103508">
 </head>
 <body>
 <div class="caption">Прототип для партнёров: акции и Single Stock ETF. Выберите сценарий на первом экране, переключать «Новичок | Клиент» можно табом под телефоном</div>
@@ -1138,13 +1138,13 @@
     </div>
   </div>
 </div>
-<script src="tickers.js?v=20261123102808"></script>
-<script src="app.js?v=20261123102808"></script>
+<script src="tickers.js?v=20261123103508"></script>
+<script src="app.js?v=20261123103508"></script>
 <script>
 /* Автостарт сценария Single Stock ETF. Добавьте ?picker=1, чтобы показать экран выбора сценария. */
 (function(){ if(/[?&]picker=1/.test(location.search)) return;
   var t=0, iv=setInterval(function(){ var sc=document.getElementById('scp'), b=document.querySelector('[data-sc="ss"]'); if(sc&&b&&sc.classList.contains('on')){ clearInterval(iv); setTimeout(function(){ b.click(); },400); } if(++t>200) clearInterval(iv); },50); })();
 </script>
-<script src="bridge.js?v=20261123102808"></script>
+<script src="bridge.js?v=20261123103508"></script>
 </body>
 </html>
