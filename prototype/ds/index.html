@@ -6740,6 +6740,17 @@ button.sd-pos{display:flex;flex-direction:column;gap:12px;width:100%;text-align:
 .why-i{display:flex;gap:12px;align-items:flex-start}
 .why-i>span{display:flex;flex-direction:column;gap:2px}
 .why-i.ok .ic{color:#2DAE57}.why-i.no .ic{color:#E53935}
+.why{gap:16px}
+.why-m{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:-4px}
+.why-g{display:flex;flex-direction:column;gap:10px}
+.why-h{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--Text-Base-Primary)}
+.why-s{display:flex;align-items:center;gap:8px;color:var(--Text-Base-Tertiary,#8E8E93);margin-top:-4px}
+.why-dots{display:inline-flex;gap:4px}.why-dots i{width:9px;height:9px;border-radius:50%;box-sizing:border-box;border:1.5px solid #AEAEB2}.why-dots i.on{background:#5AC83A;border-color:#5AC83A}
+.why-k{color:var(--Text-Base-Tertiary,#8E8E93);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+.why-it{display:flex;gap:12px;align-items:flex-start;color:var(--Text-Base-Primary)}
+.why-it i{flex:none;width:14px;height:14px;border-radius:50%;margin-top:4px;box-sizing:border-box}
+.why-it.ok i{background:#5AC83A}.why-it.no i{border:2.5px solid #8E8E93}
+.why-fn{margin:0;color:var(--Text-Base-Tertiary,#8E8E93)}
 /* ===== стакан 14260:135367 ===== */
 .sheet:has(.bk10){background:var(--Bg-Base-Default,#F2F2F7)}
 .bk10{gap:12px;padding:0 0 24px}
@@ -8359,12 +8370,18 @@ const _r10 = render;
 render = function(a){ _r10(a); phone.classList.toggle('ok2', cur().id === 'buy-ok'); if (cur().id === 'buy-cf') setTimeout(swBind, 30); };
 
 /* ---------- «Почему так» (аналитика портфеля · режим рынка) ---------- */
-OVS.why = () => { const it = (ok, k, t) => ({left: {type: 'Slots'}, content: {kind: 'slots', html: `<span class="why-i ${ok ? 'ok' : 'no'}">${ic(ok ? 'Check' : 'Close', 24)}<span><span class="ts-Caption-Regular-13 sub">${k}</span><b class="ts-Title-Semibold-16">${t}</b></span></span>`}});
-  const g = (title, a) => ListGroup({title, items: a.map((x, i) => Object.assign(it(...x), {divider: i < a.length - 1, leftShow: false}))});
-  return BottomSheet({height: 'Large', title: 'Почему так', buttonGroupShow: false, nav: {leadingShow: false, trailingShow: true, trailing: 'Single', icon: 'Close'},
-    body: `<div class="why"><h2 class="ts-Title-Bold-22">Давление ставок и цен за 3 месяца усилилось. По спросу на риск сигналы расходятся</h2><span class="ts-Body-Regular-14 sub">25 сен 2026 · за 3 месяца</span><span class="sl-tag">${Tag({label: 'Смешанные сигналы', color: 'Neutral', style: 'Subtle', size: 'S', outline: true})}</span>
-      ${g('Спрос на риск · согласны 2 из 3', [[1, 'Подтверждает', 'Акции обгоняли казначейские облигации'], [1, 'Подтверждает', 'Высокодоходные облигации обгоняли казначейские'], [0, 'Противоречит', 'Цикличные отрасли обгоняли защитные, но меньше, чем обычно за 3 месяца']])}
-      ${g('Давление ставок и цен · согласны 3 из 3', [[1, 'Подтверждает', 'Ставки по 10-летним облигациям США выросли'], [1, 'Подтверждает', 'Защищённые от роста цен облигации обгоняли обычные'], [1, 'Подтверждает', 'Сырьё подорожало']])}</div>`})
+/* «Почему так» — как макет 12.5: вывод, дата + тег, по группе сигналов карточка: тег направления, точки согласия, «Подтверждают» / «Противоречит» */
+OVS.why = () => { const dots = (n, of) => `<span class="why-dots">${Array.from({length: of}, (_, i) => `<i class="${i < n ? 'on' : ''}"></i>`).join('')}</span>`;
+  const grp = (title, dir, n, of, yes, no) => `<div class="ig Container bx why-g"><div class="why-h"><b class="ts-Title-Semibold-22">${title}</b>${Tag({label: dir, color: 'Neutral', style: 'Subtle', size: 'M'})}</div>
+    <span class="why-s ts-Body-Medium-14">${dots(n, of)}согласны ${n} из ${of}</span>
+    <span class="why-k ts-Caption-Medium-13">Подтверждают · ${yes.length}</span>${yes.map(t => `<span class="why-it ok ts-Body-Medium-16"><i></i>${t}</span>`).join('')}
+    ${no.length ? `<span class="why-k ts-Caption-Medium-13">Противоречит · ${no.length}</span>${no.map(t => `<span class="why-it no ts-Body-Medium-16"><i></i>${t}</span>`).join('')}` : ''}</div>`;
+  return BottomSheet({height: 'Large', title: 'Почему так', buttonGroupShow: false, nav: {alignment: 'Leading', layout: 'Stacked', leadingShow: false, trailingShow: true, trailing: 'Single', icon: 'Close'},
+    body: `<div class="why"><h2 class="ts-Title-Semibold-22">Давление ставок и цен за 3 месяца усилилось. По спросу на риск сигналы расходятся</h2>
+      <div class="why-m"><span class="ts-Body-Medium-14 sub">25 сен 2026 · за 3 месяца</span>${Tag({label: 'Смешанные сигналы', color: 'Neutral', style: 'Subtle', size: 'M'})}</div>
+      ${grp('Спрос на риск', 'без явного направления', 2, 3, ['Акции обгоняли казначейские облигации', 'Высокодоходные облигации обгоняли казначейские'], ['Цикличные отрасли обгоняли защитные, но меньше, чем обычно за 3 месяца'])}
+      ${grp('Давление ставок и цен', 'сильнее', 3, 3, ['Ставки по 10-летним облигациям США выросли', 'Защищённые от роста цен облигации обгоняли обычные', 'Сырьё подорожало'], [])}
+      <p class="ts-Body-Medium-14 why-fn">Описывает прошлое и текущее состояние. Не прогноз и не рекомендация.</p></div>`})
     .replace(/(<div class="sheet-nav">[\s\S]*?)data-act="noop"/, '$1data-act="close-ov"'); };
 
 /* ======================================================================
