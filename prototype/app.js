@@ -988,7 +988,7 @@
   seg($('hmPer'),i=>{ const was=HP[hper]; hper=i; v0=0; v1=HP[i].n-1; hmDraw(true); hmHead(); pfPeriod(was); });
   $('hmAcc').onclick=()=>toast('Счёт GL 789099 · Глобальный');
   $('hmX').onclick=()=>toast('Закрыть раздел «Инвестиции»');
-  $('hmFree').onclick=()=>toast('Свободно для торговли: $199,52 + D-счёт $1 200,52');
+  $('hmFree').onclick=()=>toast('Свободно для торговли: $199,52 + D-счёт $1 200,00');
   $('hmGear').onclick=()=>toast('Настройки графика — скоро'); $('crGear').onclick=()=>toast('Настройки графика — скоро');
 
   // portfolio
@@ -1011,7 +1011,7 @@
       '<button class="pf-row me" data-aapl data-ss>'+lgHTML('aapl')+'<span class="m"><span class="t">AAPL/100</span><span class="s" id="pfSs">37 шт. по 1,50 $</span></span><span class="r"><span class="t" id="pfSv">56,43</span><span class="s" id="pfSd"></span></span></button>'+
       STK.map((r,i)=>'<button class="pf-row" data-t="В прототипе открывается только Apple">'+lgHTML(r.lg)+'<span class="m"><span class="t">'+r.tk+'</span><span class="s">'+r.q+' шт. по '+r.p+' $</span></span><span class="r"><span class="t">'+dec(r.val)+'</span><span class="s" id="pfR'+i+'"></span></span></button>').join('')},
     {k:'Облигации',id:'bnd',v:'$400,00',pc:3.6,rows:()=>'<button class="pf-row" data-t="В прототипе открывается только Apple">'+lgHTML('ishr')+'<span class="m"><span class="t">AGG.US</span><span class="s">4 шт. по 96,21 $</span></span><span class="r"><span class="t">384,84</span><span class="s" id="pfRb"></span></span></button>'},
-    {k:'Долгосрочные инвестиции',id:'lng',v:'$1 000,00',pc:0,rows:()=>''},
+    {k:'Долгосрочные инвестиции',id:'lng',v:'$20 000,00',pc:0,rows:()=>''},
     {k:'Мои прогнозы',id:'prd',v:'$0,00',rows:()=>''},
     {k:'Опционы',id:'opt',v:'$317,08',pc:-36.5,rows:()=>'<button class="pf-row" data-opos="c160e0">'+lgHTML('aapl')+'<span class="m"><span class="t">AAPL 160 Call</span><span class="s">2 контракта · 17 окт</span></span><span class="r"><span class="t">317,08</span><span class="s" id="pfRo"></span></span></button>'}];
   const CHD='<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 9.5l6 6 6-6" stroke="#C7C7CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -2368,7 +2368,7 @@
 
   // ═════════ OPTIONS ═════════
   const OX={iv:.285,r:.04};
-  let OPF=1200.52;
+  let OPF=1200; // свободный остаток D-счёта (весь D-счёт — 21 200 $: 20 000 $ в долгосроке + 1 200 $)
   function ncdf(x){ const t=1/(1+.2316419*Math.abs(x)), d=.3989423*Math.exp(-x*x/2), p=d*t*(.3193815+t*(-.3565638+t*(1.781478+t*(-1.821256+t*1.330274)))); return x>0?1-p:p; }
   function bsP(S,K,T,cp){ if(T<=0) return Math.max(0,cp==='c'?S-K:K-S); const v=OX.iv, sq=v*Math.sqrt(T), d1=(Math.log(S/K)+(OX.r+v*v/2)*T)/sq, d2=d1-sq;
     return cp==='c'?S*ncdf(d1)-K*Math.exp(-OX.r*T)*ncdf(d2):K*Math.exp(-OX.r*T)*ncdf(-d2)-S*ncdf(-d1); }
@@ -2548,7 +2548,7 @@
   const LTR={USD:[[1,4.0],[3,5.0],[6,6.0],[12,6.8]],EUR:[[1,1.2],[3,1.8],[6,2.5],[12,3.2]]}, EURUSD=1.17, EURKZT=590, LTNOW=new Date(2026,8,26);
   const LT={cur:'USD',amt:5000,ti:3}; let ltHook=null;
   const LS=[1000,1250,1500,1750,2000,2250,2500,2750,3000,3250,3500,3750,4000,4250,4500,4750,5000,6000,7000,8000,10000,12000,15000,20000,25000,30000,40000,50000,75000,100000,150000,250000,350000,500000];
-  const LTD=[{cur:'USD',amt:1000,m:12,r:6.8,o:new Date(2026,8,1)}];
+  const LTD=[{cur:'USD',amt:20000,m:12,r:6.8,o:new Date(2026,8,1)}];
   const LCK='<svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1.2 4.6 4.3 7.6 10.8 1.2" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const ltM=(c,v,d)=>(c==='USD'?'$':'€')+(d?dec(v):dec(Math.round(v),0));
   const ltPay=(a,r,m)=>a*(1+r/100*m/12);
@@ -4281,7 +4281,7 @@ const CUSVG={"USD": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=
   function freshStart(){ FRESH=true; Object.assign(LIN,{cash:0,lt:LIN.pend||0,pend:0}); SH_W=0; SH_S=0; AVG_W=0; AVG_S=0; syncHold(); TRADES.length=0; dev.classList.add('fresh'); freshSync(); }
   function freshEnd(){ FRESH=false; dev.classList.remove('fresh','pf-empty','pf-noshr'); BASE_TOT=FR0.tot; BASE_STK=FR0.stk; SEC0=FR0.sec; ACCS[0].raw=ACCS[0].bal=FR0.raw; TRADES.length=0; FR0.trades.forEach(t=>TRADES.push(t));
     const hf=$('hmFree').querySelector('b'); if(hf) hf.textContent='$199,52';
-    const dr=document.querySelector('.pf-row.dacc .r'); if(dr) dr.innerHTML='<span class="t">1 200,52</span><span class="s nt">USD</span>';
+    const dr=document.querySelector('.pf-row.dacc .r'); if(dr) dr.innerHTML='<span class="t">1 200,00</span><span class="s nt">USD</span>';
     const an=document.querySelectorAll('.pf-an .row .v'); if(an[1]) an[1].textContent='$10 161,00'; if(an[2]){ an[2].textContent='+$840 (8,3 %)'; an[2].className='v up'; }
     const wr=document.querySelector('#pfSecs .pf-row[data-aapl]:not([data-ss])'); if(wr) wr.hidden=false;
     try{ scMode(PMODE); hmDraw(false); }catch(_){} }

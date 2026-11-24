@@ -7036,7 +7036,7 @@ const FROM = {n: 'GL-789099', s: 'Торговый счёт', v: 4090.80};
 const CURS = [['KZT', 'Currency/Тенге', 5082.12, '₸'], ['USD', 'Currency/Доллар', 1890.73, '$'], ['RUB', 'Currency/Рубль', 0, '₽']];
 const TO = {
   card: [['card', 'Deposit Card', 'KZT', '**0679', 44890.73, '₸']],
-  acc: [['d', 'D-789099', 'Накопительный счёт', '', 1200.52, '$', 'D']]
+  acc: [['d', 'D-789099', 'Накопительный счёт', '', 21200, '$', 'D']]
 };
 const curOf = () => CURS.find(c => c[0] === W.cur);
 const symOf = () => W.kind === 'acc' ? '$' : (curOf() ? curOf()[3] : '₸');
@@ -7123,7 +7123,8 @@ P['wd-acc-done'] = () => { const t = toOf();
   return scr; };
 
 /* ---------- экраны: D-счёт ---------- */
-var DACC = {bal: 1200.52, free: 1200.52};
+/* D-счёт: общий баланс 21 200 $ = долгосрочные инвестиции 20 000 $ + свободный остаток 1 200 $ */
+var DACC = {bal: 21200, free: 1200, lt: 20000};
 P.dacc = () => {
   const nb = Navbar({alignment: 'Center', layout: 'Inline', title: 'GL-D546178', trailingShow: true, trailing: 'Single', icon: 'Transfer', trailAct: 'dacc-swap'});
   const info = (l, v, k, o = {}) => ({density: 'Compact', content: {kind: 'info', label: l, value: v, iconShow: !!k}, act: k ? 'dacc-info' : o.act, arg: k, right: o.right, divider: o.divider !== false});
@@ -7131,7 +7132,7 @@ P.dacc = () => {
   const hero = `<div class="bleed segbg dhero${W.free ? ' fopen' : ''}" data-surface="glass-dark">
       <div class="dh-top">${Tag({style: 'Filled', color: 'Neutral', size: 'S', label: 'D-счёт'})}<span class="ts-Body-Regular-14 dh-l">Общий баланс</span><span class="ts-Title-Bold-32 dh-v">${grp(Math.floor(DACC.bal))},${DACC.bal.toFixed(2).split('.')[1]} $</span></div>
       ${Collection([ActionTile('Solid', 'Finance/Пополнить', 'Пополнение', 'dacc-dep'), ActionTile('Solid', 'Finance/Снять с карты', 'Вывести', 'dacc-wd')], {layout: 'Fit'})}
-      ${ListGroup({items: [info('Активы', n2(DACC.bal) + ' $', 'assets'), info('За сегодня', DACC.bal ? '+0,09 $ (0,01 %)' : '0,00 $', 'today'), info('D-счёт', 'USD, EUR, KZT', 'd'),
+      ${ListGroup({items: [info('Активы', n2(DACC.lt || 0) + ' $', 'assets'), info('За сегодня', DACC.bal ? '+' + n2(DACC.lt * 0.068 / 365) + ' $ (0,02 %)' : '0,00 $', 'today'), info('D-счёт', 'USD, EUR, KZT', 'd'),
         info('Свободный остаток', n2(DACC.free) + ' $', null, {act: 'dacc-free', right: {type: 'Arrow', icon: 'chevron-down'}, divider: W.free}), ...freeRows]})}
     </div>`;
   const body = `<div class="content dacc">${hero}
@@ -7139,8 +7140,7 @@ P.dacc = () => {
       ${ListGroup({items: [{left: {type: 'Card'}, content: {title: 'Invest Card', subtitle: '4400 ·· 3097'}, right: {type: 'Arrow'}, act: 'dacc-snk', arg: 'Invest Card'}]})}
       ${INV.fresh && !INV.lt ? ListGroup({title: 'Долгосрочные инвестиции', items: [{left: {type: 'Icon', duo: 'Finance/Процент'}, content: {title: 'Открыть долгосрочную инвестицию', subtitle: 'до 6,8 % годовых в долларах'}, right: {type: 'Arrow'}, act: 'dacc-lt'}]})
       : ListGroup({title: 'Долгосрочные инвестиции', button: 'Все', buttonAct: 'dacc-lt', items: INV.fresh ? [{left: {type: 'Icon', duo: 'Currency/Доллар'}, content: {kind: 'tx', title: 'Доллары США', amount: Value(INV.lt, {cur: '$'}), subtitle: 'до 12.11.2027', meta: {text: '6,8% годовых'}}, act: 'dacc-lt'}] : [
-        {left: {type: 'Icon', duo: 'Currency/Доллар'}, content: {kind: 'tx', title: 'Доллары США', amount: Value(10000, {cur: '$'}), subtitle: 'до 12.02.2026', meta: {text: '7,11% годовых'}}, act: 'dacc-lt', divider: true},
-        {left: {type: 'Icon', duo: 'Currency/Евро'}, content: {kind: 'tx', title: 'Евро', amount: Value(10000, {cur: '€'}), subtitle: 'до 01.09.2025', meta: {text: '3,81% годовых'}}, act: 'dacc-lt'}]})}
+        {left: {type: 'Icon', duo: 'Currency/Доллар'}, content: {kind: 'tx', title: 'Доллары США', amount: Value(DACC.lt, {cur: '$'}), subtitle: 'до 01.09.2027', meta: {text: '6,8% годовых'}}, act: 'dacc-lt'}]})}
       ${ListGroup({title: 'Детали', items: [{left: {type: 'Icon', duo: 'Finance/Процент'}, content: {title: 'Ставка доходности'}, right: {type: 'Arrow'}, act: 'push', arg: 'drate'}]})}
     `)}</div>`;
   return {bar: nb.bar, body, viewClass: 'dark-top'};
@@ -7557,7 +7557,7 @@ addEventListener('message', e => {
   if (d.state) Object.assign(INV, d.state);
   if (d.type === 'reset'){ S.ov = null; S.stack = [{id: 'blank'}]; render(); return; }
   if (d.type !== 'open') return;
-  DACC.bal = DACC.free = INV.fresh ? 0 : 1200.52;
+  if (INV.fresh){ DACC.bal = DACC.free = DACC.lt = 0; } else Object.assign(DACC, {bal: 21200, free: 1200, lt: 20000});
   const F = {
     ob: () => { Object.assign(OB, {mail: '', job: null, pos: null, co: '', src: [], ast: [], av: {}, inc: '', exp: ''}); S.stack = [{id: 'ob-form'}]; },
     dep: () => { Object.assign(DEP, {from: null, to: INV.fresh ? 'gl' : null, amt: '', fav: false}); S.stack = [{id: 'dep'}]; },

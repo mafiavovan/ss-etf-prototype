@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Freedom · партнёрам · Single Stock ETF</title>
-<link rel="stylesheet" href="app.css?v=20261123182712">
-<link rel="stylesheet" href="frds-tokens.css?v=20261123182712">
-<link rel="stylesheet" href="frds-skin.css?v=20261123182712">
-<link rel="stylesheet" href="bridge.css?v=20261123182712">
-<link rel="stylesheet" href="pf-shared.css?v=20261123182712">
+<link rel="stylesheet" href="app.css?v=20261124102724">
+<link rel="stylesheet" href="frds-tokens.css?v=20261124102724">
+<link rel="stylesheet" href="frds-skin.css?v=20261124102724">
+<link rel="stylesheet" href="bridge.css?v=20261124102724">
+<link rel="stylesheet" href="pf-shared.css?v=20261124102724">
 </head>
 <body>
 <div class="caption">Прототип для партнёров: акции и Single Stock ETF. Выберите сценарий на первом экране, переключать «Новичок | Клиент» можно табом под телефоном</div>
@@ -73,7 +73,7 @@
         </div>
         <div class="hm-bridge"><div class="hm-blk" style="border-radius:24px 24px 24px 24px">
           <div class="hm-h">Счета и карты</div>
-          <button class="pf-row dacc"><span class="lg lg-dacc"><img src="media/ic-dacc.svg" alt="" width="40" height="40"></span><span class="m"><span class="t">D-счёт</span><span class="s">Свободный остаток</span></span><span class="r"><span class="t">1 200,52</span><span class="s nt">USD</span></span></button>
+          <button class="pf-row dacc"><span class="lg lg-dacc"><img src="media/ic-dacc.svg" alt="" width="40" height="40"></span><span class="m"><span class="t">D-счёт</span><span class="s">Свободный остаток</span></span><span class="r"><span class="t">1 200,00</span><span class="s nt">USD</span></span></button>
         </div></div>
 
         <div class="hm-blk" id="pfBlk">
@@ -515,7 +515,7 @@
         </div>
         <div class="lo-res"><div><span id="loResK">Получите 26 сентября 2027</span><b class="pmv" id="loRes">$5 340,00</b></div><i></i><div><span>Доход за срок</span><b class="pmv up" id="loInc">+$340,00</b></div></div>
       </div>
-      <div class="chipzone"><button class="chip lo-chip" id="loAcc"><span id="loAccIc"></span><span class="n" id="loAccN">D-счёт</span><span class="b" id="loAccB">$1 200,52</span>
+      <div class="chipzone"><button class="chip lo-chip" id="loAcc"><span id="loAccIc"></span><span class="n" id="loAccN">D-счёт</span><span class="b" id="loAccB">$1 200,00</span>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 7l7 6 7-6" stroke="#AEAEB2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
       <div class="ctazone"><button class="cta" id="loGo">Продолжить</button></div>
       <div class="keypad" id="loKp">
@@ -1139,14 +1139,14 @@
     </div>
   </div>
 </div>
-<script src="tickers.js?v=20261123182712"></script>
-<script src="pf-shared.js?v=20261123182712"></script>
-<script src="app.js?v=20261123182712"></script>
+<script src="tickers.js?v=20261124102724"></script>
+<script src="pf-shared.js?v=20261124102724"></script>
+<script src="app.js?v=20261124102724"></script>
 <script>
 /* Автостарт сценария Single Stock ETF. Добавьте ?picker=1, чтобы показать экран выбора сценария. */
 (function(){ if(/[?&]picker=1/.test(location.search)) return;
   var t=0, iv=setInterval(function(){ var sc=document.getElementById('scp'), b=document.querySelector('[data-sc="ss"]'); if(sc&&b&&sc.classList.contains('on')){ clearInterval(iv); setTimeout(function(){ b.click(); },400); } if(++t>200) clearInterval(iv); },50); })();
 </script>
-<script src="bridge.js?v=20261123182712"></script>
+<script src="bridge.js?v=20261124102724"></script>
 </body>
 </html>
