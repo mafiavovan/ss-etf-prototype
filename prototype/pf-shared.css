@@ -74,3 +74,10 @@
 .pfz-sh>.ttl{padding:var(--Padding-S) 0 0}
 .pfz-sh .lslot{display:grid;place-items:center;width:32px;height:32px;background:none!important;border:0!important;box-shadow:none!important}
 .pfz-dyn{display:flex;flex-direction:column;gap:inherit;cursor:pointer}.pfz-dyn:active{opacity:.7}
+
+/* шторка «Колебания цены» портфеля */
+.pfz-pb .lbl .v b{color:var(--Text-Base-Primary);font-weight:600}
+.pfv-r{font-size:var(--Body-14-size);line-height:var(--Body-14-lh);color:var(--Text-Base-Secondary);white-space:nowrap}
+.pfv-dot{display:block;width:12px;height:12px;border-radius:50%;background:var(--Bg-Brand-Default)}
+.pfz-sh .lslot:has(.pfv-dot){width:24px;height:24px}
+.pfv-st{display:flex;flex-direction:column;gap:4px;color:var(--Text-Base-Tertiary)}.pfv-st b{color:var(--Text-Base-Primary);font-weight:500}

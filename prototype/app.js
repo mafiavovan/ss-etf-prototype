@@ -4553,13 +4553,13 @@ const CUSVG={"USD": "<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=
         '<div class="pfz-lgp">'+PFZ.bz.map((b,i)=>'<button class="pfz-li" data-pfbz="'+i+'"><span class="r"><span class="tc"><span class="tt">'+b.t+'</span><span class="st">'+b.v+' из 6 условий</span></span><span class="ch">'+CH16+'</span></span><span class="pfz-dots">'+b.p.map(p=>pfzPie(p,24)).join('')+'</span></button>').join('')+'</div>'+
         '<p class="pfz-ds">Описывает прошлое и текущее состояние. Не прогноз и не рекомендация.</p>';
       pn[1].innerHTML='<p class="pfz-s">За год, по 25 сен · в сравнении с рынком (S&P 500)</p>'+
-        TTL('Колебания цены','почти в 2 раза сильнее')+PB('Портфель','25,2 % в год',50)+PB('Рынок','13,0 % в год',26,'info')+
-        '<span class="pfz-k">Бумаги портфеля</span>'+pfzPills(PFZ.vol)+'<i class="pfz-hr"></i>'+
+        '<div class="pfz-dyn" data-pfvol role="button" tabindex="0">'+TTL('Колебания цены','почти в 2 раза сильнее')+PB('Портфель','<b>25,2 %</b> в год',50)+PB('Рынок','<b>13,0 %</b> в год',26,'info')+
+        '<span class="pfz-k">Бумаги портфеля</span>'+pfzPills(PFZ.vol)+'</div><i class="pfz-hr"></i>'+
         '<div class="pfz-dyn" data-pfdyn role="button" tabindex="0">'+TTL('Динамика цены','близко к рынку')+pfzScale(PFZ.dyn.dot)+pfzPills(PFZ.dyn.t)+
         '<div class="pfz-lg"><span>меньше</span><b>как у рынка</b><span>больше</span></div></div>'+
         '<p class="pfz-fn">Динамика — по 90 % портфеля (без QQQ и AGG); колебания — по всему портфелю</p><p class="pfz-ds">Описывает прошлое и текущее состояние. Не прогноз и не рекомендация.</p>';
-      // строки «Бизнеса» → шторка критерия; блок «Динамика цены» → шторка «Динамика цены»
-      tb.addEventListener('click',e=>{ const r=e.target.closest('[data-pfbz]'); if(r){ dsOpen('pfbz',{i:+r.dataset.pfbz}); return; } if(e.target.closest('[data-pfdyn]')) dsOpen('pfdyn'); });
+      // строки «Бизнеса» → шторка критерия; блоки «Колебания цены» и «Динамика цены» → свои шторки
+      tb.addEventListener('click',e=>{ const r=e.target.closest('[data-pfbz]'); if(r){ dsOpen('pfbz',{i:+r.dataset.pfbz}); return; } if(e.target.closest('[data-pfvol]')){ dsOpen('pfvol'); return; } if(e.target.closest('[data-pfdyn]')) dsOpen('pfdyn'); });
       seg($('anTab'),i=>{ tb.querySelectorAll('.an-tp').forEach((p,j)=>p.hidden=j!==i); }); }
   } }
   { const mv=[...document.querySelectorAll('#scrAn .an-card')].find(c=>/Движение денег/.test(c.textContent)); if(mv){ mv.classList.add('mv10');
