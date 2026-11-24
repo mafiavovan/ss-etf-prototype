@@ -3556,7 +3556,7 @@
   const nbInv=()=>NBM.st==='open'&&NBM.otc?NBM.otc.a:0;
   const nbDayS=()=>{ const g=NBM.gift?10:0, b=nbInv(); return '+'+fmt2(g)+' ('+(g?'+'+dec(b?g/b*100:100,0):'0')+' %)'; };
   function nbHero(){ const s=NBM.st;
-    if(s==='new') return '<h1 class="nb-h1">Откройте брокерский счёт — и&nbsp;начните инвестировать</h1>'+
+    if(s==='new') return '<h1 class="nb-h1">Откройте брокерский счёт и&nbsp;инвестируйте</h1>'+
       '<p class="nb-p">Сделайте первый шаг к финансовым целям и инвестируйте</p>'+
       '<div class="nb-art-sp" aria-hidden="true"></div>'+
       '<button class="nb-go" data-nbopen>Открыть брокерский счёт</button>';

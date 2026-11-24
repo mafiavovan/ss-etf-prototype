@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Freedom · партнёрам · Single Stock ETF</title>
-<link rel="stylesheet" href="app.css?v=20261124182419">
-<link rel="stylesheet" href="frds-tokens.css?v=20261124182419">
-<link rel="stylesheet" href="frds-skin.css?v=20261124182419">
-<link rel="stylesheet" href="bridge.css?v=20261124182419">
-<link rel="stylesheet" href="pf-shared.css?v=20261124182419">
+<link rel="stylesheet" href="app.css?v=20261124184041">
+<link rel="stylesheet" href="frds-tokens.css?v=20261124184041">
+<link rel="stylesheet" href="frds-skin.css?v=20261124184041">
+<link rel="stylesheet" href="bridge.css?v=20261124184041">
+<link rel="stylesheet" href="pf-shared.css?v=20261124184041">
 </head>
 <body>
 <div class="caption">Прототип для партнёров: акции и Single Stock ETF. Выберите сценарий на первом экране, переключать «Новичок | Клиент» можно табом под телефоном</div>
@@ -35,7 +35,7 @@
         <!-- ═════════ NEWBIE HOME (demo switch «Новичок») ═════════ -->
         <div class="nb" id="nbHome">
           <div class="nb-dark" id="nbDark">
-            <div class="nb-head" id="nbHero"><i class="fdots" aria-hidden="true"></i><div class="nb-hc" id="nbHc"></div></div>
+            <div class="nb-head" id="nbHero"><i class="fdots" aria-hidden="true"></i><div class="nb-hxl" aria-hidden="true"><i class="nb-glow"></i><i class="nbx hx-bl" style="--x:17px;--y:278px;--i:0"><b class="g"></b><img class="lg" src="media/nbh/nbis.svg" alt="" style="left:32px;top:26px;width:38px;height:35px"></i><i class="nbx hx-dm" style="--x:16px;--y:373px;--i:1"><b class="g"></b><img class="lg" src="media/nbh/apple.svg" alt="" style="left:35px;top:27px;width:29px;height:35px"></i><i class="nbx hx-gl" style="--x:100px;--y:327px;--i:2"><b class="g"></b><img class="lg" src="media/nbh/frhc.svg" alt="" style="left:32px;top:25px;width:40px;height:40px"></i><i class="nbx hx-gl" style="--x:186px;--y:278px;--i:3"><b class="g"></b><img class="lg" src="media/nbh/x.svg" alt="" style="left:1px;top:29px;width:102px;height:31px"></i><i class="nbx hx-gl" style="--x:185px;--y:375px;--i:4"><b class="g"></b><img class="lg" src="media/nbh/tsla.png" alt="" style="left:36px;top:30px;width:31px;height:31px"></i><i class="nbx hx-gl" style="--x:271px;--y:328px;--i:5"><b class="g"></b><img class="lg" src="media/nbh/goog.svg" alt="" style="left:7px;top:31px;width:88px;height:26px"></i><i class="nbx hx-ed" style="--x:-66px;--y:324px;--i:6"><b class="g"></b></i><i class="nbx hx-ed" style="--x:355px;--y:378px;--i:7"><b class="g"></b></i></div><div class="nb-hc" id="nbHc"></div></div>
             <div class="hm-acts nb-acts" id="nbActs">
               <button class="hm-act" data-t="Пополнение с карты — скоро"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>Пополнить</button>
               <button class="hm-act" data-t="Вывод средств — скоро"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 19V5m0 0L4.5 8.5M8 5l3.5 3.5M16 5v14m0 0-3.5-3.5M16 19l3.5-3.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Вывести</button>
@@ -1139,14 +1139,14 @@
     </div>
   </div>
 </div>
-<script src="tickers.js?v=20261124182419"></script>
-<script src="pf-shared.js?v=20261124182419"></script>
-<script src="app.js?v=20261124182419"></script>
+<script src="tickers.js?v=20261124184041"></script>
+<script src="pf-shared.js?v=20261124184041"></script>
+<script src="app.js?v=20261124184041"></script>
 <script>
 /* Автостарт сценария Single Stock ETF. Добавьте ?picker=1, чтобы показать экран выбора сценария. */
 (function(){ if(/[?&]picker=1/.test(location.search)) return;
   var t=0, iv=setInterval(function(){ var sc=document.getElementById('scp'), b=document.querySelector('[data-sc="ss"]'); if(sc&&b&&sc.classList.contains('on')){ clearInterval(iv); setTimeout(function(){ b.click(); },400); } if(++t>200) clearInterval(iv); },50); })();
 </script>
-<script src="bridge.js?v=20261124182419"></script>
+<script src="bridge.js?v=20261124184041"></script>
 </body>
 </html>
