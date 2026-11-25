@@ -137,7 +137,7 @@
 /* ===== R3 · по Figma «Порог входа» (12.11.2026) ===== */
 /* Главная новичка: картинка из макета 14244:83364 (фон, гексагоны, глобус) */
 #device .nb-dark:has(#nbHero.art){background:#F7F7F7}
-#device #nbHero.art{background:var(--Bg-Base-Page) url(media/nbh/bg@4x.jpg) center top/390px auto no-repeat;padding-bottom:16px}
+#device #nbHero.art{background:#7d97f4 linear-gradient(180deg,#8796f6,#6f9cf2 40%,var(--Bg-Base-Page) 100%);padding-bottom:16px}
 #device #nbHero.art .fdots,#device #nbHero.art::before,#device #nbHero.art::after{display:none}
 #device .nb-art-sp{height:212px}
 #device #nbHero.art .nb-h1{margin-top:12px}
@@ -437,11 +437,14 @@
 #device #nbHero.art .nb-p{margin-top:8px;max-width:none;font-size:16px;line-height:22px}
 #device #nbHero.art .nb-go{height:52px;margin-top:20px}
 #device:has(#nbHero.art) .nb-cat{padding-top:16px}
-/* слой сот — исходное видео из макета (узел 15022:76983, VIDEO fill, CROP): кадр 381×218 на y 264,
-   видео 1170×886 (3x) по ширине кадра, видимая часть с 31,4 % высоты → top −90,6 px */
-.nb-hxl{display:none;position:absolute;left:0;top:0;width:390px;height:560px;pointer-events:none;z-index:0}
+/* слой сот — исходное видео из макета (15022:76983, VIDEO fill, CROP). Слой фона 390×560 масштабируется по ширине hero (--hs)
+   и привязан к кнопке: y 484 макета = верх кнопки (--ht считает app.js). Кадр видео 381×218 на y 264, видимая часть с −90,6 px */
+.nb-hxl{display:none;position:absolute;left:0;top:var(--ht,0px);width:calc(390px * var(--hs,1));height:calc(560px * var(--hs,1));pointer-events:none;z-index:0;
+  background:url(media/nbh/bg@4x.jpg) 0 0/100% 100% no-repeat}
 #nbHero.art .nb-hxl{display:block}
-.nb-hxv{position:absolute;left:0;top:264px;width:381px;height:218px;overflow:hidden;background:url(media/nbh/hex-still@3x.png) 0 0/100% auto no-repeat}
-/* статичный кадр из макета — пока видео не пошло (и в Safari/iOS, где WebM с прозрачностью не играет) */
+.nb-hxv{position:absolute;left:0;top:calc(264px * var(--hs,1));width:calc(381px * var(--hs,1));height:calc(218px * var(--hs,1));overflow:hidden;
+  background:url(media/nbh/hex-still.png) 0 calc(-90.6px * var(--hs,1))/100% auto no-repeat}
+.nb-hxv video{position:absolute;left:0;top:calc(-90.6px * var(--hs,1));width:100%;height:auto;display:block}
+/* статичный кадр из макета — пока видео не пошло; в Safari/iOS (WebM без прозрачности) видео убирается */
 .nb-hxv.on{background:none}
 .nb-hxv video{position:absolute;left:0;top:-90.6px;width:381px;height:auto;display:block}

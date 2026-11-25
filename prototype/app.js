@@ -3920,6 +3920,15 @@
 
   // ── home wiring ──
   $('nbHero').addEventListener('click',e=>{ if(e.target.closest('[data-nbopen]')) nboOpen(); });
+  // соты новичка: слой фона+видео масштабируется по ширине hero и привязан к кнопке (y 484 макета = верх кнопки)
+  { const H=$('nbHero'), L=H.querySelector('.nb-hxl'), V=L&&L.querySelector('video'), ua=navigator.userAgent;
+    const noAlpha=/iP(hone|ad|od)/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1)||(/Safari\//.test(ua)&&!/Chrome|Chromium|CriOS|Edg|OPR|Firefox|FxiOS/.test(ua));
+    if(V&&noAlpha){ V.remove(); }
+    const lay=()=>{ if(!L||!H.classList.contains('art')) return; const b=H.querySelector('.nb-go'); if(!b) return; const s=H.offsetWidth/390;
+      let y=0,n=b; while(n&&n!==H){ y+=n.offsetTop; n=n.offsetParent; }
+      H.style.setProperty('--hs',s.toFixed(4)); H.style.setProperty('--ht',(y-484*s).toFixed(1)+'px'); };
+    if(window.ResizeObserver) new ResizeObserver(lay).observe(H); new MutationObserver(lay).observe(H,{attributes:true,attributeFilter:['class'],childList:true,subtree:true}); lay(); }
+
   $('nbTt').addEventListener('click',()=>{ if(NBM.st==='open') toast('Брокерский счёт GL 789099'); });
   $('nbBody').addEventListener('click',e=>{ const t=e.target;
     if(t.closest('#nbGiftB')){ ngOpen(); return; }
