@@ -3924,6 +3924,9 @@
   { const H=$('nbHero'), L=H.querySelector('.nb-hxl'), V=L&&L.querySelector('video'), ua=navigator.userAgent;
     const noAlpha=/iP(hone|ad|od)/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1)||(/Safari\//.test(ua)&&!/Chrome|Chromium|CriOS|Edg|OPR|Firefox|FxiOS/.test(ua));
     if(V&&noAlpha){ V.remove(); }
+    // проверка по факту: если браузер отрисовал угол кадра непрозрачным (нет поддержки прозрачности VP9) — убираем видео, остаётся прозрачный кадр
+    else if(V){ V.removeAttribute('onplaying'); V.addEventListener('playing',()=>{ try{ const c=document.createElement('canvas'); c.width=c.height=4; const x=c.getContext('2d'); x.drawImage(V,0,0,40,40,0,0,4,4);
+        if(x.getImageData(0,0,1,1).data[3]>200){ V.remove(); return; } }catch(e){} V.parentNode&&V.parentNode.classList.add('on'); },{once:true}); }
     const lay=()=>{ if(!L||!H.classList.contains('art')) return; const b=H.querySelector('.nb-go'); if(!b) return; const s=H.offsetWidth/390;
       let y=0,n=b; while(n&&n!==H){ y+=n.offsetTop; n=n.offsetParent; }
       H.style.setProperty('--hs',s.toFixed(4)); H.style.setProperty('--ht',(y-484*s).toFixed(1)+'px'); };
